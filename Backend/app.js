@@ -1,6 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
+//const MemoryStore = require('session-memory-store')(session);
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const { checkSessionMiddleware } = require("./middlewares/sessionHandler");
 const { checkTokenMiddleware } = require("./middlewares/tokenHandler");
@@ -17,9 +21,26 @@ const paidRoutes = require("./routes/paidRoutes");
 const reservedTableRoutes = require("./routes/reservedTableRoutes");
 
 dotenv.config();
+
 const app = express();
 
-//session
+/*app.use(
+    session({
+        genid: (req) => {
+            return uuidv4();
+        },
+        store: MemoryStore(),
+        secret: process.env.SECRET || "",
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: false,
+            sameSite: "lax",
+            maxAge: 86_400_000,
+            httpOnly: true,
+        },
+    })
+);*/
 //app.use(checkSessionMiddleware)
 //app.use(checkTokenMiddleware)
 //app.post("/register", register);
@@ -28,6 +49,8 @@ const app = express();
 
 app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
 
 app.use('/user', userRoutes);
 app.use('/item', itemRoutes);
