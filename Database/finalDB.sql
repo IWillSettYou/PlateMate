@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2024 at 09:56 AM
+-- Generation Time: Oct 27, 2024 at 04:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,6 +55,14 @@ CREATE TABLE `item` (
   `categoryId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`id`, `name`, `price`, `categoryId`) VALUES
+(4, 'pizza', 2222, 3),
+(5, 'leves', 2222, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -79,8 +87,6 @@ CREATE TABLE `paid` (
   `id` int(11) NOT NULL,
   `tableId` int(11) NOT NULL,
   `itemId` int(11) NOT NULL,
-  `price` int(11) NOT NULL,
-  `nameOfCustomer` varchar(255) NOT NULL,
   `paymentMethodId` int(11) NOT NULL,
   `paidAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
@@ -187,8 +193,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `createdAt`, `updatedAt`) VALUES
-(1, 'Jani Patrik', 'janipatrik138@gmail.com', 'aasd', 1, '2024-10-27 09:20:02', '2024-10-27 09:41:47'),
-(2, 'gere', 'geaasda', 'afa', 2, '2024-10-27 09:42:21', '2024-10-27 09:51:44');
+(1, 'Jani Patrik', 'janipatrik138@gmail.com', 'aasd', 1, '2024-10-27 09:20:02', '2024-10-27 09:41:47');
 
 --
 -- Indexes for dumped tables
@@ -247,7 +252,8 @@ ALTER TABLE `reservedtable`
 -- Indexes for table `tables`
 --
 ALTER TABLE `tables`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tableNumber` (`tableNumber`);
 
 --
 -- Indexes for table `user`
@@ -265,37 +271,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `paid`
 --
 ALTER TABLE `paid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `permissionsettings`
 --
 ALTER TABLE `permissionsettings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `reservedtable`
@@ -307,7 +313,7 @@ ALTER TABLE `reservedtable`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`

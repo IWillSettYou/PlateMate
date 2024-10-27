@@ -17,7 +17,7 @@ permissionSettings{
 
 Tables{
     int id PK
-    int tableNumber 
+    int tableNumber UK
 }
 
 PaymentMethods{
@@ -41,8 +41,6 @@ Paid{
     int id PK
     int tableId FK 
     int itemId FK
-    int price
-    string nameOfCustomer
     int paymentMethodId FK
     DateTime paidAt
 }

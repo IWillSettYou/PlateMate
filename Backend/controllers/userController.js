@@ -44,27 +44,6 @@ const getUserById = async (req, res) => {
     }
 };
 
-const createUser = async (req, res) => {
-    const { name, hashedPassword, email, permissionLevel } = req.body;
-
-    if (!name || !hashedPassword || !email || !permissionLevel) {
-        return res.status(400).json({ message: "Minden mező megadása kötelező." });
-    }
-
-    try {
-        const response = await new Promise((resolve, reject) => {
-            connect.query("INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionLevel`) VALUES (NULL, ?, ?, ?, ?);", [name, email, hashedPassword, permissionLevel], (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
-            });
-        });
-
-        return res.status(200).json({ message: "Felhasználó sikeresen létrehozva.", data: response });
-    } catch (error) {
-        res.status(500).json({ message: "Hiba történt a felhasználó létrehozása során.", error });
-    }
-};
-
 const updateUser = async (req, res) => {
     const { id } = req.params;
     const { name, hashedPassword, email, permissionLevel } = req.body;
@@ -75,7 +54,7 @@ const updateUser = async (req, res) => {
 
     try {
         const response = await new Promise((resolve, reject) => {
-            connect.query("UPDATE `user` SET `name` = ?, `email` = ?, `hashedPassword` = ?, `permissionLevel` = ? WHERE `user`.`id` = ?", [name, email, hashedPassword, permissionLevel], (err, result) => {
+            connect.query("UPDATE `user` SET `name` = ?, `email` = ?, `hashedPassword` = ?, `permissionLevel` = ? WHERE `user`.`id` = ?", [name, email, hashedPassword, permissionLevel, id], (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
@@ -119,7 +98,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
     getAllUsers,
     getUserById,
-    createUser,
     updateUser,
     deleteUser
 };
