@@ -3,17 +3,11 @@ var Router = express.Router()
 
 const{
     getAllUsers,
-    getUserById,
-    updateUser,
-    deleteUser
+    getUserById
 } = require('../controllers/userController.js')
 
 Router.get('/', getAllUsers);
 
 Router.get('/:id', getUserById);
-
-Router.put('/:id', updateUser);
-
-Router.delete('/:id', deleteUser);
 
 module.exports = Router
