@@ -27,7 +27,6 @@ const verifyToken = async (req, res) => {
     if (!token) return res.status(401).send({ message : "Jogosultság megtagadva, nincs token." });
 
     try {
-        console.log(token)
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
         if (req.sessionID !== verified.sid) return res.status(400).send({message : "Érvénytelen token" });
         return true

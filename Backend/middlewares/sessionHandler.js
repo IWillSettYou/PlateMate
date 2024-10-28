@@ -23,7 +23,7 @@ const checkSessionMiddleware = async (req, res, next) => {
               if (err) {
                 res.status(400).send({ message : "Hiba kijelentkeztetéskor: ", error : err});
               }
-              res.status(200).send({ message: "Engedélytelen kérés, kijelentkeztetve" });
+              res.status(200).send({ message: "Engedélytelen munkamenet, kijelentkeztetve" });
             });
           }
           catch(error) {
@@ -34,7 +34,7 @@ const checkSessionMiddleware = async (req, res, next) => {
 
 const checkSession = async (req, res) => {
     try {
-        const dbSession = await findSession(req.sessionID, req).catch(error => res.status(500).send({ message : "Hiba a munkamenet lekérdezésekor.", error : error }));
+        const dbSession = await findSession(req.sessionID, req);
         const dbSessionData = dbSession.response;
 
         if (dbSessionData.length === 0) {
