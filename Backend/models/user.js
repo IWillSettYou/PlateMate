@@ -10,22 +10,22 @@ class User {
 
     async save() {
         try {
-            const response = new Promise((resolve, reject) => {
+            const response = await new Promise((resolve, reject) => {
                 connect.query("INSERT INTO `user` ( `name`, `hashedPassword`, `email`, `permissionId`) VALUES (?, ?, ?, ?);", [this.name, this.password, this.email, this.permissionId], (err, result, fields) => {
                     if (err) reject(err); 
                     else resolve(result);
                 });
             })
 
-            return res.status(200).json({ message: "Felhasználó sikeresen létrehozva.", data: response });
+            return { message: "Felhasználó sikeresen létrehozva.", data: response };
         } catch (error) {
-            res.status(500).json({ message: "Hiba történt a foglalás létrehozása során.", error });
+            return { message: "Hiba történt a foglalás létrehozása során.", error };
         }
     }
 
     static async findOne(email) {
         try {    
-            const user = new Promise((resolve, reject) => {
+            const user = await new Promise((resolve, reject) => {
                 connect.query("SELECT * FROM `user` WHERE `email` = ?", [email], (err, result) => {
                     if (err) reject(err); 
                     resolve(result);  
@@ -33,12 +33,12 @@ class User {
             });
 
             if (!user.length) {
-                return res.status(404).json({ message: "A megadott felhasználó nem található." });
+                return { message: "A megadott felhasználó nem található.", data: user };
             }
     
-            return res.status(200).json({ message: "Felhasználó sikeresen lekérve.", data: user });
+            return { message: "Felhasználó sikeresen lekérve.", data: user };
         } catch (error) {
-            res.status(500).json({ message: "Hiba történt a felhasználó lekérése során.", error });
+            return { message: "Hiba történt a felhasználó lekérése során.", error };
         }
     }
 
@@ -52,12 +52,12 @@ class User {
             });
     
             if (response.affectedRows === 0) {
-                return res.status(404).json({ message: "A megadott ID-hoz tartozó felhasználó nem található." });
+                return { message: "A megadott ID-hoz tartozó felhasználó nem található." };
             }
     
-            return res.status(200).json({ message: "Felhasználó sikeresen törölve.", data: response });
+            return { message: "Felhasználó sikeresen törölve.", data: response };
         } catch (error) {
-            res.status(500).json({ message: "Hiba történt a felhasználó törlése során.", error });
+            return { message: "Hiba történt a felhasználó törlése során.", error };
         }
     }
 
@@ -66,7 +66,7 @@ class User {
         const hashedPassword = await bcrypt.hash(password, salt);
         
         try {
-            const response = new Promise((resolve, reject) => {
+            const response = await new Promise((resolve, reject) => {
                 connect.query("UPDATE `user` SET `name` = ?, `email` = ?, `hashedPassword` = ?, `permissionLevel` = ? WHERE `email` = ?", [name, email, hashedPassword, permissionId, email], (err, result, fields) => {
                     if (err) reject(err); 
                     else resolve(result);
@@ -74,12 +74,12 @@ class User {
             })
 
             if (response.affectedRows === 0) {
-                return res.status(404).json({ message: "A megadott ID-hoz tartozó felhasználó nem található." });
+                return { message: "A megadott ID-hoz tartozó felhasználó nem található." };
             }
 
-            return res.status(200).json({ message: "Felhasználó sikeresen frissítve.", data: response });
+            return { message: "Felhasználó sikeresen frissítve.", data: response };
         } catch (error) {
-            res.status(500).json({ message: "Hiba történt a felhasználó frissítése során.", error });
+            return { message: "Hiba történt a felhasználó frissítése során.", error };
         }
     }
 }

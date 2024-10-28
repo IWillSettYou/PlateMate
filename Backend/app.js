@@ -1,10 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-//const MemoryStore = require('session-memory-store')(session);
 const session = require("express-session");
+const MemoryStore = require('session-memory-store')(session);
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const { v4: uuidv4 } = require('uuid');
 
 const { checkSessionMiddleware } = require("./middlewares/sessionHandler");
 const { checkTokenMiddleware } = require("./middlewares/tokenHandler");
@@ -24,13 +25,18 @@ dotenv.config();
 
 const app = express();
 
-/*app.use(
+app.use(express.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
+
+app.use(
     session({
         genid: (req) => {
             return uuidv4();
         },
         store: MemoryStore(),
-        secret: process.env.SECRET || "",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: {
@@ -40,17 +46,13 @@ const app = express();
             httpOnly: true,
         },
     })
-);*/
-//app.use(checkSessionMiddleware)
-//app.use(checkTokenMiddleware)
-//app.post("/register", register);
-//app.post("/login", login);
-//app.post("/logout", logout)
+);
 
-app.use(express.json()); 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(cors());
+app.use(checkSessionMiddleware)
+app.use(checkTokenMiddleware)
+app.post("/register", register);
+app.post("/login", login);
+app.post("/logout", logout)
 
 app.use('/user', userRoutes);
 app.use('/item', itemRoutes);

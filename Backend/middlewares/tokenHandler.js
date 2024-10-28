@@ -1,4 +1,4 @@
-/*const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const User = require("../models/user");
 
@@ -11,84 +11,91 @@ const checkTokenMiddleware = async (req, res, next) => {
         return next();
     }
 
-    const token = req.header("Authorization");
-    if (!token) return res.status(401).send("Access Denied");
+    const token = req.cookies.token;
+
+    if (!token) return res.status(401).send({ message : "Jogosultság megtagadva, nincs token." });
     try {
-        await verifyToken(req, res);
-        await refreshToken(req, res);
-        next();
+        if(await verifyToken(req, res) &&  await refreshToken(req, res)) next()
     } catch (err) {
-        res.status(400).send("Invalid Token-4");
+        res.status(400).send({ message : "Érvénytelen token." });
     }
 };
 
 const verifyToken = async (req, res) => {
-    const token = req.header("Authorization").replace("Bearer ", "");
-    if (!token) return res.status(401).send("Access Denied");
+    const token = req.cookies.token;
+
+    if (!token) return res.status(401).send({ message : "Jogosultság megtagadva, nincs token." });
+
     try {
-        const verified = jwt.verify(token, process.env.TOKEN_SECRET || "");
-        if (req.sessionID !== verified.sid)
-            return res.status(400).send("Invalid Token");
+        console.log(token)
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+        if (req.sessionID !== verified.sid) return res.status(400).send({message : "Érvénytelen token" });
+        return true
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send({ message : "Érvénytelen token" });
     }
 };
 
 const refreshToken = async (req, res) => {
-    const token = req.header("Authorization");
-    const refreshToken = req.body.refresh_token;
-    if (!token) return res.status(401).send("Access Denied");
-    if (!refreshToken) return res.status(400).send("Bad Request");
+    const token = req.cookies.token;
+    const refreshToken = req.cookies.refreshToken;
+    if (!token) return res.status(401).send({ message : "Jogosultság megtagadva, nincs token." });
+    if (!refreshToken) return res.status(400).send({ message : "Rossz kérés." });
 
     try {
-        const verified = jwt.verify(
-            token.split(" ")[1],
-            process.env.TOKEN_SECRET || ""
-        );
-        const verifiedRefresh = jwt.verify(
-            refreshToken,
-            process.env.TOKEN_SECRET || ""
-        );
+        const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+        const verifiedRefresh = jwt.verify(refreshToken,process.env.TOKEN_SECRET);
 
         if (verifiedRefresh.exp < Math.floor(Date.now() / 1000))
-            return res.status(400).send("Expired RToken");
+            return res.status(400).send({ message : "Lejárt refresh token." });
         if (verifiedRefresh.typ !== "Refresh")
-            return res.status(400).send("Invalid RToken type");
+            return res.status(400).send({ message : "Érvénytelen refresh token." });
         if (verified.iss !== verifiedRefresh.iss)
-            return res.status(400).send("Invalid Issuer");
+            return res.status(400).send({ message : "Érvénytelen issuer." });
         if (verified.sub !== verifiedRefresh.sub)
-            return res.status(400).send("Invalid Subject");
+            return res.status(400).send({ message : "Érvénytelen subject." });
         if (
             verified.sid !== verifiedRefresh.sid ||
             verifiedRefresh.sid !== req.sessionID ||
             verified.sid !== req.sessionID
-        )
-            return res.status(400).send("Invalid Session ID");
+        ) return res.status(400).send({ message : "Érvénytelen session id." });
 
         const jti = await uuidv4();
         const users = await User.findOne(verified.sub);
-        const user =users[0]
+        const user = users.data[0]
         const newToken = jwt.sign(
             {
                 jti: jti,
-                sub: user.id,
+                sub: user.email,
                 iss: process.env.ISSUER,
                 sid: req.sessionID,
                 typ: "Bearer",
-                preferred_username: user.username,
+                preferred_username: user.email,
             },
-            process.env.TOKEN_SECRET || "",
+            process.env.TOKEN_SECRET,
             {
-                expiresIn: "3m",
+                expiresIn: "3h",
             }
         );
 
-        res.header("Authorization", "Bearer " + newToken)
-        res.header("Refresh-Token", refreshToken)
+        res.cookie("token", newToken, {
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === "production", 
+            maxAge: 3 * 60 * 60 * 1000,
+          });
+    
+          res.cookie("refreshToken", refreshToken, {
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 30 * 24 * 60 * 60 * 1000, 
+          });
+
+          return true
     } catch (err) {
-        console.log(err);
-        res.status(400).send("Invalid Token-3");
+        res.status(400).send({ message : "Érvénytelen refresh token.", error : err });
     }
 };
 
-module.exports = checkTokenMiddleware;*/
+module.exports = {
+    checkTokenMiddleware
+} 
