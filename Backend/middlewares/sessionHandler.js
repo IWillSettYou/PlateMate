@@ -6,7 +6,8 @@ const checkSessionMiddleware = async (req, res, next) => {
     if (
         req.path === "/login" ||
         req.path === "/register" ||
-        req.path === "/logout"
+        req.path === "/logout" ||
+        req.path === "/check"
     ) {
         return next();
     }
@@ -36,7 +37,7 @@ const checkSession = async (req, res) => {
     try {
         const dbSession = await findSession(req.sessionID, req);
         const dbSessionData = dbSession.response;
-
+        
         if (dbSessionData.length === 0) {
             return { message : "Nem található ilyen munkamenet.", response :false }; 
         }
@@ -54,16 +55,12 @@ const checkSession = async (req, res) => {
 };
 
 const findSession = async (id, req) => {
-    const users = await User.findOne(req.body.email);
-    const user = users.data[0]
-
     return new Promise((resolve, reject) => {
         const session = connect.query(
-            "SELECT * FROM `sessions` WHERE id = ? AND userId = ?", [id, user.id], (err, result) => {
+            "SELECT * FROM `sessions` WHERE id = ?", [id], (err, result) => {
                 if (err) {
                     return reject({ message : "Hiba a munkamenet lekérdezésekor.", error : err });
-                }
-                resolve({ message : "A munkamenet sikeresen lekérdezve.", response : result });
+                }  resolve({ message : "A munkamenet sikeresen lekérdezve.", response : result });
             }
         );
     });
@@ -96,8 +93,7 @@ const uploadSession = async (req, userId) => {
                 if (err) {
                     reject({ message : "Hiba a munkamenet feltöltésekor.", error : err });
                     return;
-                }
-                resolve({ message : "A munkamenet sikeresen feltöltve.", response : result });
+                } resolve({ message : "A munkamenet sikeresen feltöltve.", response : result });
             }
         );
     });

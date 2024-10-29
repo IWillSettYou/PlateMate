@@ -6,7 +6,8 @@ const checkTokenMiddleware = async (req, res, next) => {
     if (
         req.path === "/login" ||
         req.path === "/register" ||
-        req.path === "/logout"
+        req.path === "/logout" ||
+        req.path === "/check"
     ) {
         return next();
     }
@@ -96,5 +97,7 @@ const refreshToken = async (req, res) => {
 };
 
 module.exports = {
-    checkTokenMiddleware
+    checkTokenMiddleware,
+    verifyToken,
+    refreshToken
 } 

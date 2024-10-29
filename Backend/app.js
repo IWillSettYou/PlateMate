@@ -10,6 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const { checkSessionMiddleware } = require("./middlewares/sessionHandler");
 const { checkTokenMiddleware } = require("./middlewares/tokenHandler");
 const { login, register, logout } = require("./controllers/authController") 
+const { checkLogin } = require("./middlewares/checkLogin") 
 
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
@@ -24,11 +25,15 @@ const reservedTableRoutes = require("./routes/reservedTableRoutes");
 dotenv.config();
 
 const app = express();
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true, 
+};
 
 app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(
     session({
@@ -40,19 +45,18 @@ app.use(
         resave: false,
         saveUninitialized: true,
         cookie: {
-            secure: false,
-            sameSite: "lax",
-            maxAge: 86_400_000,
-            httpOnly: true,
+            maxAge: 86_400_000
         },
     })
 );
 
-app.use(checkSessionMiddleware)
-app.use(checkTokenMiddleware)
+app.use(checkSessionMiddleware);
+app.use(checkTokenMiddleware);
 app.post("/register", register);
 app.post("/login", login);
-app.post("/logout", logout)
+app.post("/logout", logout);
+app.get("/check", checkLogin);
+
 
 app.use('/user', userRoutes);
 app.use('/item', itemRoutes);
