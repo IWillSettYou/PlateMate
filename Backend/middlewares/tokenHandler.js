@@ -5,7 +5,6 @@ const User = require("../models/user");
 const checkTokenMiddleware = async (req, res, next) => {
     if (
         req.path === "/login" ||
-        req.path === "/register" ||
         req.path === "/logout" ||
         req.path === "/redirect"
     ) {

@@ -5,7 +5,6 @@ const User = require("../models/user");
 const checkSessionMiddleware = async (req, res, next) => {
     if (
         req.path === "/login" ||
-        req.path === "/register" ||
         req.path === "/logout" ||
         req.path === "/redirect"
     ) {
