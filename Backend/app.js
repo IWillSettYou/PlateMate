@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 const { checkSessionMiddleware } = require("./middlewares/sessionHandler");
 const { checkTokenMiddleware } = require("./middlewares/tokenHandler");
 const { login, register, logout } = require("./controllers/authController") 
-const { checkLogin } = require("./middlewares/checkLogin") 
+const { redirectHandler } = require("./middlewares/redirectHandler") 
 
 const userRoutes = require("./routes/userRoutes");
 const itemRoutes = require("./routes/itemRoutes");
@@ -55,7 +55,7 @@ app.use(checkTokenMiddleware);
 app.post("/register", register);
 app.post("/login", login);
 app.post("/logout", logout);
-app.get("/check", checkLogin);
+app.get("/redirect", redirectHandler);
 
 
 app.use('/user', userRoutes);

@@ -25,7 +25,7 @@ export default {
   methods: {
     async checkLogin() {
       try {
-        const response = await axios.get('http://localhost:3000/check', {
+        const response = await axios.get('http://localhost:3000/redirect', {
             withCredentials: true 
         });
         return response.data.isAuthorized; 

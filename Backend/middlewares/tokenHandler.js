@@ -7,7 +7,7 @@ const checkTokenMiddleware = async (req, res, next) => {
         req.path === "/login" ||
         req.path === "/register" ||
         req.path === "/logout" ||
-        req.path === "/check"
+        req.path === "/redirect"
     ) {
         return next();
     }
