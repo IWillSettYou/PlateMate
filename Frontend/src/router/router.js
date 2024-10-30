@@ -13,10 +13,12 @@ import PaymentMethods from '../pages/admin/PaymentMethods.vue'
 import PaidOrders from '../pages/admin/PaidOrders.vue'
 import Sections from '../pages/admin/Sections.vue'
 import Users from '../pages/admin/Users.vue'
+//Restaurant
 import NewReservations from '../pages/restaurant/NewReservations.vue'
 import Reservation from '../pages/restaurant/Reservation.vue'
 import NewOrders from '../pages/restaurant/NewOrders.vue'
 import Orders from '../pages/restaurant/Orders.vue'
+//Kitchen
 import FinishedOrders from '../pages/kitchen/FinishedOrders.vue'
 import InProcessOrders from '../pages/kitchen/InProcessOrders.vue'
 
