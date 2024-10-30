@@ -133,7 +133,6 @@ const generateRefreshToken = async (jti, user, sid) => {
 
 const logout = async (req, res) => {
   try {
-    console.log(req.cookies)
     const response = await deleteSession(req.sessionID)
 
     if(response.response.affectedRows == 0) res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });

@@ -8,6 +8,7 @@ const redirectHandler = async (req, res) => {
     const pages = {
         home : ['admin', 'chef', 'waiter', 'cashier'], 
         login : ['admin', 'chef', 'waiter', 'cashier'], 
+        admin : ['admin'], 
         cashout : ['admin', 'cashier'],
         kitchen : ['admin', 'chef'],
         restaurant :  ['admin', 'waiter'],
@@ -33,7 +34,7 @@ const redirectHandler = async (req, res) => {
             if(!res.headersSent) res.send({ message : "Invalid Role", isAuthorized: false })
         }
 
-        if(!res.headersSent) res.send({ isAuthorized: true })
+        if(!res.headersSent) res.send({ isAuthorized: true, role : section.data[0].section })
     }
 };
 
