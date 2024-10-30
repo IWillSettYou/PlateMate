@@ -133,17 +133,20 @@ const generateRefreshToken = async (jti, user, sid) => {
 
 const logout = async (req, res) => {
   try {
-    await deleteSession(req.sessionID)
+    console.log(req.cookies)
+    const response = await deleteSession(req.sessionID)
+
+    if(response.response.affectedRows == 0) res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });
 
     req.session.destroy((err) => {
       if (err) {
-        res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });
+        if(!res.headersSent) res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });
       }
-      res.status(200).send({ message : "Sikeresen kilépve." });
+      if(!res.headersSent) res.status(200).send({ message : "Sikeresen kilépve." });
     });
   }
   catch(error) {
-    res.status(500).send({ message : "Hiba kijelentkezéskor.", error : error })
+    if(!res.headersSent) res.status(500).send({ message : "Hiba kijelentkezéskor.", error : error })
   };
 }
 

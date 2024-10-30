@@ -56,7 +56,7 @@ app.use(checkTokenMiddleware);
 app.post("/login", login);
 app.post("/logout", logout);
 app.get("/redirect", redirectHandler);
-app.post("/register", register);
+app.post("/register", roleCheck(['admin']), register);
 
 app.use('/user', roleCheck(['admin']), userRoutes);
 app.use('/item', roleCheck(['admin']), itemRoutes);
