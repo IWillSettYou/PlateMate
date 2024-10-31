@@ -1,10 +1,17 @@
 <script>
 import axios from 'axios';
+import SectionAdd from '../../components/admin/sections/SectionAdd.vue';
+import SectionList from '../../components/admin/sections/SectionList.vue';
 
 export default {
+  components: {
+    SectionAdd,
+    SectionList
+  },    
   data(){
     return {
       loading: true,
+      currentComponent: ""
     }
   },
   async mounted(){
@@ -55,14 +62,34 @@ export default {
 </script>
 
 <template>
-  <div>
-    <p v-if="loading">Betöltés...</p>
-    <div v-if="!loading">
-      <RouterLink to="/">
-            <Button>Back</Button>
-      </RouterLink>
-      <h1>Üdvözöljük a Sections oldalon!</h1>
-      <button @click="logout()">logout</button>
+<p v-if="loading">Betöltés...</p>
+<div v-if="!loading">
+    <div class="bg-gray-50 dark:bg-gray-900">
+      <nav class="bg-white dark:bg-gray-800 shadow dark:border-gray-700 p-4">
+        <div class="flex items-center">
+          <RouterLink to="/" class="mr-auto">
+            <button class="ml-auto text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-m px-4 py-2">
+              Back
+            </button>
+          </RouterLink>
+
+          <div class="flex space-x-6 mx-auto">
+            <button @click="currentComponent = 'SectionList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              Section List
+            </button>
+            <button @click="currentComponent = 'SectionAdd'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              Section Add
+            </button>
+          </div>
+
+          <button @click="logout" class="ml-auto text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-m px-4 py-2">
+            Kijelentkezés
+          </button>
+        </div>
+      </nav>
+    </div>
+    <div class="content">
+      <component :is="currentComponent"></component>
     </div>
   </div>
 </template>

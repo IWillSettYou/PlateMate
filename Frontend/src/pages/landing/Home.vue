@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-import MenuDropdown from "../../components/MenuDropdown.vue";
+import MenuDropdown from "../../components/landing/MenuDropdown.vue";
 
 export default {
   components: {
@@ -99,7 +99,7 @@ export default {
             { name: 'Ételek és Italok', path: '/foods-and-drinks' },
             { name: 'Kategóriák', path: '/categories' },
             { name: 'Asztalok', path: '/tables' },
-            { name: 'Fizetésimódok', path: '/payment-methods' },
+            { name: 'Fizetési módok', path: '/payment-methods' },
             { name: 'Kifizetett ételek', path: '/paid-orders' },
             { name: 'Szekciók', path: '/sections' },
             { name: 'Felhasználók', path: '/users' },

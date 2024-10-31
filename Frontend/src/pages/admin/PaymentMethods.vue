@@ -1,10 +1,17 @@
 <script>
 import axios from 'axios';
+import PaymentMethodAdd from '../../components/admin/paymentMethods/PaymentMethodAdd.vue';
+import PaymentMethodList from '../../components/admin/paymentMethods/PaymentMethodList.vue';
 
 export default {
+  components: {
+    PaymentMethodAdd,
+    PaymentMethodList
+  },
   data(){
     return {
       loading: true,
+      currentComponent: ""
     }
   },
   async mounted(){
@@ -55,14 +62,34 @@ export default {
 </script>
 
 <template>
-  <div>
-    <p v-if="loading">Betöltés...</p>
-    <div v-if="!loading">
-      <RouterLink to="/">
-            <Button>Back</Button>
-      </RouterLink>
-      <h1>Üdvözöljük a PaymentMehods oldalon!</h1>
-      <button @click="logout()">logout</button>
+<p v-if="loading">Betöltés...</p>
+<div v-if="!loading">
+    <div class="bg-gray-50 dark:bg-gray-900">
+      <nav class="bg-white dark:bg-gray-800 shadow dark:border-gray-700 p-4">
+        <div class="flex items-center">
+          <RouterLink to="/" class="mr-auto">
+            <button class="ml-auto text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-m px-4 py-2">
+              Back
+            </button>
+          </RouterLink>
+
+          <div class="flex space-x-6 mx-auto">
+            <button @click="currentComponent = 'PaymentMethodList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              PaymentMethod List
+            </button>
+            <button @click="currentComponent = 'PaymentMethodAdd'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              PaymentMethod Add
+            </button>
+          </div>
+
+          <button @click="logout" class="ml-auto text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-m px-4 py-2">
+            Kijelentkezés
+          </button>
+        </div>
+      </nav>
+    </div>
+    <div class="content">
+      <component :is="currentComponent"></component>
     </div>
   </div>
 </template>
