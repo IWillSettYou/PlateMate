@@ -54,7 +54,7 @@ app.post("/logout", logout);
 app.get("/redirect", redirectHandler);
 app.post("/register", roleCheck(['admin']), register);
 
-app.use('/user', roleCheck(['admin']), userRoutes);
+app.use('/user', roleCheck(['admin', 'chef']), userRoutes);
 app.use('/item', roleCheck(['admin']), itemRoutes);
 app.use('/category', roleCheck(['admin']), categoryRoutes);
 app.use('/payment-method', roleCheck(['admin']), paymentMethodRoutes);

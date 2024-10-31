@@ -91,7 +91,6 @@ const uploadSession = async (req, sid, userId, expires) => {
             ],
             (err, result) => {
                 if (err) {
-                    console.log(err)
                     reject({ message : "Hiba a munkamenet feltöltésekor.", error : err });
                     return;
                 } resolve({ message : "A munkamenet sikeresen feltöltve.", response : result });

@@ -35,8 +35,6 @@ const login = async (req, res) => {
   const sessionCheck = await checkSession(req, res);
 
   const sessionId = await uuidv4();
-  req.sessionID = sessionId
-  req.session.id = sessionId  
 
   if(sessionCheck.response) { 
     const users = await User.findOne(req.body.email);
@@ -50,14 +48,14 @@ const login = async (req, res) => {
       iss: process.env.ISSUER,
       typ: "Bearer",
       preferred_username: user.name,
-      sid: req.sessionID,
+      sid: sessionId,
     },
     process.env.TOKEN_SECRET,
     {
       expiresIn: "3h",
     });
 
-    const refreshToken = await generateRefreshToken(jti, user, req.sessionID);
+    const refreshToken = await generateRefreshToken(jti, user, sessionId);
 
     res.cookie("token", token, {
       httpOnly: true, 
@@ -90,20 +88,20 @@ const login = async (req, res) => {
       iss: process.env.ISSUER,
       typ: "Bearer",
       preferred_username: user.name,
-      sid: req.sessionID,
+      sid: sessionId,
     },
     process.env.TOKEN_SECRET,
     { expiresIn: "3h"}
     );
     
     try{
-      const refreshToken = await generateRefreshToken(jti, user, req.sessionID);
+      const refreshToken = await generateRefreshToken(jti, user, sessionId);
 
       const expires = formatDateToMySQL(Date.now() + 86400000);
 
       await uploadSession(req, sessionId, user.id, expires)
 
-      res.cookie('connect.sid', `s:${req.sessionID}`, { 
+      res.cookie('connect.sid', `s:${sessionId}`, { 
         httpOnly: true, 
         maxAge: 86400000 
       });
@@ -123,7 +121,6 @@ const login = async (req, res) => {
       res.status(200).send({ "message" : "Belépve új munkamenettel." })
     }
     catch (error){
-      console.log(error)
       res.status(500).send({ error : error })
     }
   }
@@ -157,7 +154,6 @@ const logout = async (req, res) => {
     });
   }
   catch(error) {
-    console.log(error)
     if(!res.headersSent) res.status(500).send({ message : "Hiba kijelentkezéskor.", error : error })
   };
 }

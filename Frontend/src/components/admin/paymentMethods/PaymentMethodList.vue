@@ -54,7 +54,7 @@ export default {
 <p v-if="loading">Betöltés...</p>
 <div v-if="!loading">
   <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-sm w-full">
-  <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Kategóriák</h2>
+  <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Fizetési módok</h2>
 
   <div class="overflow-x-auto">
     <table class="min-w-full bg-blue-50 border border-gray-200 rounded-lg shadow-lg">

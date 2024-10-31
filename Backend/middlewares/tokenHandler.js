@@ -17,7 +17,7 @@ const checkTokenMiddleware = async (req, res, next) => {
     try {
         if(await verifyToken(req, res) &&  await refreshToken(req, res)) next()
     } catch (err) {
-        res.status(400).send({ message : "Érvénytelen token." });
+        if(!res.headersSent)res.status(400).send({ message : "Érvénytelen token." });
     }
 };
 
