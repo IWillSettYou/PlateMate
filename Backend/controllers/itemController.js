@@ -3,7 +3,18 @@ const connect = require("../config/db");
 const getAllItems = async (req, res) => {
     try {
         const users = await new Promise((resolve, reject) => {
-            connect.query("SELECT * FROM `item`", (err, result) => {
+            connect.query(`
+                SELECT
+                    i.id as id, 
+                    i.name as name,
+                    i.price as price,
+                    i.categoryId as categoryId,
+                    c.name as categoryName
+                FROM 
+                    item i
+                JOIN 
+                    category c ON i.categoryId = c.id
+                `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });

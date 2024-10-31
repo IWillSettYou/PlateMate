@@ -97,7 +97,7 @@ export default {
           <MenuDropdown v-if="isAdminVisible"
           title="Admin Panel"
           :items="[
-            { name: 'Ételek és Italok', path: '/foods-and-drinks' },
+            { name: 'Ételek és Italok', path: '/items' },
             { name: 'Kategóriák', path: '/categories' },
             { name: 'Asztalok', path: '/tables' },
             { name: 'Fizetési módok', path: '/payment-methods' },

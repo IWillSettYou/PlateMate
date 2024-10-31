@@ -7,7 +7,7 @@ import Login from '../pages/auth/Login.vue'
 import Cashout from '../pages/cashout/Cashout.vue'
 //Admin
 import Categories from '../pages/admin/Categories.vue'
-import FoodsAndDrinks from '../pages/admin/FoodsAndDrinks.vue'
+import Items from '../pages/admin/Items.vue'
 import Tables from '../pages/admin/Tables.vue'
 import PaymentMethods from '../pages/admin/PaymentMethods.vue'
 import PaidOrders from '../pages/admin/PaidOrders.vue'
@@ -28,7 +28,7 @@ const routes = [
   { path: '/', name:  'Home', component: Home },
   { path: '/login', name: 'Login', component: Login },
   { path: '/cashout',  name: 'Cashout', component: Cashout },
-  { path: '/foods-and-drinks',  name: 'FoodsAndDrinks', component: FoodsAndDrinks },
+  { path: '/items',  name: 'Items', component: Items },
   { path: '/categories',  name: 'Categories', component: Categories },
   { path: '/tables',  name: 'Tables', component: Tables },
   { path: '/payment-methods',  name: 'PaymentMethods', component: PaymentMethods },

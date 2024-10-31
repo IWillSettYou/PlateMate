@@ -3,32 +3,31 @@
 import axios from 'axios';
 
 export default {
-  name: "UserAdd",
+  name: "ItemAdd",
   data() {
     return {
       loading: true,
       formData: {
         name: "",
-        email: "",
-        password: "",
-        permissionId: "",
-        sections:  []
+        price: 0,
+        categoryId: "",
+        categories:  []
       }
     }
   },
   async mounted(){
     try {
-        const response = await this.getSections();
-        this.sections = response.data.data;
+        const response = await this.getCategories();
+        this.categories = response.data.data;
         this.loading = false
       } catch (error) {
         console.error("Hiba az ellenőrzés során:", error);
     } 
   },
   methods: {
-    async getSections() {
+    async getCategories() {
       try {
-        const response = await axios.get(`http://localhost:3000/permission-setting/`, {
+        const response = await axios.get(`http://localhost:3000/category/`, {
           withCredentials: true 
         });
         
@@ -39,14 +38,13 @@ export default {
         alert("Hiba a lekérés során: " + errorCode);
       }
     },
-    async createUser(){
+    async createItem(){
       try {
-        const response = await axios.post('http://localhost:3000/register', { 
+        const response = await axios.post('http://localhost:3000/item', { 
           name: this.formData.name,
-          email: this.formData.email,
-          password: this.formData.password,
-          permissionId: this.formData.permissionId
-        }, 
+          price: this.formData.price,
+          categoryId: this.formData.categoryId
+        },
         {
           withCredentials: true
         });
@@ -64,25 +62,21 @@ export default {
   <p v-if="loading">Betöltés...</p>
   <div v-if="!loading">
   <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-sm w-full">
-    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Felhasználó Létrehozás</h2>
-    <form @submit.prevent="createUser">
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Termék Létrehozás</h2>
+    <form @submit.prevent="createItem">
       <div class="mb-4">
         <label class="block text-gray-700 dark:text-gray-300 mb-2">Név</label>
         <input type="text" v-model="formData.name" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" required/>
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
-        <input type="text" v-model="formData.email" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" required/>
+        <label class="block text-gray-700 dark:text-gray-300 mb-2">Ár</label>
+        <input type="number" v-model="formData.price" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" required/>
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 dark:text-gray-300 mb-2">Jelszó</label>
-        <input type="text" v-model="formData.password" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" required/>
-      </div>
-      <div class="mb-4">
-        <label class="block text-gray-700 dark:text-gray-300 mb-2">Szekció</label>
-        <select id="dropdown" v-model="formData.permissionId">
-      <option v-for="section in sections" :key="section.id" :value="section.id">
-        {{ section.section }}
+        <label class="block text-gray-700 dark:text-gray-300 mb-2">Kategória</label>
+        <select id="dropdown" v-model="formData.categoryId">
+      <option v-for="category in categories" :key="category.id" :value="category.id">
+        {{ category.name }}
       </option>
     </select>
       </div>

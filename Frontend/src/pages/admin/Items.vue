@@ -1,17 +1,17 @@
 <script>
 import axios from 'axios';
-import CategoryAdd from '../../components/admin/categories/CategoryAdd.vue';
-import CategoryList from '../../components/admin/categories/CategoryList.vue';
+import ItemList from '../../components/admin/items/ItemList.vue';
+import ItemAdd from '../../components/admin/items/ItemAdd.vue';
 
 export default {
-  components : {
-    CategoryAdd,
-    CategoryList
+  components: {
+    ItemList,
+    ItemAdd
   },
   data(){
     return {
       loading: true,
-      currentComponent: "CategoryList"
+      currentComponent: "ItemList"
     }
   },
   async mounted(){
@@ -74,11 +74,11 @@ export default {
           </RouterLink>
 
           <div class="flex space-x-6 mx-auto">
-            <button @click="currentComponent = 'CategoryList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              Category List
+            <button @click="currentComponent = 'ItemList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              Items List
             </button>
-            <button @click="currentComponent = 'CategoryAdd'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              Category Add
+            <button @click="currentComponent = 'ItemAdd'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+              Items Add
             </button>
           </div>
 
@@ -88,7 +88,7 @@ export default {
         </div>
       </nav>
     </div>
-      <div class="flex-grow flex items-center justify-center min-h-screen">
+    <div class="flex-grow flex items-center justify-center min-h-screen">
         <component :is="currentComponent"></component>
       </div>
   </div>

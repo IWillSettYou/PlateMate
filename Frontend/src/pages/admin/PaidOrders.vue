@@ -1,10 +1,15 @@
 <script>
 import axios from 'axios';
+import PaidOrderList from '../../components/admin/paidOrders/PaidOrderList.vue';
 
 export default {
+  components : {
+    PaidOrderList
+  },
   data(){
     return {
       loading: true,
+      currentComponent: "PaidOrderList"
     }
   },
   async mounted(){
@@ -72,7 +77,10 @@ export default {
         </div>
       </nav>
     </div>
-</div>
+    <div class="flex-grow flex items-center justify-center min-h-screen">
+        <component :is="currentComponent"></component>
+    </div>
+  </div>
 </template>
 
 <style scoped>

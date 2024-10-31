@@ -3,7 +3,18 @@ const connect = require("../config/db");
 const getAllUsers = async (req, res) => {
     try {
         const users = await new Promise((resolve, reject) => {
-            connect.query("SELECT * FROM `user`", (err, result) => {
+            connect.query(`
+                SELECT 
+                    u.id as userId,
+                    u.name as userName,
+                    u.email as email,
+                    u.permissionId as sectionId,
+                    ps.section as sectionName
+                FROM 
+                    user u
+                JOIN
+                    permissionsettings ps ON  u.permissionId = ps.id
+                `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
@@ -53,7 +64,7 @@ const deleteUser = async (req, res) => {
 
     try {
         const response = await new Promise((resolve, reject) => {
-            connect.query("DELETE FROM `usesr` WHERE `user`.`id` = ?", [id], (err, result) => {
+            connect.query("DELETE FROM `user` WHERE `user`.`id` = ?", [id], (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });

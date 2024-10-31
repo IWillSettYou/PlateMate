@@ -6,7 +6,7 @@ const { deleteSession, uploadSession, checkSession } = require("../middlewares/s
 
 const register = async (req, res) => {
   const { name, email, password, permissionId} = req.body;
-
+  
   if (!name || !email || !password || !permissionId) {
     return res.status(400).json({ message: "Minden mező megadása kötelező." });
   }

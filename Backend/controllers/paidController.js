@@ -3,7 +3,26 @@ const connect = require("../config/db");
 const getAllPayments = async (req, res) => {
     try {
         const users = await new Promise((resolve, reject) => {
-            connect.query("SELECT * FROM `paid`", (err, result) => {
+            connect.query(`
+                SELECT 
+                    p.id as id,
+                    p.tableId as tableId,
+                    p.itemId as itemId,
+                    p.paymentMethodId as paymentMethodId,
+                    p.paidAt as paidAt,
+                    i.name as itemName,
+                    i.price as itemPrice,
+                    t.tableNumber as tableNumber,
+                    pm.name as paymentMethodName
+                FROM 
+                    paid p
+                JOIN 
+                    item i ON p.itemId = i.id
+                JOIN
+                    tables t ON p.tableId =t.id
+                JOIN 
+                    paymentMethods pm ON p.paymentMethodId = pm.id
+                `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });

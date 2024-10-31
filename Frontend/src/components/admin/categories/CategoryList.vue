@@ -37,7 +37,10 @@ export default {
         const response = await axios.delete(`http://localhost:3000/category/${id}`, {
         withCredentials: true 
       });
-        if(response.status == 200) this.categories.filter(category => category.id !== id)
+        if(response.status == 200) {
+          this.categories.filter(category => category.id !== id)
+          alert(response.data.message)
+        }
       } catch (error) {
         console.log(error)
         alert("Hiba a törlés során");
