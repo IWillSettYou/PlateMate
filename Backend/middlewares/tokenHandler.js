@@ -28,7 +28,7 @@ const verifyToken = async (req, res) => {
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-        if (req.sessionID !== verified.sid) return res.status(400).send({message : "Érvénytelen token" });
+        if (req.cookies['connect.sid'].split(':')[1].split('.')[0] !== verified.sid) return res.status(400).send({message : "Érvénytelen token" });
         return true
     } catch (err) {
         res.status(400).send({ message : "Érvénytelen token" });
@@ -55,8 +55,8 @@ const refreshToken = async (req, res) => {
             return res.status(400).send({ message : "Érvénytelen subject." });
         if (
             verified.sid !== verifiedRefresh.sid ||
-            verifiedRefresh.sid !== req.sessionID ||
-            verified.sid !== req.sessionID
+            verifiedRefresh.sid !== req.cookies['connect.sid'].split(':')[1].split('.')[0] ||
+            verified.sid !== req.cookies['connect.sid'].split(':')[1].split('.')[0]
         ) return res.status(400).send({ message : "Érvénytelen session id." });
 
         const jti = await uuidv4();
@@ -67,7 +67,7 @@ const refreshToken = async (req, res) => {
                 jti: jti,
                 sub: user.email,
                 iss: process.env.ISSUER,
-                sid: req.sessionID,
+                sid: req.cookies['connect.sid'].split(':')[1].split('.')[0],
                 typ: "Bearer",
                 preferred_username: user.email,
             },

@@ -88,9 +88,9 @@ export default {
         </div>
       </nav>
     </div>
-    <div class="content">
-      <component :is="currentComponent"></component>
-    </div>
+      <div class="flex-grow flex items-center justify-center min-h-screen">
+        <component :is="currentComponent"></component>
+      </div>
   </div>
 </template>
 

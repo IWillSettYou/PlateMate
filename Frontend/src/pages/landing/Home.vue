@@ -60,6 +60,7 @@ export default {
             },
             withCredentials: true 
         });
+
         return response.data; 
       } catch (error) {
           console.error("Hiba az API hívás során:", error);

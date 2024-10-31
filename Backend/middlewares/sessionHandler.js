@@ -13,11 +13,12 @@ const checkSessionMiddleware = async (req, res, next) => {
 
     const sessionValidty = await checkSession(req, res)
 
-    if (req.session.id && sessionValidty.response) {
+    if (req.cookies['connect.sid'].split(':')[1].split('.')[0] && sessionValidty.response) {
+        req.session = await findSession(req.cookies['connect.sid'].split(':')[1].split('.')[0]).response;
         return next();
     } else {
         try {
-            await deleteSession(req.sessionID)
+            await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
         
             req.session.destroy((err) => {
               if (err) {
@@ -34,7 +35,7 @@ const checkSessionMiddleware = async (req, res, next) => {
 
 const checkSession = async (req, res) => {
     try {
-        const dbSession = await findSession(req.sessionID, req);
+        const dbSession = await findSession(req.cookies['connect.sid'].split(':')[1].split('.')[0]);
         const dbSessionData = dbSession.response;
         
         if (dbSessionData.length === 0) {
@@ -53,7 +54,7 @@ const checkSession = async (req, res) => {
     }
 };
 
-const findSession = async (id, req) => {
+const findSession = async (id) => {
     return new Promise((resolve, reject) => {
         const session = connect.query(
             "SELECT * FROM `sessions` WHERE id = ?", [id], (err, result) => {
@@ -78,18 +79,19 @@ const deleteSession = async (id) => {
     });
 };
 
-const uploadSession = async (req, userId) => {
+const uploadSession = async (req, sid, userId, expires) => {
     return new Promise((resolve, reject) => {
         connect.query(
             "INSERT INTO `sessions` (`id`, `userId`, `ip`, `expires`) VALUES (?, ?, ?, ?);",
             [
-                req.sessionID,
+                sid,
                 userId,
                 req.headers["x-forwarded-for"] || req.socket.remoteAddress,
-                req.session.cookie.expires
+                expires
             ],
             (err, result) => {
                 if (err) {
+                    console.log(err)
                     reject({ message : "Hiba a munkamenet feltöltésekor.", error : err });
                     return;
                 } resolve({ message : "A munkamenet sikeresen feltöltve.", response : result });

@@ -34,6 +34,10 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const sessionCheck = await checkSession(req, res);
 
+  const sessionId = await uuidv4();
+  req.sessionID = sessionId
+  req.session.id = sessionId  
+
   if(sessionCheck.response) { 
     const users = await User.findOne(req.body.email);
     const user = users.data[0]
@@ -91,12 +95,19 @@ const login = async (req, res) => {
     process.env.TOKEN_SECRET,
     { expiresIn: "3h"}
     );
-
+    
     try{
       const refreshToken = await generateRefreshToken(jti, user, req.sessionID);
 
-      await uploadSession(req, user.id)
-      
+      const expires = formatDateToMySQL(Date.now() + 86400000);
+
+      await uploadSession(req, sessionId, user.id, expires)
+
+      res.cookie('connect.sid', `s:${req.sessionID}`, { 
+        httpOnly: true, 
+        maxAge: 86400000 
+      });
+
       res.cookie("token", token, {
         httpOnly: true, 
         secure: process.env.NODE_ENV === "production", 
@@ -112,6 +123,7 @@ const login = async (req, res) => {
       res.status(200).send({ "message" : "Belépve új munkamenettel." })
     }
     catch (error){
+      console.log(error)
       res.status(500).send({ error : error })
     }
   }
@@ -133,9 +145,9 @@ const generateRefreshToken = async (jti, user, sid) => {
 
 const logout = async (req, res) => {
   try {
-    const response = await deleteSession(req.sessionID)
+    const response = await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
 
-    if(response.response.affectedRows == 0) res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });
+    if(response.response.affectedRows == 0) res.status(400).send({ message : "Hiba történt a kilépéskor"});
 
     req.session.destroy((err) => {
       if (err) {
@@ -145,9 +157,22 @@ const logout = async (req, res) => {
     });
   }
   catch(error) {
+    console.log(error)
     if(!res.headersSent) res.status(500).send({ message : "Hiba kijelentkezéskor.", error : error })
   };
 }
+
+const formatDateToMySQL = (timestamp) => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 
 module.exports = {
   logout,

@@ -2,7 +2,6 @@ const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const MemoryStore = require('session-memory-store')(session);
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { v4: uuidv4 } = require('uuid');
@@ -38,21 +37,18 @@ app.use(cors(corsOptions));
 
 app.use(
     session({
-        genid: (req) => {
-            return uuidv4();
-        },
-        store: MemoryStore(),
         secret: process.env.SESSION_SECRET,
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         cookie: {
             maxAge: 86_400_000
         },
     })
 );
-
+//TODO - Store sessionId to allow deletion after sessionId is changed
 app.use(checkSessionMiddleware);
 app.use(checkTokenMiddleware);
+
 app.post("/login", login);
 app.post("/logout", logout);
 app.get("/redirect", redirectHandler);

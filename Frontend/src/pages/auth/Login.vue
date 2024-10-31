@@ -27,6 +27,7 @@ export default {
             },
             withCredentials: true 
         });
+
         return response.data; 
     } catch (error) {
         console.error("Hiba az API hívás során:", error);
@@ -41,9 +42,10 @@ export default {
         }, {
           withCredentials: true
         });
-
+        
         if (response.status == 200) this.$router.push({ name: 'Home' });
       } catch (error) {
+        console.log(error)
         const errorCode = error.response.data.message
         alert("Hiba a bejelentkezés során: " + errorCode);
       }

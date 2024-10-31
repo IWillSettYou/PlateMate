@@ -17,9 +17,9 @@ const redirectHandler = async (req, res) => {
     const sessionValidty = await checkSession(req, res)
     const token = req.cookies.token;
     const page = req.query.page;
-
-    if (!req.session.id || sessionValidty.response != true || !token || await verifyToken(req, res) != true || await refreshToken(req, res) != true ) { 
-        await deleteSession(req.sessionID)
+     
+    if (!req.cookies['connect.sid'].split(':')[1].split('.')[0] || sessionValidty.response != true || !token || await verifyToken(req, res) != true || await refreshToken(req, res) != true ) { 
+        await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
         req.session.destroy();
         if(!res.headersSent) res.send({ message : "Invalid Credentials", isAuthorized: false })
     } else {
@@ -34,7 +34,7 @@ const redirectHandler = async (req, res) => {
             if(!res.headersSent) res.send({ message : "Invalid Role", isAuthorized: false })
         }
 
-        if(!res.headersSent) res.send({ isAuthorized: true, role : section.data[0].section })
+        if(!res.headersSent) res.status(200).send({ isAuthorized: true, role : section.data[0].section })
     }
 };
 
