@@ -10,8 +10,8 @@ const redirectHandler = async (req, res) => {
         login : ['admin', 'chef', 'waiter', 'cashier'], 
         admin : ['admin'], 
         cashout : ['admin', 'cashier'],
-        kitchen : ['admin', 'chef'],
-        restaurant :  ['admin', 'waiter'],
+        orders : ['admin', 'chef', 'waiter'],
+        reservations : ['admin', 'waiter'],
     };
     
     const sessionValidty = await checkSession(req, res)

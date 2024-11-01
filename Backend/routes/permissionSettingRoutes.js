@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deleteSetting
 } = require('../controllers/permissionSettingController.js')
 
-Router.get('/', getAllSettings);
+Router.get('/', roleCheck(['admin']), getAllSettings);
 
-Router.get('/:id', getSettingById);
+Router.get('/:id', roleCheck(['admin']), getSettingById);
 
-Router.post('/', createSetting);
+Router.post('/', roleCheck(['admin']), createSetting);
 
-Router.delete('/:id', deleteSetting);
+Router.delete('/:id', roleCheck(['admin']), deleteSetting);
 
 module.exports = Router

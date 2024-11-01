@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deletePayment
 } = require('../controllers/paidController.js')
 
-Router.get('/', getAllPayments);
+Router.get('/', roleCheck(['admin']), getAllPayments);
 
-Router.get('/:id', getPaymentById);
+Router.get('/:id', roleCheck(['admin']), getPaymentById);
 
-Router.post('/', createPayment);
+Router.post('/', roleCheck(['admin', 'cashier']), createPayment);
 
-Router.delete('/:id', deletePayment);
+Router.delete('/:id', roleCheck(['admin']), deletePayment);
 
 module.exports = Router

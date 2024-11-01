@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deleteReservation
 } = require('../controllers/reservedTableController.js')
 
-Router.get('/', getAllReservations);
+Router.get('/', roleCheck(['admin', 'waiter', 'cashier']), getAllReservations);
 
-Router.get('/:id', getReservationById);
+Router.get('/:id', roleCheck(['admin', 'waiter', 'cashier']), getReservationById);
 
-Router.post('/', createReservation);
+Router.post('/', roleCheck(['admin', 'waiter', 'cashier']), createReservation);
 
-Router.delete('/:id', deleteReservation);
+Router.delete('/:id', roleCheck(['admin', 'waiter', 'cashier']), deleteReservation);
 
 module.exports = Router

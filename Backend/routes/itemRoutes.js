@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deleteItem
 } = require('../controllers/itemController.js')
 
-Router.get('/', getAllItems);
+Router.get('/', roleCheck(['admin', 'waiter']), getAllItems);
 
-Router.get('/:id', getItemById);
+Router.get('/:id', roleCheck(['admin', 'waiter']), getItemById);
 
-Router.post('/', createItem);
+Router.post('/', roleCheck(['admin']), createItem);
 
-Router.delete('/:id', deleteItem);
+Router.delete('/:id', roleCheck(['admin']), deleteItem);
 
 module.exports = Router

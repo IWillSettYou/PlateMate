@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deleteTable
 } = require('../controllers/tableController.js')
 
-Router.get('/', getAllTables);
+Router.get('/', roleCheck(['admin', 'waiter', 'cashier']), getAllTables);
 
-Router.get('/:id', getTableById);
+Router.get('/:id', roleCheck(['admin', 'waiter', 'cashier']), getTableById);
 
-Router.post('/', createTable);
+Router.post('/', roleCheck(['admin']), createTable);
 
-Router.delete('/:id', deleteTable);
+Router.delete('/:id', roleCheck(['admin']), deleteTable);
 
 module.exports = Router

@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -8,12 +9,12 @@ const{
     deleteCategory
 } = require('../controllers/categoryController.js')
 
-Router.get('/', getAllCategories);
+Router.get('/', roleCheck(['admin', 'waiter']), getAllCategories);
 
-Router.get('/:id', getCategoryById);
+Router.get('/:id', roleCheck(['admin', 'waiter']), getCategoryById);
 
-Router.post('/', createCategory);
+Router.post('/', roleCheck(['admin']), createCategory);
 
-Router.delete('/:id', deleteCategory);
+Router.delete('/:id', roleCheck(['admin']), deleteCategory);
 
 module.exports = Router

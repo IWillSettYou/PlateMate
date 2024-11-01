@@ -45,24 +45,24 @@ app.use(
         },
     })
 );
-//TODO - Store sessionId to allow deletion after sessionId is changed
+
 app.use(checkSessionMiddleware);
 app.use(checkTokenMiddleware);
 
+app.get("/redirect", redirectHandler);
 app.post("/login", login);
 app.post("/logout", logout);
-app.get("/redirect", redirectHandler);
 app.post("/register", roleCheck(['admin']), register);
 
-app.use('/user', roleCheck(['admin', 'chef']), userRoutes);
-app.use('/item', roleCheck(['admin']), itemRoutes);
-app.use('/category', roleCheck(['admin']), categoryRoutes);
-app.use('/payment-method', roleCheck(['admin']), paymentMethodRoutes);
-app.use('/table', roleCheck(['admin']), tableRoutes);
-app.use('/permission-setting', roleCheck(['admin']), permissionsettingRoutes);
-app.use('/order', roleCheck(['admin']), orderRoutes);
-app.use('/paid', roleCheck(['admin']), paidRoutes);
-app.use('/reservation', roleCheck(['admin']), reservedTableRoutes);
+app.use('/user', userRoutes);
+app.use('/permission-setting', permissionsettingRoutes);
+app.use('/order', orderRoutes);
+app.use('/paid', paidRoutes);
+app.use('/reservation', reservedTableRoutes);
+app.use('/item', itemRoutes);
+app.use('/category', categoryRoutes);
+app.use('/payment-method', paymentMethodRoutes);
+app.use('/table', tableRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT,() => {

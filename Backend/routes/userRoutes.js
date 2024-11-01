@@ -1,4 +1,5 @@
 const express = require('express')
+const { roleCheck } = require("../middlewares/roleHandler") 
 var Router = express.Router()
 
 const{
@@ -7,10 +8,10 @@ const{
     deleteUser
 } = require('../controllers/userController.js')
 
-Router.get('/', getAllUsers);
+Router.get('/', roleCheck(['admin']), getAllUsers);
 
-Router.get('/:id', getUserById);
+Router.get('/:id', roleCheck(['admin']), getUserById);
 
-Router.delete('/:id', deleteUser);
+Router.delete('/:id', roleCheck(['admin']), deleteUser);
 
 module.exports = Router
