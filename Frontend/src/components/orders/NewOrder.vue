@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios';
 import { ref, computed } from 'vue';
-import ScrollableTable from './scrollables/ScrollableTable.vue';
+import ScrollableTable from './table/ScrollableTable.vue';
 
 export default {
   components: { ScrollableTable },
