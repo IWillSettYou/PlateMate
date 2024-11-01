@@ -130,15 +130,9 @@ export default {
           @toggle="toggleMenu('Orders')"
         />
         
-        <MenuDropdown v-if="isKitchenVisible"
-          title="Konyha"
-          :items="[
-            { name: 'Elkészítendő rendelések', path: '/inprocess-orders' },
-            { name: 'Elkészült rendelések', path: '/finished-orders' }
-          ]"
-          :isOpen="openMenu === 'Kitchen'"
-          @toggle="toggleMenu('Kitchen')"
-        />
+        <router-link v-if="isCashoutVisible" to="/kitchen" class="text-gray-900 dark:text-white p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
+          Konyha
+        </router-link>
 
         <router-link v-if="isCashoutVisible" to="/cashout" class="text-gray-900 dark:text-white p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
           Kassza

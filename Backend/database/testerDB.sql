@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2024 at 11:57 PM
+-- Generation Time: Nov 01, 2024 at 02:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 (1, 'drink'),
 (2, 'appetizer'),
 (3, 'main course'),
-(4, 'dessert');
+(8, 'dessert');
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE `item` (
 
 INSERT INTO `item` (`id`, `name`, `price`, `categoryId`) VALUES
 (4, 'pizza', 2222, 3),
-(5, 'leves', 2222, 3);
+(7, 'Gyros', 444, 3);
 
 -- --------------------------------------------------------
 
@@ -74,8 +74,18 @@ CREATE TABLE `orders` (
   `tableId` int(11) NOT NULL,
   `itemId` int(11) NOT NULL,
   `isDone` tinyint(1) NOT NULL DEFAULT 0,
+  `isServed` tinyint(1) NOT NULL DEFAULT 0,
   `orderedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `tableId`, `itemId`, `isDone`, `isServed`, `orderedAt`) VALUES
+(21, 2, 4, 0, 0, '2024-11-01 00:46:55'),
+(22, 1, 4, 1, 0, '2024-11-01 01:34:09'),
+(23, 1, 4, 1, 1, '2024-11-01 01:34:15');
 
 -- --------------------------------------------------------
 
@@ -171,7 +181,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `userId`, `ip`, `expires`) VALUES
-('ced95085-794c-4273-981b-296e82cd5edb', 5, '::1', '2024-10-31 23:57:20');
+('ac07b294-fc5d-417e-83e9-9e693deaea55', 5, '::1', '2024-11-02 01:48:48'),
+('f2c8d0f1-0061-43df-9fc6-c6d2b15e27e4', 5, '::1', '2024-11-02 01:54:34');
 
 -- --------------------------------------------------------
 
@@ -204,17 +215,16 @@ CREATE TABLE `user` (
   `email` varchar(255) NOT NULL,
   `hashedPassword` varchar(255) NOT NULL,
   `permissionId` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL DEFAULT current_timestamp(),
-  `updatedAt` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `createdAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `createdAt`, `updatedAt`) VALUES
-(5, 'Jani Patrik', 'janipatrik138@gmail.com', '$2b$10$bc/JA.8dmsiBDfnsCoY.uOjndd5mqVvaTQjPdF9NfLSx76GIqqmY6', 1, '2024-10-28 13:56:07', '2024-10-30 23:57:30'),
-(6, 'Gere Csanad', 'gerecsani11@gmail.com', '$2b$10$xUN8VGgDb6Pmmf7z.rZKo.7ORG2nkt6X3x7Q2MaixgA9GoSkZP/4i', 1, '2024-10-28 14:28:34', '2024-10-28 14:28:34');
+INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `createdAt`) VALUES
+(5, 'Jani Patrik', 'janipatrik138@gmail.com', '$2b$10$bc/JA.8dmsiBDfnsCoY.uOjndd5mqVvaTQjPdF9NfLSx76GIqqmY6', 1, '2024-10-28 13:56:07'),
+(6, 'Gere Csanad', 'gerecsani11@gmail.com', '$2b$10$xUN8VGgDb6Pmmf7z.rZKo.7ORG2nkt6X3x7Q2MaixgA9GoSkZP/4i', 1, '2024-10-28 14:28:34');
 
 --
 -- Indexes for dumped tables
@@ -299,37 +309,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `paid`
 --
 ALTER TABLE `paid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `permissionsettings`
 --
 ALTER TABLE `permissionsettings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `reservedtable`
@@ -341,13 +351,13 @@ ALTER TABLE `reservedtable`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables

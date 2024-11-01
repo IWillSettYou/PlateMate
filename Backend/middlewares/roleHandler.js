@@ -4,6 +4,7 @@ const User = require("../models/user");
 
 const roleCheck = (allowedRoles) => {
     return async (req, res, next) => {
+        
         const email = getEmailFromToken(req.cookies.token)
 
         const users = await User.findOne(email);

@@ -19,8 +19,7 @@ import Reservation from '../pages/restaurant/Reservation.vue'
 import NewOrders from '../pages/restaurant/NewOrders.vue'
 import Orders from '../pages/restaurant/Orders.vue'
 //Kitchen
-import FinishedOrders from '../pages/kitchen/FinishedOrders.vue'
-import InProcessOrders from '../pages/kitchen/InProcessOrders.vue'
+import Kitchen from '../pages/kitchen/Kitchen.vue'
 
 
 
@@ -39,8 +38,7 @@ const routes = [
   { path: '/reservations',  name: 'Reservations', component: Reservation },
   { path: '/new-order',  name: 'NewOrders', component: NewOrders },
   { path: '/orders',  name: 'Orders', component: Orders },
-  { path: '/finished-orders',  name: 'FinishedOrders', component: FinishedOrders },
-  { path: '/inprocess-orders',  name: 'InProcessOrders', component: InProcessOrders }
+  { path: '/kitchen',  name: 'Kitchen', component: Kitchen }
 ]
 
 const router = createRouter({

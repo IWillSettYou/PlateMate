@@ -10,7 +10,7 @@ const checkSessionMiddleware = async (req, res, next) => {
     ) {
         return next();
     }
-
+    
     const sessionValidty = await checkSession(req, res)
 
     if (req.cookies['connect.sid'].split(':')[1].split('.')[0] && sessionValidty.response) {
