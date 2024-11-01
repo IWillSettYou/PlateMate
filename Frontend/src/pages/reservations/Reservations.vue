@@ -1,12 +1,17 @@
 <script>
 import axios from 'axios';
+import ReservationAdd from '../../components/reservations/ReservationAdd.vue';
+import ReservationList from '../../components/reservations/ReservationList.vue';
 
 export default {
-
+  components:{
+    ReservationAdd,
+    ReservationList
+  },
   data(){
     return {
       loading: true,
-      currentComponent: "InProcessOrderList",
+      currentComponent: "ReservationList",
     }
   },
   async mounted(){
@@ -69,10 +74,10 @@ export default {
           </RouterLink>
 
           <div class="flex space-x-6 mx-auto">
-            <button @click="currentComponent = 'InProcessOrderList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+            <button @click="currentComponent = 'ReservationAdd'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
               New Reservation
             </button>
-            <button @click="currentComponent = 'FinishedOrderList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
+            <button @click="currentComponent = 'ReservationList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
               Reservation List
             </button>
           </div>

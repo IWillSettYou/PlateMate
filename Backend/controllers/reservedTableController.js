@@ -3,7 +3,20 @@ const connect = require("../config/db");
 const getAllReservations = async (req, res) => {
     try {
         const users = await new Promise((resolve, reject) => {
-            connect.query("SELECT * FROM `reservedtable`", (err, result) => {
+            connect.query(`
+                SELECT 
+                    rt.id as id,
+                    rt.name as name,
+                    rt.numberOfCustomers as numberOfCustomers,
+                    rt.tableId as tableId,
+                    rt.reservedAt as reservedAt,
+                    rt.reservedUntil as reservedUntil, 
+                    t.tableNumber as tableNumber
+                FROM 
+                    reservedtable rt
+                JOIN
+                    tables t ON  rt.tableId = t.id
+                `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
@@ -28,7 +41,22 @@ const getReservationById = async (req, res) => {
 
     try {
         const user = await new Promise((resolve, reject) => {
-            connect.query("SELECT * FROM `reservedtable` WHERE `id` = ?", [id], (err, result) => {
+            connect.query(`
+                SELECT 
+                    rt.id as id,
+                    rt.name as name,
+                    rt.numberOfCustomers as numberOfCustomers,
+                    rt.tableId as tableId,
+                    rt.reservedAt as reservedAt,
+                    rt.reservedUntil as reservedUntil, 
+                    t.tableNumber as tableNumber
+                FROM 
+                    reservedtable rt
+                JOIN
+                    tables t ON  rt.tableId = t.id
+                WHERE
+                    rt.id = ?
+                `, [id], (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
