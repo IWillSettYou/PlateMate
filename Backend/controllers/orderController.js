@@ -95,6 +95,37 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+const deleteOrderByArray = async (req, res) => {
+    const { items } = req.body;
+
+    if (!items) {
+        return res.status(400).json({ message: "Az ID-k megadása kötelező." });
+    }
+
+    try {
+        const response = await Promise.all(
+            items.map(async (itemId) => {
+                return new Promise((resolve, reject) => {
+                    connect.query("DELETE FROM `orders` WHERE `orders`.`id` = ?", [itemId], (err, result) => {
+                            if (err) reject(err);
+                            else resolve(result);
+                        }
+                    );
+                });
+            })
+        );
+
+        if (response.affectedRows === 0) {
+            return res.status(404).json({ message: "A megadott rendelések nem találhatók." });
+        }
+
+        return res.status(200).json({ message: "Rendelések sikeresen törölve.", data: response });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "Hiba történt a rendelések törlése során.", error });
+    }
+};
+
 const getAllInProcessOrders = async (req, res) => {
     try {
         const orders = await new Promise((resolve, reject) => {
@@ -105,15 +136,21 @@ const getAllInProcessOrders = async (req, res) => {
                     o.itemId as itemId,
                     o.orderedAt as orderedAt, 
                     i.name as itemName, 
-                    t.tableNumber as tableNumber
+                    i.categoryId as itemCategoryId,
+                    t.tableNumber as tableNumber,
+                    c.id as categoryId,
+                    c.name as categoryName
                 FROM 
                     orders o
                 JOIN 
                     item i  ON o.itemId = i.id 
                 JOIN
+                	category c ON i.categoryId = c.id
+                JOIN
                     tables t ON o.tableId = t.id
                 WHERE 
-                    isDone = false
+                    isDone = false AND
+                    c.name != "drink"
                     `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
@@ -140,15 +177,23 @@ const getAllFinishedOrders = async (req, res) => {
                     o.itemId as itemId,
                     o.orderedAt as orderedAt, 
                     i.name as itemName, 
-                    t.tableNumber as tableNumber
+                    i.categoryId as itemCategoryId,
+                    t.tableNumber as tableNumber,
+                    c.id as categoryId,
+                    c.name as categoryName
                 FROM 
                     orders o
                 JOIN 
                     item i  ON o.itemId = i.id 
                 JOIN
+                	category c ON i.categoryId = c.id
+                JOIN
                     tables t ON o.tableId = t.id
                 WHERE 
-                    isDone = true AND isServed = false
+                    (isDone = true AND 
+                    isServed = false) or
+                    (c.name = "drink" AND 
+                    isServed = false)
                     `, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
@@ -288,16 +333,62 @@ const rollbackServedOrder = async (req, res) => {
     }
 };
 
+const getOrdersByTableId = async (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: "Az ID megadása kötelező." });
+    }
+
+    try {
+        const users = await new Promise((resolve, reject) => {
+            connect.query(`
+                SELECT 
+                    o.id as id,
+                    o.tableId as tableId,
+                    o.itemId as itemId,
+                    o.orderedAt as orderedAt, 
+                    i.id as  itemId,
+                    i.name as itemName,
+                    i.price as itemPrice,
+                    t.tableNumber as tableNumber
+                FROM 
+                    orders o
+                JOIN 
+                    item i  ON o.itemId = i.id 
+                JOIN
+                    tables t ON o.tableId = t.id
+                WHERE 
+                    t.tableNumber  = ?
+                    `, id, (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
+        if (!users.length) {
+            return res.status(404).json({ message: "Nincsenek elérhető kész rendelések." });
+        }
+
+        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
+    } catch (error) {
+        res.status(500).json({ message: "Hiba történt a kész rendelések lekérése során.", error });
+    }
+};
+
+
 module.exports = {
     getAllOrders,
     getOrderById,
     createOrder,
     deleteOrder,
+    deleteOrderByArray,
     getAllInProcessOrders,
     getAllFinishedOrders,
     getAllServedOrders,
     setUpdateOrder,
     rollbackUpdatedOrder,
     setServedOrder,
-    rollbackServedOrder
+    rollbackServedOrder,
+    getOrdersByTableId
 };

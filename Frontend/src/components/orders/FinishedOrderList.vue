@@ -81,9 +81,9 @@ export default {
 </script>
 
 <template>
-      <h1 v-if="!notEmpty" class="text-6xl">Nincsenek Elkészült rendelések</h1>
+      <h1 v-if="!notEmpty" class="text-6xl">Nincsenek Felszolgálandó rendelések</h1>
         <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-fit w-full"  v-if="notEmpty">
-        <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Elkészült rendelések</h2>
+        <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Felszolgálandó rendelések</h2>
 
         <div class="overflow-x-auto">
           <table class="min-w-full bg-blue-50 border border-gray-200 rounded-lg shadow-lg">

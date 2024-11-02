@@ -1,10 +1,15 @@
 <script>
 import axios from 'axios';
+import Cashout from '../../components/cashout/Cashout.vue';
 
 export default {
+  components:{
+    Cashout
+  },
   data(){
     return {
       loading: true,
+      currentComponent: "Cashout",
     }
   },
   async mounted(){
@@ -26,15 +31,15 @@ export default {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
             params: {
-              page: "cashout"
+              page: "reservations"
             },
             withCredentials: true 
         });
         return response.data; 
-    } catch (error) {
-        console.error("Hiba az API hívás során:", error);
-        return false; 
-    }
+      } catch (error) {
+          console.error("Hiba az API hívás során:", error);
+          return false; 
+      }
     },
     async logout(){
       try {
@@ -55,16 +60,28 @@ export default {
 </script>
 
 <template>
-  <div>
-    <p v-if="loading">Betöltés...</p>
-    <div v-if="!loading">
-      <RouterLink to="/">
-            <Button>Back</Button>
-      </RouterLink>
-      <h1>Üdvözöljük a Cashout oldalon!</h1>
-      <button @click="logout()">logout</button>
+<p v-if="loading">Betöltés...</p>
+<div v-if="!loading">
+    <div class="bg-gray-50 dark:bg-gray-900">
+      <nav class="bg-white dark:bg-gray-800 shadow dark:border-gray-700 p-4">
+        <div class="flex items-center">
+          <RouterLink to="/" class="mr-auto">
+            <button class="ml-auto text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-m px-4 py-2">
+              Back
+            </button>
+          </RouterLink>
+
+          <button @click="logout" class="ml-auto text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-m px-4 py-2">
+            Kijelentkezés
+          </button>
+        </div>
+      </nav>
     </div>
-  </div>
+
+    <div class="flex-grow flex items-center justify-center min-h-screen">
+      <component :is="currentComponent"></component>
+    </div>
+</div>
 </template>
 
 <style scoped>
