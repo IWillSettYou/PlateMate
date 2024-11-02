@@ -21,6 +21,7 @@ const permissionsettingRoutes = require("./routes/permissionSettingRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const paidRoutes = require("./routes/paidRoutes");
 const reservedTableRoutes = require("./routes/reservedTableRoutes");
+const openingHourRoutes = require("./routes/openingHourRoutes")
 
 dotenv.config();
 
@@ -63,6 +64,7 @@ app.use('/item', itemRoutes);
 app.use('/category', categoryRoutes);
 app.use('/payment-method', paymentMethodRoutes);
 app.use('/table', tableRoutes);
+app.use('/opening-hours', openingHourRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT,() => {

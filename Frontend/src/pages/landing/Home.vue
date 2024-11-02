@@ -102,6 +102,7 @@ export default {
             { name: 'Kifizetett ételek', path: '/paid-orders' },
             { name: 'Szekciók', path: '/sections' },
             { name: 'Felhasználók', path: '/users' },
+            { name: 'Nyitvatartás', path: '/opening-hours' },
           ]"
           :isOpen="openMenu === 'AdminPanel'"
           @toggle="toggleMenu('AdminPanel')"

@@ -11,7 +11,7 @@ export default {
   data(){
     return {
       loading: true,
-      currentComponent: "ReservationList",
+      currentComponent: "ReservationAdd",
     }
   },
   async mounted(){

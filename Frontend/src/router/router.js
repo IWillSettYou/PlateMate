@@ -13,6 +13,7 @@ import PaymentMethods from '../pages/admin/PaymentMethods.vue'
 import PaidOrders from '../pages/admin/PaidOrders.vue'
 import Sections from '../pages/admin/Sections.vue'
 import Users from '../pages/admin/Users.vue'
+import OpeningHours from '../pages/admin/OpeningHours.vue'
 //Reservations
 import Reservation from '../pages/reservations/Reservations.vue'
 //Orders
@@ -25,6 +26,7 @@ const routes = [
   { path: '/login', name: 'Login', component: Login },
   { path: '/cashout',  name: 'Cashout', component: Cashout },
   { path: '/items',  name: 'Items', component: Items },
+  { path: '/opening-hours',  name: 'OpeningHours', component: OpeningHours },
   { path: '/categories',  name: 'Categories', component: Categories },
   { path: '/tables',  name: 'Tables', component: Tables },
   { path: '/payment-methods',  name: 'PaymentMethods', component: PaymentMethods },

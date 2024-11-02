@@ -1,12 +1,18 @@
 <script>
 import axios from 'axios';
+import FloorPlan from './templates/FloorPlan.vue';
+import ReservationForm from './additional/ReservationForm.vue';
 
 export default {
   name: "ReservationAdd",
+  components:{
+    FloorPlan,
+    ReservationForm
+  },
   data() {
     return {
       loading: true,
-      sections: {}
+      selectedTableId: ''
     }
   },
   async mounted(){
@@ -45,6 +51,10 @@ export default {
         console.log(error)
         alert("Hiba a törlés során");
       }
+    },
+    handleTableSelection(id) {
+      this.selectedTableId = id;
+      console.log("Kiválasztott asztal:", this.selectedTableId);
     }
   }
 };
@@ -53,11 +63,12 @@ export default {
 <template>
 <p v-if="loading">Betöltés...</p>
 <div v-if="!loading">
-  <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-sm w-full">
-  <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Új foglalás</h2>
-
-  
-</div>
+  <div class="bg-gray-900 min-h-max p-8 flex flex-col items-center">
+    <div class="flex space-x-8">
+      <FloorPlan @tableSelected="handleTableSelection" />
+      <ReservationForm />
+    </div>
+  </div>
 </div>
 </template>
   
