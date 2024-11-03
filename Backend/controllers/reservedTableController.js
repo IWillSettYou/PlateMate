@@ -72,6 +72,39 @@ const getReservationById = async (req, res) => {
     }
 };
 
+const getAllReservationsOnDay = async (req, res) => {
+    const { tableId, fromDate } = req.query;
+    
+    if (!tableId || !fromDate) {
+        return res.status(400).json({ message: "Az adatok megadása kötelező." });
+    }
+
+    try {
+        const reservations = await new Promise((resolve, reject) => {
+            connect.query(`
+                    SELECT 
+                        * 
+                    FROM
+                        reservedtable 
+                    WHERE 
+                        tableId = ? AND 
+                        DATE(reservedAt) = ?;
+                `, [tableId, fromDate], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
+        if (!reservations.length) {
+            return res.status(404).json({ message: "A megadott napra foglalás nem található." });
+        }
+
+        return res.status(200).json({ message: "Foglalások sikeresen lekérve.", data: reservations });
+    } catch (error) {
+        res.status(500).json({ message: "Hiba történt a foglalások lekérése során.", error });
+    }
+};
+
 const createReservation = async (req, res) => {
     const { tableId, name, numberOfCustomers, reservedAt, reservedUntil } = req.body;
 
@@ -121,6 +154,7 @@ const deleteReservation = async (req, res) => {
 module.exports = {
     getAllReservations,
     getReservationById,
+    getAllReservationsOnDay,
     createReservation,
     deleteReservation
 };

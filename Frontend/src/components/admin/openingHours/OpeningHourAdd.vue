@@ -52,7 +52,7 @@ export default {
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 dark:text-gray-300 mb-2">Ettől</label>
-        <input type="text" v-model="formData.from" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" placeholder="9:00" required/>
+        <input type="text" v-model="formData.from" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" placeholder="09:00" required/>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 dark:text-gray-300 mb-2">Eddig</label>
