@@ -1,21 +1,31 @@
 <script>
 import axios from 'axios';
-import VueCookies from 'vue-cookies'
+
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiLogin } from '@mdi/js';
+
+import Popup from '../../components/popup/Popup.vue';
 
 export default {
+  components:{
+    Popup,
+    SvgIcon
+  },
   data(){
     return {
       email: "",
-      password: ""
+      password: "",
+      popupMessage: "",
+      popupType: "",
+      popupVisible: false,
+      iconPath: mdiLogin,
     }
   },
   async mounted(){
     try {
-        const response = await this.redirectHandler();
-
-        if(response.isAuthorized == true) this.$router.push({ name: 'Home' });
+      await this.redirectHandler();
     } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+      this.triggerPopup("Hiba történt a betöltés során!", "error")
     } 
   },  
   methods: {
@@ -28,27 +38,37 @@ export default {
             withCredentials: true 
         });
 
-        return response.data; 
-    } catch (error) {
-        console.error("Hiba az API hívás során:", error);
-        return false; 
-    }
+        if(response.isAuthorized == true) this.$router.push({ name: 'Home' });
+      } catch (error) {
+          this.triggerPopup("Hiba történt a betöltés során!", "error")
+      }
     },
-    async Login() {
+    async login() {
       try {
         const response = await axios.post('http://localhost:3000/login', {
           email: this.email,
           password: this.password
         }, {
-          withCredentials: true
+          withCredentials: true,
+          validateStatus: function (status) {
+            return status >= 200 && status < 500;
+          }
         });
         
         if (response.status == 200) this.$router.push({ name: 'Home' });
+        else this.triggerPopup("Érvénytelen bejelentkezési adatok!", "error");
       } catch (error) {
-        console.log(error)
-        const errorCode = error.response.data.message
-        alert("Hiba a bejelentkezés során: " + errorCode);
+        this.triggerPopup("Hiba a szerverre történő csatlakozás során!", "error")
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
     }
   },
 }
@@ -56,32 +76,150 @@ export default {
 </script>
 
 <template>
-<div class="bg-gray-50 dark:bg-gray-900">
-  <section class="bg-gray-50 dark:bg-gray-900">
-  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 class="text-center text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                  Bejelentkezés
-              </h1>
-              <form @submit.prevent="Login" class="space-y-4 md:space-y-6" action="#">
-                  <div>
-                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                      <input type="email" v-model="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@gmail.com" required="">
-                  </div>
-                  <div>
-                      <label for="password"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jelszó</label>
-                      <input type="password" v-model="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                  </div>
-                  <button tpye="submit" class="opacity-100 w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Bejelentkezés</button>
-              </form>
-          </div>
+  <section class="background">
+    <div class="wrapper">
+      <div class="content-box">
+        <div class="form-container">
+          <h1 class="title">Bejelentkezés</h1>
+          <form @submit.prevent="login" class="form">
+            <div class="input-group">
+              <label for="email" class="email-label">Email</label>
+              <input type="email" v-model="email" name="email" id="email" class="email-input" placeholder="name@gmail.com"  required/>
+            </div>
+            <div class="input-group">
+              <label for="password" class="password-label">Jelszó</label>
+              <input type="password"  v-model="password" name="password" id="password" placeholder="••••••••" class="password-input"  required/>
+            </div>
+            <button type="submit" class="login-button">Bejelentkezés<svg-icon type="mdi" :path="iconPath"></svg-icon></button>
+          </form>
+        </div>
       </div>
-  </div>
-</section>
-</div>
+    </div>
+  </section>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
 </template>
 
 <style scoped>
+.background {
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.content-box {
+  width: 100%;
+  max-width: 600px;
+  background-color: #282828;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  overflow: hidden;
+}
+
+.form-container {
+  padding: 16px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 32px;
+  color: white;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.email-label,
+.password-label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.email-input,
+.password-input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #49d0ce;
+  border-radius: 6px;
+  font-size: 16px;
+  color: white;
+  background-color: #3f3f3f;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.email-input:focus,
+.password-input:focus {
+  border-color: #b9ebe9;
+}
+
+.login-button {
+  width: 100%;
+  padding: 16px;
+  background-color: #49d0ce;
+  color: black;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-button:hover {
+  background-color: #56b6b1;
+}
+
+button {
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .content-box {
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .login-button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .email-input,
+  .password-input {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
 </style>
 
