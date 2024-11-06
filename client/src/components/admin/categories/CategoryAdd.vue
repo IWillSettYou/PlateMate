@@ -11,10 +11,10 @@ export default {
   data() {
     return {
       formData: {
-        categoryName: ''
+        categoryName: null
       },
-      popupMessage: "",
-      popupType: "",
+      popupMessage: null,
+      popupType: null,
       popupVisible: false,
     }
   },
@@ -105,6 +105,11 @@ export default {
 
 .form-input:focus {
   border-color: #b9ebe9;
+}
+
+.form-input:hover {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a;
 }
 
 .form-submit {

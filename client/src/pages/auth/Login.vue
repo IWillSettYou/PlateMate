@@ -13,10 +13,10 @@ export default {
   },
   data(){
     return {
-      email: "",
-      password: "",
-      popupMessage: "",
-      popupType: "",
+      email: null,
+      password: null,
+      popupMessage: null,
+      popupType: null,
       popupVisible: false,
       iconPath: mdiLogin,
     }
@@ -172,6 +172,12 @@ export default {
 .email-input:focus,
 .password-input:focus {
   border-color: #b9ebe9;
+}
+
+.email-input:hover,
+.password-input:hover {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a;
 }
 
 .login-button {

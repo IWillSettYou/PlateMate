@@ -10,10 +10,9 @@ export default {
   },
   data() {
     return {
-      loading: true,
       categories: {},
-      popupMessage: "",
-      popupType: "",
+      popupMessage: null,
+      popupType: null,
       popupVisible: false,
     }
   },
@@ -43,7 +42,7 @@ export default {
       });
         if(response.status == 200) {
           this.getCategories()
-          this.triggerPopup("Sikeres törlés!", "succes")
+          this.triggerPopup("Sikeres törlés!", "success")
         }
       } catch (error) {
         this.triggerPopup("Sikertelen törlés!", "error")
