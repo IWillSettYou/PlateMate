@@ -79,6 +79,7 @@ export default {
         });
 
         if (response.status === 200) this.$router.push({ name: 'Login' });
+        else this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       } catch (error) {
         this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }

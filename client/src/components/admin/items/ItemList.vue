@@ -31,6 +31,7 @@ export default {
         });
         
         if(response.status == 200) this.items = response.data.data;
+        else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -41,10 +42,10 @@ export default {
         withCredentials: true 
       });
 
-      if(response.status == 200) {
+        if(response.status == 200) {
           this.getItems()
           this.triggerPopup("Sikeres törlés!", "success")
-        }
+        } else this.triggerPopup("Sikertelen törlés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen törlés!", "error")
       }

@@ -6,11 +6,13 @@ import { mdiLogout } from '@mdi/js';
 
 import CategoryAdd from '../../components/admin/categories/CategoryAdd.vue';
 import CategoryList from '../../components/admin/categories/CategoryList.vue';
+import Popup from '../../components/popup/Popup.vue';
 
 export default {
   components : {
     CategoryAdd,
     CategoryList,
+    Popup,
     SvgIcon
   },
   data(){
@@ -18,14 +20,17 @@ export default {
       currentComponent: "CategoryAdd",
       isMobileMenuOpen: false,
       isMobile: false,
-      iconPath: mdiLogout
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
+      iconPath: mdiLogout,
     }
   },
   async mounted(){
     try {
       await this.redirectHandler();
     } catch (error) {
-      this.triggerPopup("Hiba történt a jogok ellenőrzése során!" ,"error")
+      this.triggerPopup("Hiba történt a betöltés során!" ,"error")
     } 
 
     this.isMobile = window.innerWidth <= 768;
@@ -55,9 +60,19 @@ export default {
         });
 
         if (response.status === 200) this.$router.push({ name: 'Login' });
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       } catch (error) {
         this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
     },
     updateIsMobile() {
       this.isMobile = window.innerWidth <= 768;
@@ -105,6 +120,13 @@ export default {
       <component :is="currentComponent"></component>
     </div>
   </div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
 </template>
 
 

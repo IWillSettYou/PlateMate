@@ -40,7 +40,7 @@ export default {
         if(response.status == 200) {
           this.categories = response.data.data;
           this.loading = false;
-        }
+        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -57,6 +57,7 @@ export default {
         });
 
         if(response.status == 200) this.triggerPopup("Sikeres létrehozás!", "success")
+        else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
       catch (error){
         this.triggerPopup("Sikertelen létrehozás!", "error")

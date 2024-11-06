@@ -20,20 +20,17 @@ export default {
       currentComponent: "ItemAdd",
       isMobileMenuOpen: false,
       isMobile: false,
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
       iconPath: mdiLogout
     }
   },
   async mounted(){
     try {
-        const response = await this.redirectHandler();
-
-        if(response.isAuthorized != true){  
-          if(response.message == "Invalid Credentials") this.$router.push({ name: 'Login' });
-          else { this.$router.push({ name: 'Home' }); }
-        } else {
-        }
+      await this.redirectHandler();
     } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+      this.triggerPopup("Hiba történt a betöltés során!" ,"error")
     } 
 
     this.isMobile = window.innerWidth <= 768;
@@ -43,33 +40,43 @@ export default {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-            params: {
-              page: "admin"
-            },
-            withCredentials: true 
+          params: { page: "admin" },
+          withCredentials: true
         });
-        return response.data; 
+
+        if (response.data.isAuthorized !== true) {
+          if(response.data.message == "Invalid Role") this.$router.push({ name: 'Home' });
+          else this.$router.push({ name: 'Login' });
+        }
       } catch (error) {
-          console.error("Hiba az API hívás során:", error);
-          return false; 
+        this.triggerPopup("Hiba történt a betöltés során!","error");
+        return false
       }
     },
     async logout(){
       try {
         const response = await axios.post('http://localhost:3000/logout', null, {
-      withCredentials: true 
-      });
+          withCredentials: true
+        });
 
-        if (response.status == 200) this.$router.push({ name: 'Login' });
+        if (response.status === 200) this.$router.push({ name: 'Login' });
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       } catch (error) {
-        console.log("Hiba a kijelentkezés során: " + error)
-        const errorCode = error.response.data.message
-        alert("Hiba a kijelentkezés során: " + errorCode);
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
     },
     updateIsMobile() {
       this.isMobile = window.innerWidth <= 768;
-    }
+    },
   },
 } 
 
@@ -113,6 +120,13 @@ export default {
       <component :is="currentComponent"></component>
     </div>
   </div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
 </template>
 
 

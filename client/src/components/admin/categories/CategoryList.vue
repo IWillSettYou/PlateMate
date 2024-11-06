@@ -31,6 +31,7 @@ export default {
         });
         
         if(response.status == 200) this.categories = response.data.data;
+        else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -43,7 +44,7 @@ export default {
         if(response.status == 200) {
           this.getCategories()
           this.triggerPopup("Sikeres törlés!", "success")
-        }
+        } else this.triggerPopup("Sikertelen törlés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen törlés!", "error")
       }

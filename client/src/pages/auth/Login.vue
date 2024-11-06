@@ -32,9 +32,7 @@ export default {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-            params: {
-              page: "login"
-            },
+            params: { page: "login"},
             withCredentials: true 
         });
 
