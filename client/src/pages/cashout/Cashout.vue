@@ -31,7 +31,7 @@ export default {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
             params: {
-              page: "reservations"
+              page: "cashout"
             },
             withCredentials: true 
         });

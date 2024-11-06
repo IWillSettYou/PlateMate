@@ -1,21 +1,27 @@
 <script>
 import axios from 'axios';
 
+import Popup from '../../popup/Popup.vue';
+
 export default {
   name: "CategoryList",
+  components: {
+    Popup
+  },
   data() {
     return {
       loading: true,
-      categories: {}
+      categories: {},
+      popupMessage: "",
+      popupType: "",
+      popupVisible: false,
     }
   },
   async mounted(){
     try {
-        const response = await this.getCategories();
-        this.categories = response.data.data;
-        this.loading = false
+        await this.getCategories();
       } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+        this.triggerPopup("Hiba a betöltés során!", "error")
     } 
   },
   methods: {
@@ -25,11 +31,9 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) return response
+        if(response.status == 200) this.categories = response.data.data;
       } catch (error) {
-        console.log(error)
-        const errorCode = error.response.data.message
-        alert("Hiba a lekérés során: " + errorCode);
+        this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
     async deleteCategory(id){
@@ -38,52 +42,124 @@ export default {
         withCredentials: true 
       });
         if(response.status == 200) {
-          this.categories.filter(category => category.id !== id)
-          alert(response.data.message)
+          this.getCategories()
+          this.triggerPopup("Sikeres törlés!", "succes")
         }
       } catch (error) {
-        console.log(error)
-        alert("Hiba a törlés során");
+        this.triggerPopup("Sikertelen törlés!", "error")
       }
-    }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
   }
 };
 </script>
 
 <template>
-<p v-if="loading">Betöltés...</p>
-<div v-if="!loading">
-  <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-sm w-full">
-  <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Kategóriák</h2>
-
-  <div class="overflow-x-auto">
-    <table class="min-w-full bg-blue-50 border border-gray-200 rounded-lg shadow-lg">
-      <thead>
-        <tr class="bg-blue-100 border-b">
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">ID</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Név</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Művelet</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(category, index) in categories" :key="index" class="hover:bg-blue-100 border-b">
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ category.id }}</td>
-          <td class="py-4 px-4 text-sm text-gray-500">{{ category.name }}</td>
-          <td class="py-4 px-4 text-sm">
-            <button @click="deleteCategory(category.id)" class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 rounded">
-              Törlés
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="form-container">
+    <h2 class="form-title">Kategóriák</h2>
+    <div class="table-container">
+      <table class="category-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Név</th>
+            <th>Művelet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(category, index) in categories" :key="index">
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+              <button @click="deleteCategory(category.id)" class="delete-button">
+                Törlés
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
-</div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
 </template>
   
 <style scoped>
-h1 {
-  color: #42b983;
+.form-container {
+  background-color: #282828;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.category-table {
+  width: 100%;
+  background-color: #575757;
+  border: 1px solid #49d0ce;
+  border-radius: 8px;
+  text-align: left;
+  margin-top: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-table th, .category-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: white;
+}
+
+.category-table th {
+  background-color: #3f3f3f;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-bottom: 1px solid #49d0ce;
+}
+
+.category-table tr:hover {
+  background-color: #717171;
+}
+
+.delete-button {
+  background-color: #49d0ce;
+  color: black;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #56b6b1;
 }
 </style>

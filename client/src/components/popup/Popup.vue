@@ -30,7 +30,7 @@ export default {
 <style scoped>
 .popup {
   position: fixed;
-  top: 20px; 
+  top: 90px; 
   left: 50%;
   transform: translateX(-50%);
   width: 350px;

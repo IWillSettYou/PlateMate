@@ -65,7 +65,7 @@ export default {
           withCredentials: true
         });
 
-        if (response.data.isAuthorized !== true) this.$router.push({ name: 'Login' });
+        if (response.data.isAuthorized != true) this.$router.push({ name: 'Login' });
         else return response.data;
       } catch (error) {
         this.triggerPopup("Hiba történt a betöltés során!","error");
@@ -331,5 +331,4 @@ h2 {
     font-size: 1.5rem;
   }
 }
-
 </style>
