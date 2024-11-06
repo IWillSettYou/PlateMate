@@ -158,6 +158,11 @@ export default {
         </button>
       </div>
     </nav>
+    
+    <div class="content-body">
+      <h1>Üdvözözzek az oldalon!</h1>
+      <h2>Válaszd ki a számodra szükséges oldalt!</h2>
+    </div>
   </div>
 
   <Popup
@@ -250,6 +255,43 @@ export default {
   width: 100%;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobile-menu .navbar-link,
+  .mobile-menu .menu-dropdown {
+    width: 100%;  
+    text-align: left;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+
+  .mobile-menu .navbar-link:hover,
+  .mobile-menu .menu-dropdown:hover {
+    background-color: #3f3f3f;
+  }
+
+.content-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  min-height: 70vh;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 @media (max-width: 768px) {
@@ -273,6 +315,21 @@ export default {
     left: 0;
     background-color: #282828;
     width: 100%;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;  
+    gap: 10px;
+  }
+
+  .content-body h1 {
+    font-size: 2.5rem;
+  }
+
+  .content-body h2 {
+    font-size: 1.5rem;
   }
 }
+
 </style>
