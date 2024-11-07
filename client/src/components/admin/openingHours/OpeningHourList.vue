@@ -133,7 +133,21 @@ export default {
 }
 
 .table-container {
-  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #49d0ce; 
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #575757; 
 }
 
 .hours-table {

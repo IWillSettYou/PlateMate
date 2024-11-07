@@ -1,5 +1,6 @@
 <script>
 import axios from 'axios';
+
 import Popup from '../../popup/Popup.vue';
 
 export default {
@@ -34,6 +35,7 @@ export default {
         const response = await axios.get(`http://localhost:3000/category/`, {
           withCredentials: true
         });
+
         if (response.status === 200) this.categories = response.data.data;
         else this.triggerPopup("Sikertelen lekérdezés!", "error");
       } catch (error) {
@@ -45,6 +47,7 @@ export default {
         const response = await axios.delete(`http://localhost:3000/category/${id}`, {
           withCredentials: true
         });
+
         if (response.status === 200) {
           this.getCategories();
           this.triggerPopup("Sikeres törlés!", "success");
@@ -102,6 +105,7 @@ export default {
         </tbody>
       </table>
     </div>
+
     <Popup
       v-if="popupVisible"
       :message="popupMessage"
