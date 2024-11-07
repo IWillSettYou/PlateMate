@@ -81,9 +81,9 @@ export default {
   <h2 class="form-title">Termék Létrehozás</h2>
   <form @submit.prevent="createItem">
     <div class="form-group">
-      <label class="form-label">Kategória név</label>
+      <label class="form-label">Termék név</label>
       <input type="text" v-model="formData.name" class="form-input" required />
-      <label class="form-label">Kategória név</label>
+      <label class="form-label">Termék ára</label>
       <input type="number" v-model="formData.price" class="form-input" required />
       <label class="form-label">Kategória</label>
       <select id="dropdown" v-model="formData.categoryId" v-if="!loading" class="form-input" required>

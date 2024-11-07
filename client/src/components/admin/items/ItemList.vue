@@ -10,10 +10,16 @@ export default {
   },
   data() {
     return {
-      items: {},
+      items: [],
+      searchQuery: '',
       popupMessage: null,
       popupType: null,
       popupVisible: false,
+    }
+  },
+  computed: {
+    filteredItems() {
+      return this.items.filter(item => item.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
     }
   },
   async mounted(){
@@ -65,9 +71,20 @@ export default {
 
 <template>
   <div class="form-container">
-    <h2 class="form-title">Kategóriák</h2>
+    <h2 class="form-title">Termékek</h2>
+    <div v-if="items.length > 0" class="search-container">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Keresés"
+        class="search-input"
+      />
+    </div>
     <div class="table-container">
-      <table class="category-table">
+      <div v-if="items.length <= 0">
+        <h1 class="form-title">Nincsenek elérhető Termékek</h1>
+      </div>
+      <table v-if="items.length > 0" class="item-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -92,16 +109,15 @@ export default {
         </tbody>
       </table>
     </div>
+    <Popup
+      v-if="popupVisible"
+      :message="popupMessage"
+      :popupType="popupType"
+      :isVisible="popupVisible"
+    />
   </div>
-
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -121,12 +137,53 @@ export default {
   text-align: center;
 }
 
-.table-container {
-  overflow-x: auto;
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
 }
 
-.category-table {
+.search-input {
+  width: 50%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #49d0ce;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.search-input::placeholder {
+  text-align: center;  
+}
+
+.search-input:hover, .search-input:focus {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a; 
+}
+
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #49d0ce; 
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #575757; 
+}
+
+.item-table {
   width: 100%;
+  border-collapse: collapse;
   background-color: #575757;
   border: 1px solid #49d0ce;
   border-radius: 8px;
@@ -135,21 +192,26 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.category-table th, .category-table td {
+.item-table th,
+.item-table td {
   padding: 12px;
   font-size: 14px;
   color: white;
 }
 
-.category-table th {
+.item-table thead th {
+  position: sticky;
+  top: 0;
   background-color: #3f3f3f;
   color: white;
   font-weight: 500;
   text-transform: uppercase;
   border-bottom: 1px solid #49d0ce;
+  border-top: 1px solid #49d0ce;
+  z-index: 1;
 }
 
-.category-table tr:hover {
+.item-table tbody tr:hover {
   background-color: #717171;
 }
 

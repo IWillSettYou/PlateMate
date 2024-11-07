@@ -75,7 +75,10 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Nyitvatartás</h2>
     <div class="table-container">
-      <table class="category-table">
+      <div v-if="hours.length <= 0">
+        <h1 class="form-title">Nincsenek elérhető időpontok</h1>
+      </div>
+      <table v-if="hours.length > 0" class="hours-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -133,7 +136,7 @@ export default {
   overflow-x: auto;
 }
 
-.category-table {
+.hours-table {
   width: 100%;
   background-color: #575757;
   border: 1px solid #49d0ce;
@@ -143,13 +146,13 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.category-table th, .category-table td {
+.hours-table th, .hours-table td {
   padding: 12px;
   font-size: 14px;
   color: white;
 }
 
-.category-table th {
+.hours-table th {
   background-color: #3f3f3f;
   color: white;
   font-weight: 500;
@@ -157,7 +160,7 @@ export default {
   border-bottom: 1px solid #49d0ce;
 }
 
-.category-table tr:hover {
+.hours-table tr:hover {
   background-color: #717171;
 }
 

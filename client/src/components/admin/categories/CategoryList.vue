@@ -1,6 +1,5 @@
 <script>
 import axios from 'axios';
-
 import Popup from '../../popup/Popup.vue';
 
 export default {
@@ -10,43 +9,48 @@ export default {
   },
   data() {
     return {
-      categories: {},
+      categories: [],
+      searchQuery: '',
       popupMessage: null,
       popupType: null,
       popupVisible: false,
     }
   },
-  async mounted(){
+  computed: {
+    filteredCategories() {
+      return this.categories.filter(category => category.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+    }
+  },
+  async mounted() {
     try {
-        await this.getCategories();
-      } catch (error) {
-        this.triggerPopup("Hiba a betöltés során!", "error")
-    } 
+      await this.getCategories();
+    } catch (error) {
+      this.triggerPopup("Hiba a betöltés során!", "error");
+    }
   },
   methods: {
     async getCategories() {
       try {
         const response = await axios.get(`http://localhost:3000/category/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.categories = response.data.data;
-        else this.triggerPopup("Sikertelen lekérdezés!", "error")
+        if (response.status === 200) this.categories = response.data.data;
+        else this.triggerPopup("Sikertelen lekérdezés!", "error");
       } catch (error) {
-        this.triggerPopup("Sikertelen lekérdezés!", "error")
+        this.triggerPopup("Sikertelen lekérdezés!", "error");
       }
     },
-    async deleteCategory(id){
+    async deleteCategory(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/category/${id}`, {
-        withCredentials: true 
-      });
-        if(response.status == 200) {
-          this.getCategories()
-          this.triggerPopup("Sikeres törlés!", "success")
-        } else this.triggerPopup("Sikertelen törlés!", "error")
+          withCredentials: true
+        });
+        if (response.status === 200) {
+          this.getCategories();
+          this.triggerPopup("Sikeres törlés!", "success");
+        } else this.triggerPopup("Sikertelen törlés!", "error");
       } catch (error) {
-        this.triggerPopup("Sikertelen törlés!", "error")
+        this.triggerPopup("Sikertelen törlés!", "error");
       }
     },
     triggerPopup(message, type) {
@@ -57,7 +61,7 @@ export default {
       setTimeout(() => {
         this.popupVisible = false;
       }, 3000);
-    },
+    }
   }
 };
 </script>
@@ -65,8 +69,19 @@ export default {
 <template>
   <div class="form-container">
     <h2 class="form-title">Kategóriák</h2>
+    <div v-if="categories.length > 0" class="search-container">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Keresés"
+        class="search-input"
+      />
+    </div>
     <div class="table-container">
-      <table class="category-table">
+      <div v-if="categories.length <= 0">
+        <h1 class="form-title">Nincsenek elérhető kategóriák</h1>
+      </div>
+      <table v-if="categories.length > 0" class="category-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -75,7 +90,7 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(category, index) in categories" :key="index">
+          <tr v-for="(category, index) in filteredCategories" :key="index">
             <td>{{ category.id }}</td>
             <td>{{ category.name }}</td>
             <td>
@@ -87,16 +102,15 @@ export default {
         </tbody>
       </table>
     </div>
+    <Popup
+      v-if="popupVisible"
+      :message="popupMessage"
+      :popupType="popupType"
+      :isVisible="popupVisible"
+    />
   </div>
-
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -116,12 +130,53 @@ export default {
   text-align: center;
 }
 
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 50%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #49d0ce;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.search-input::placeholder {
+  text-align: center;  
+}
+
+.search-input:hover, .search-input:focus {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a; 
+}
+
 .table-container {
-  overflow-x: auto;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #49d0ce; 
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #575757; 
 }
 
 .category-table {
   width: 100%;
+  border-collapse: collapse;
   background-color: #575757;
   border: 1px solid #49d0ce;
   border-radius: 8px;
@@ -130,21 +185,26 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.category-table th, .category-table td {
+.category-table th,
+.category-table td {
   padding: 12px;
   font-size: 14px;
   color: white;
 }
 
-.category-table th {
+.category-table thead th {
+  position: sticky;
+  top: 0;
   background-color: #3f3f3f;
   color: white;
   font-weight: 500;
   text-transform: uppercase;
   border-bottom: 1px solid #49d0ce;
+  border-top: 1px solid #49d0ce;
+  z-index: 1;
 }
 
-.category-table tr:hover {
+.category-table tbody tr:hover {
   background-color: #717171;
 }
 

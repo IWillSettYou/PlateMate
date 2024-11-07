@@ -75,9 +75,9 @@ export default {
           <option>Vasárnap</option>
         </select>
       <label class="form-label">Ettől</label>
-      <input type="text" v-model="formData.from" class="form-input" required />
+      <input type="text" placeholder="09:00" v-model="formData.from" class="form-input" required />
       <label class="form-label">Eddig</label>
-      <input id="dropdown" v-model="formData.until" class="form-input" required />
+      <input id="dropdown" placeholder="18:00" v-model="formData.until" class="form-input" required />
     </div>
     <button type="submit" class="form-submit">Létrehozás</button>
   </form>
