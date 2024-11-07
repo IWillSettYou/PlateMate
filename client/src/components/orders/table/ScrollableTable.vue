@@ -53,10 +53,10 @@ export default {
   
   <style scoped>
   .table-container {
-  border: 1px solid #374151; /* border-gray-700 */
-  border-radius: 0.375rem; /* rounded-md */
+  border: 1px solid #374151; 
+  border-radius: 0.375rem; 
   overflow-y: auto;
-  background-color: #374151; /* bg-gray-700 */
+  background-color: #374151;
   height: 500px;
 }
 
@@ -64,25 +64,25 @@ export default {
   width: 100%;
   border-collapse: collapse;
   min-width: 100%;
-  color: #e5e7eb; /* text-gray-200 */
+  color: #e5e7eb;
 }
 
 .table-header {
-  padding: 0.75rem 1.5rem; /* px-6 py-3 */
+  padding: 0.75rem 1.5rem; 
   text-align: left;
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
+  font-size: 0.875rem;
+  font-weight: 500; 
   text-transform: uppercase;
-  letter-spacing: 0.05em; /* tracking-wider */
-  background-color: #1f2937; /* bg-gray-800 */
-  color: #d1d5db; /* text-gray-300 */
+  letter-spacing: 0.05em; 
+  background-color: #1f2937; 
+  color: #d1d5db; 
 }
 
 .table-cell {
-  padding: 1rem 1.5rem; /* px-6 py-4 */
+  padding: 1rem 1.5rem; 
   text-align: left;
-  font-size: 0.875rem; /* text-sm */
-  color: #e5e7eb; /* text-gray-300 */
+  font-size: 0.875rem; 
+  color: #e5e7eb; 
   white-space: nowrap;
 }
 
@@ -92,8 +92,8 @@ export default {
 
 .add-button,
 .remove-button {
-  font-size: 0.875rem; /* text-sm */
-  font-weight: 500; /* font-medium */
+  font-size: 0.875rem;
+  font-weight: 500;
   text-decoration: none;
   border: none;
   background: none;
@@ -101,31 +101,31 @@ export default {
 }
 
 .add-button {
-  color: #60a5fa; /* text-blue-400 */
+  color: #60a5fa; 
 }
 
 .add-button:hover {
-  color: #2563eb; /* hover:text-blue-600 */
+  color: #2563eb; 
 }
 
 .remove-button {
-  color: #f87171; /* text-red-400 */
+  color: #f87171; 
 }
 
 .remove-button:hover {
-  color: #ef4444; /* hover:text-red-600 */
+  color: #ef4444; 
 }
 
 tbody {
-  background-color: #374151; /* bg-gray-700 */
+  background-color: #374151;
 }
 
 tbody tr:nth-child(odd) {
-  background-color: #4b5563; /* alternate rows with darker shades */
+  background-color: #4b5563; 
 }
 
 tbody tr:hover {
-  background-color: #6b7280; /* hover background */
+  background-color: #6b7280; 
 }
 
 .table-container::-webkit-scrollbar {
@@ -133,12 +133,11 @@ tbody tr:hover {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #60a5fa; /* scrollbar thumb color */
+  background-color: #60a5fa;
   border-radius: 4px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #1f2937; /* scrollbar track color */
+  background-color: #1f2937; 
 }
-
-  </style>
+</style>
