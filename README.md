@@ -7,3 +7,13 @@
 - **Google Docs:** https://docs.google.com/document/d/1qDjUVyfVYWxee_muj0MDoPkimhoEpPZP2fQtc1KWSZQ/edit?tab=t.0 
 - **Figma:** https://www.figma.com/design/mPEEoeujzk7OEmxFKASuJt/Untitled?t=BqYBYj94V9ki3foq-0 
 - **GANTT Viewer:** https://www.onlinegantt.com/?authuser=0#/gantt
+
+# Checklist for pages
+- responsive
+- api handling
+- clear code
+- scrollable table
+- empty table handling
+- popup handling
+- input checking
+  
