@@ -65,11 +65,11 @@ export default {
 <template>
 <div class="form-container">
     <h2 class="form-title">Fizetési módok</h2>
-    <div class="table-container">
-      <div v-if="paymentMethods.length <= 0">
+    <div v-if="paymentMethods.length <= 0">
         <h1 class="form-title">Nincsenek elérhető fizetési módok</h1>
       </div>
-      <table v-if="paymentMethods.length > 0" class="category-table">
+    <div v-if="paymentMethods.length > 0" class="table-container">
+      <table class="payment-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -120,54 +120,53 @@ export default {
 }
 
 .table-container {
-  max-height: 400px;
   overflow-y: auto;
+  border: #49d0ce solid 2px;
 }
 
 .table-container::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
   background-color: #49d0ce; 
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
   background-color: #575757; 
 }
 
-.category-table {
+.table-container::-webkit-scrollbar-corner {
+    background-color: #49d0ce; 
+}
+
+.payment-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #575757;
-  border: 1px solid #49d0ce;
-  border-radius: 8px;
   text-align: left;
-  margin-top: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.category-table th,
-.category-table td {
+.payment-table th,
+.payment-table td {
   padding: 12px;
   font-size: 14px;
   color: white;
 }
 
-.category-table thead th {
+.payment-table thead th {
   position: sticky;
   top: 0;
   background-color: #3f3f3f;
   color: white;
   font-weight: 500;
   text-transform: uppercase;
-  border-bottom: 1px solid #49d0ce;
-  border-top: 1px solid #49d0ce;
   z-index: 1;
 }
 
-.category-table tbody tr:hover {
+.payment-table tbody tr:hover {
   background-color: #717171;
 }
 

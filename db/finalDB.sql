@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2024 at 03:40 PM
+-- Generation Time: Nov 08, 2024 at 07:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,10 +37,9 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
-(1, 'drink'),
-(2, 'appetizer'),
-(3, 'main course'),
-(8, 'dessert');
+(68, 'appetizer'),
+(67, 'drink'),
+(65, 'main course');
 
 -- --------------------------------------------------------
 
@@ -60,10 +59,8 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id`, `name`, `price`, `categoryId`) VALUES
-(4, 'pizza', 2222, 3),
-(7, 'Gyros', 444, 3),
-(8, 'Zserbo', 599, 8),
-(9, 'Alamale', 222, 1);
+(28, 'Bor', 1444, 67),
+(29, 'Pizza', 14443, 65);
 
 -- --------------------------------------------------------
 
@@ -83,13 +80,13 @@ CREATE TABLE `openinghours` (
 --
 
 INSERT INTO `openinghours` (`id`, `dayName`, `fromHour`, `untilHour`) VALUES
-(1, 'Hétfő', '9:00', '21:00'),
-(2, 'Kedd', '9:00', '21:00'),
-(3, 'Szerda', '9:00', '21:00'),
-(4, 'Csütörtök', '9:00', '21:00'),
-(5, 'Péntek', '9:00', '21:00'),
-(6, 'Szombat', '9:00', '22:00'),
-(7, 'Vasárnap', '9:00', '22:00');
+(2, 'Kedd', '09:00', '21:00'),
+(3, 'Szerda', '09:00', '21:00'),
+(4, 'Csütörtök', '09:00', '21:00'),
+(5, 'Péntek', '09:00', '21:00'),
+(6, 'Szombat', '09:00', '22:00'),
+(7, 'Vasárnap', '09:00', '22:00'),
+(20, 'Héftő', '09:00', '21:00');
 
 -- --------------------------------------------------------
 
@@ -106,16 +103,6 @@ CREATE TABLE `orders` (
   `orderedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `tableId`, `itemId`, `isDone`, `isServed`, `orderedAt`) VALUES
-(62, 2, 4, 0, 0, '2024-11-02 15:37:39'),
-(63, 2, 9, 0, 0, '2024-11-02 15:37:39'),
-(64, 2, 9, 0, 0, '2024-11-02 15:37:39'),
-(65, 2, 4, 0, 0, '2024-11-02 15:37:39');
-
 -- --------------------------------------------------------
 
 --
@@ -129,19 +116,6 @@ CREATE TABLE `paid` (
   `paymentMethodId` int(11) NOT NULL,
   `paidAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
-
---
--- Dumping data for table `paid`
---
-
-INSERT INTO `paid` (`id`, `tableId`, `itemId`, `paymentMethodId`, `paidAt`) VALUES
-(319, 1, 8, 1, '2024-11-02 04:19:48'),
-(320, 1, 7, 1, '2024-11-02 04:19:48'),
-(321, 1, 4, 1, '2024-11-02 04:19:48'),
-(322, 1, 9, 1, '2024-11-02 04:19:48'),
-(327, 1, 4, 1, '2024-11-02 15:38:01'),
-(328, 1, 7, 1, '2024-11-02 15:38:01'),
-(329, 1, 9, 1, '2024-11-02 15:38:01');
 
 -- --------------------------------------------------------
 
@@ -159,8 +133,8 @@ CREATE TABLE `paymentmethods` (
 --
 
 INSERT INTO `paymentmethods` (`id`, `name`) VALUES
-(1, 'card'),
-(5, 'cash');
+(7, 'Kártya'),
+(9, 'Készpénz');
 
 -- --------------------------------------------------------
 
@@ -203,7 +177,10 @@ CREATE TABLE `reservedtable` (
 --
 
 INSERT INTO `reservedtable` (`id`, `name`, `numberOfCustomers`, `tableId`, `reservedAt`, `reservedUntil`) VALUES
-(5, 'Geza', 5, 1, '2024-11-01 20:17:39', '2024-11-01 21:17:07');
+(7, 'Jani', 65, 1, '2024-11-03 12:00:00', '2024-11-03 14:00:00'),
+(9, 'asd', 5, 1, '2024-11-03 14:00:00', '2024-11-03 16:00:00'),
+(11, 'asd', 5, 1, '2024-11-03 17:00:00', '2024-11-03 18:00:00'),
+(14, 'Janika', 5, 1, '2024-11-03 09:00:00', '2024-11-03 10:00:00');
 
 -- --------------------------------------------------------
 
@@ -223,7 +200,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `userId`, `ip`, `expires`) VALUES
-('cbaa2951-6b48-4e96-a039-a663e8f68130', 5, '::1', '2024-11-03 15:39:35');
+('36a6cec7-c695-4ea1-bb68-9b00a039a0df', 5, '::1', '2024-11-07 15:55:20'),
+('c22f2ab5-486d-4646-a042-8e8ef61b15be', 11, '::1', '2024-11-09 19:05:04');
 
 -- --------------------------------------------------------
 
@@ -265,7 +243,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `createdAt`) VALUES
 (5, 'Jani Patrik', 'janipatrik138@gmail.com', '$2b$10$bc/JA.8dmsiBDfnsCoY.uOjndd5mqVvaTQjPdF9NfLSx76GIqqmY6', 1, '2024-10-28 13:56:07'),
-(6, 'Gere Csanad', 'gerecsani11@gmail.com', '$2b$10$xUN8VGgDb6Pmmf7z.rZKo.7ORG2nkt6X3x7Q2MaixgA9GoSkZP/4i', 1, '2024-10-28 14:28:34');
+(6, 'Gere Csanad', 'gerecsani11@gmail.com', '$2b$10$xUN8VGgDb6Pmmf7z.rZKo.7ORG2nkt6X3x7Q2MaixgA9GoSkZP/4i', 2, '2024-10-28 14:28:34'),
+(11, 'admin', 'admin@admin', '$2b$10$LDiEu4BJXGwygTSSnJuKvO4ZQr1/sS.aS6MX45KFzoYqj30LcMvb6', 1, '2024-11-08 19:03:06');
 
 --
 -- Indexes for dumped tables
@@ -275,7 +254,8 @@ INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `cr
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `item`
@@ -289,7 +269,7 @@ ALTER TABLE `item`
 --
 ALTER TABLE `openinghours`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `dayName` (`dayName`);
+  ADD UNIQUE KEY `dayName` (`dayName`);
 
 --
 -- Indexes for table `orders`
@@ -312,7 +292,8 @@ ALTER TABLE `paid`
 -- Indexes for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `permissionsettings`
@@ -357,19 +338,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `openinghours`
 --
 ALTER TABLE `openinghours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -381,13 +362,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `paid`
 --
 ALTER TABLE `paid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
 
 --
 -- AUTO_INCREMENT for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `permissionsettings`
@@ -399,7 +380,7 @@ ALTER TABLE `permissionsettings`
 -- AUTO_INCREMENT for table `reservedtable`
 --
 ALTER TABLE `reservedtable`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tables`
@@ -411,7 +392,7 @@ ALTER TABLE `tables`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables

@@ -74,11 +74,11 @@ export default {
 <template>
   <div class="form-container">
     <h2 class="form-title">Nyitvatartás</h2>
-    <div class="table-container">
-      <div v-if="hours.length <= 0">
+    <div v-if="hours.length <= 0">
         <h1 class="form-title">Nincsenek elérhető időpontok</h1>
       </div>
-      <table v-if="hours.length > 0" class="hours-table">
+    <div v-if="hours.length > 0" class="table-container">
+      <table class="hours-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -133,8 +133,8 @@ export default {
 }
 
 .table-container {
-  max-height: 500px;
   overflow-y: auto;
+  border: #49d0ce solid 2px;
 }
 
 .table-container::-webkit-scrollbar {
@@ -143,20 +143,22 @@ export default {
 
 .table-container::-webkit-scrollbar-thumb {
   background-color: #49d0ce; 
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
   background-color: #575757; 
 }
 
+.table-container::-webkit-scrollbar-corner {
+    background-color: #49d0ce; 
+}
+
 .hours-table {
   width: 100%;
+  border-collapse: collapse;
   background-color: #575757;
-  border: 1px solid #49d0ce;
-  border-radius: 8px;
   text-align: left;
-  margin-top: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -171,7 +173,6 @@ export default {
   color: white;
   font-weight: 500;
   text-transform: uppercase;
-  border-bottom: 1px solid #49d0ce;
 }
 
 .hours-table tr:hover {

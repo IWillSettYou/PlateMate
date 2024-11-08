@@ -71,6 +71,9 @@ export default {
 <template>
   <div class="form-container">
     <h2 class="form-title">Termékek</h2>
+    <div v-if="items.length <= 0">
+        <h1 class="form-title">Nincsenek elérhető Termékek</h1>
+      </div>
     <div v-if="items.length > 0" class="search-container">
       <input
         v-model="searchQuery"
@@ -79,11 +82,8 @@ export default {
         class="search-input"
       />
     </div>
-    <div class="table-container">
-      <div v-if="items.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető Termékek</h1>
-      </div>
-      <table v-if="items.length > 0" class="item-table">
+    <div v-if="items.length > 0" class="table-container">
+      <table class="item-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -165,6 +165,7 @@ export default {
 .table-container {
   max-height: 400px;
   overflow-y: auto;
+  border: #49d0ce solid 2px;
 }
 
 .table-container::-webkit-scrollbar {
@@ -173,21 +174,22 @@ export default {
 
 .table-container::-webkit-scrollbar-thumb {
   background-color: #49d0ce; 
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
   background-color: #575757; 
 }
 
+.table-container::-webkit-scrollbar-corner {
+    background-color: #49d0ce; 
+}
+
 .item-table {
   width: 100%;
   border-collapse: collapse;
   background-color: #575757;
-  border: 1px solid #49d0ce;
-  border-radius: 8px;
   text-align: left;
-  margin-top: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -205,8 +207,6 @@ export default {
   color: white;
   font-weight: 500;
   text-transform: uppercase;
-  border-bottom: 1px solid #49d0ce;
-  border-top: 1px solid #49d0ce;
   z-index: 1;
 }
 
