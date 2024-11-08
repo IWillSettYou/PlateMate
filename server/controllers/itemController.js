@@ -21,7 +21,7 @@ const getAllItems = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető ételek." });
+            return res.status(204).json({ message: "Nincsenek elérhető ételek." });
         }
 
         return res.status(200).json({ message: "Ételek sikeresen lekérve.", data: users });
@@ -46,7 +46,7 @@ const getItemById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott étel nem található." });
+            return res.status(204).json({ message: "A megadott étel nem található." });
         }
 
         return res.status(200).json({ message: "Étel sikeresen lekérve.", data: user });
@@ -92,7 +92,7 @@ const deleteItem = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó étel nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó étel nem található." });
         }
 
         return res.status(200).json({ message: "Étel sikeresen törölve.", data: response });

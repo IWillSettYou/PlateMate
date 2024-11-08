@@ -27,12 +27,13 @@ export default {
     async getPaidOrders() {
       try {
         const response = await axios.get(`http://localhost:3000/paid/`, {
-          withCredentials: true 
+          withCredentials: true,
+          validateStatus: function (status) {
+            return status >= 200 && status < 500;
+          }
         });
         
-        if(response.status == 200) {
-          this.paidOrders = response.data.data;
-        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
+        if(response.status == 200) this.paidOrders = response.data.data;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }

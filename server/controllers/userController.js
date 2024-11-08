@@ -21,7 +21,7 @@ const getAllUsers = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető felhasználók." });
+            return res.status(204).json({ message: "Nincsenek elérhető felhasználók." });
         }
 
         return res.status(200).json({ message: "Felhasználók sikeresen lekérve.", data: users });
@@ -46,7 +46,7 @@ const getUserById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott felhasználó nem található." });
+            return res.status(204).json({ message: "A megadott felhasználó nem található." });
         }
 
         return res.status(200).json({ message: "Felhasználó sikeresen lekérve.", data: user });
@@ -71,7 +71,7 @@ const deleteUser = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó felhasználó nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó felhasználó nem található." });
         }
 
         return res.status(200).json({ message: "Felhasználó sikeresen törölve.", data: response });

@@ -37,7 +37,6 @@ export default {
         });
 
         if (response.status === 200) this.categories = response.data.data;
-        else this.triggerPopup("Sikertelen lekérdezés!", "error");
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }

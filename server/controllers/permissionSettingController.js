@@ -10,7 +10,7 @@ const getAllSettings = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető jogok." });
+            return res.status(204).json({ message: "Nincsenek elérhető jogok." });
         }
 
         return res.status(200).json({ message: "Jogok sikeresen lekérve.", data: users });
@@ -35,7 +35,7 @@ const getSettingById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott jog nem található." });
+            return res.status(204).json({ message: "A megadott jog nem található." });
         }
 
         return res.status(200).json({ message: "Jog sikeresen lekérve.", data: user });
@@ -81,7 +81,7 @@ const deleteSetting = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó jog nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó jog nem található." });
         }
 
         return res.status(200).json({ message: "Jog sikeresen törölve.", data: response });

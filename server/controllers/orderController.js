@@ -10,7 +10,7 @@ const getAllOrders = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető rendelések." });
+            return res.status(204).json({ message: "Nincsenek elérhető rendelések." });
         }
 
         return res.status(200).json({ message: "Rendelések sikeresen lekérve.", data: users });
@@ -35,7 +35,7 @@ const getOrderById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott rendelés nem található." });
+            return res.status(204).json({ message: "A megadott rendelés nem található." });
         }
 
         return res.status(200).json({ message: "Rendelés sikeresen lekérve.", data: user });
@@ -86,7 +86,7 @@ const deleteOrder = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
         }
 
         return res.status(200).json({ message: "Rendelés sikeresen törölve.", data: response });
@@ -116,7 +116,7 @@ const deleteOrderByArray = async (req, res) => {
         );
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott rendelések nem találhatók." });
+            return res.status(204).json({ message: "A megadott rendelések nem találhatók." });
         }
 
         return res.status(200).json({ message: "Rendelések sikeresen törölve.", data: response });
@@ -158,7 +158,7 @@ const getAllInProcessOrders = async (req, res) => {
         });
 
         if (!orders.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető készülő rendelések." });
+            return res.status(204).json({ message: "Nincsenek elérhető készülő rendelések." });
         }
 
         return res.status(200).json({ message: "Készülő rendelések sikeresen lekérve.", data: orders });
@@ -201,7 +201,7 @@ const getAllFinishedOrders = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető kész rendelések." });
+            return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
         return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
@@ -236,7 +236,7 @@ const getAllServedOrders = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető kész rendelések." });
+            return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
         return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
@@ -367,7 +367,7 @@ const getOrdersByTableId = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető kész rendelések." });
+            return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
         return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });

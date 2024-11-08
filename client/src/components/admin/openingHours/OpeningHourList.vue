@@ -33,7 +33,7 @@ export default {
         if(response.status == 200) {
           const data = response.data.data;
           this.hours = this.sortDaysOfWeek(data);
-        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
+        }
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -133,7 +133,7 @@ export default {
 }
 
 .table-container {
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: auto;
 }
 

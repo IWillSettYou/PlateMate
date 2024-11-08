@@ -37,7 +37,6 @@ export default {
         });
         
         if(response.status == 200) this.items = response.data.data;
-        else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -95,7 +94,7 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in items" :key="index">
+          <tr v-for="(item, index) in filteredItems" :key="index">
             <td>{{ item.id }}</td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>

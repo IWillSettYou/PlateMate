@@ -10,7 +10,7 @@ const getAllHours = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető időpontok." });
+            return res.status(204).json({ message: "Nincsenek elérhető időpontok." });
         }
 
         return res.status(200).json({ message: "Időpontok sikeresen lekérve.", data: users });
@@ -57,7 +57,7 @@ const deleteHour = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó időpont nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó időpont nem található." });
         }
 
         return res.status(200).json({ message: "Időpont sikeresen törölve.", data: response });

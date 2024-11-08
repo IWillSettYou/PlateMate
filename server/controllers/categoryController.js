@@ -10,7 +10,7 @@ const getAllCategories = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető kategóriák." });
+            return res.status(204).json({ message: "Nincsenek elérhető kategóriák." });
         }
 
         return res.status(200).json({ message: "Kategóriák sikeresen lekérve.", data: users });
@@ -35,7 +35,7 @@ const getCategoryById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott kategória nem található." });
+            return res.status(204).json({ message: "A megadott kategória nem található." });
         }
 
         return res.status(200).json({ message: "Kategória sikeresen lekérve.", data: user });
@@ -81,7 +81,7 @@ const deleteCategory = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó kategória nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó kategória nem található." });
         }
 
         return res.status(200).json({ message: "Kategória sikeresen törölve.", data: response });

@@ -10,7 +10,7 @@ const getAllTables = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető asztalok." });
+            return res.status(204).json({ message: "Nincsenek elérhető asztalok." });
         }
 
         return res.status(200).json({ message: "Asztalok sikeresen lekérve.", data: users });
@@ -35,7 +35,7 @@ const getTableById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott asztal nem található." });
+            return res.status(204).json({ message: "A megadott asztal nem található." });
         }
 
         return res.status(200).json({ message: "Asztal sikeresen lekérve.", data: user });
@@ -81,7 +81,7 @@ const deleteTable = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó asztal nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó asztal nem található." });
         }
 
         return res.status(200).json({ message: "Asztal sikeresen törölve.", data: response });

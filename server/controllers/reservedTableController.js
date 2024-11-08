@@ -23,7 +23,7 @@ const getAllReservations = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető foglalások." });
+            return res.status(204).json({ message: "Nincsenek elérhető foglalások." });
         }
 
         return res.status(200).json({ message: "Foglalások sikeresen lekérve.", data: users });
@@ -63,7 +63,7 @@ const getReservationById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott foglalás nem található." });
+            return res.status(204).json({ message: "A megadott foglalás nem található." });
         }
 
         return res.status(200).json({ message: "Foglalás sikeresen lekérve.", data: user });
@@ -96,7 +96,7 @@ const getAllReservationsOnDay = async (req, res) => {
         });
 
         if (!reservations.length) {
-            return res.status(404).json({ message: "A megadott napra foglalás nem található." });
+            return res.status(204).json({ message: "A megadott napra foglalás nem található." });
         }
 
         return res.status(200).json({ message: "Foglalások sikeresen lekérve.", data: reservations });
@@ -142,7 +142,7 @@ const deleteReservation = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó foglalás nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó foglalás nem található." });
         }
 
         return res.status(200).json({ message: "Foglalás sikeresen törölve.", data: response });

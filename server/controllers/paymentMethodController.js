@@ -10,7 +10,7 @@ const getAllMethods = async (req, res) => {
         });
 
         if (!users.length) {
-            return res.status(404).json({ message: "Nincsenek elérhető fizetési módszerek." });
+            return res.status(204).json({ message: "Nincsenek elérhető fizetési módszerek." });
         }
 
         return res.status(200).json({ message: "Fizetési módszerek sikeresen lekérve.", data: users });
@@ -35,7 +35,7 @@ const getMethodById = async (req, res) => {
         });
 
         if (!user.length) {
-            return res.status(404).json({ message: "A megadott fizetési módszer nem található." });
+            return res.status(204).json({ message: "A megadott fizetési módszer nem található." });
         }
 
         return res.status(200).json({ message: "Fizetési módszer sikeresen lekérve.", data: user });
@@ -81,7 +81,7 @@ const deleteMethod = async (req, res) => {
         });
 
         if (response.affectedRows === 0) {
-            return res.status(404).json({ message: "A megadott ID-hoz tartozó fizetési módszer nem található." });
+            return res.status(204).json({ message: "A megadott ID-hoz tartozó fizetési módszer nem található." });
         }
 
         return res.status(200).json({ message: "Fizetési módszer sikeresen törölve.", data: response });
