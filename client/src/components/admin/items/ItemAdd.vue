@@ -86,6 +86,9 @@ export default {
       <label class="form-label">Termék ára</label>
       <input type="number" v-model="formData.price" class="form-input" required />
       <label class="form-label">Kategória</label>
+      <div class="loading-spinner" v-if="loading">
+        <div class="spinner"></div>
+      </div>
       <select id="dropdown" v-model="formData.categoryId" v-if="!loading" class="form-input" required>
         <option v-for="category in categories" :key="category.id" :value="category.id" class="input-select">
           {{ category.name }}
@@ -175,5 +178,26 @@ export default {
   padding: 8px 12px;
   font-size: 14px;
   border: none;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px; 
+}
+
+.spinner {
+  border: 8px solid #4a4a4a;
+  border-top: 8px solid #49d0ce;
+  border-radius: 50%; 
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 </style>
