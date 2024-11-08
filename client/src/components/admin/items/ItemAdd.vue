@@ -185,6 +185,8 @@ export default {
   justify-content: center;
   align-items: center;
   height: 30px; 
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .spinner {
