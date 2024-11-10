@@ -96,7 +96,7 @@ export default {
         
         <div v-if="!isMobileMenuOpen" class="navbar-center">
           <button @click="currentComponent = 'PaymentMethodAdd'" class="navbar-link">Új Fizetési mód</button>
-          <button @click="currentComponent = 'PaymentMethodList'" class="navbar-link">Fizetési módok</button>
+          <button @click="currentComponent = 'PaymentMethodList'" class="navbar-link">Fizetési módok lista</button>
         </div>
         
         <div class="navbar-right">
@@ -112,7 +112,7 @@ export default {
           <button class="navbar-link">Back</button>
         </RouterLink>
         <button @click="currentComponent = 'PaymentMethodAdd'" class="navbar-link">Új Fizetési mód</button>
-        <button @click="currentComponent = 'PaymentMethodList'" class="navbar-link">Fizetési módok</button>
+        <button @click="currentComponent = 'PaymentMethodList'" class="navbar-link">Fizetési módok lista</button>
       </div>
     </nav>
 

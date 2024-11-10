@@ -2,46 +2,129 @@
 <script>
 import axios from 'axios';
 
+import Popup from '../../popup/Popup.vue';
+
 export default {
   name: "TableAdd",
+  components:{
+    Popup
+  },
   data() {
     return {
       formData: {
         tableNumber: ''
-      }
+      },
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
     }
   },
   methods: {
-    async addTable(){
+    async createTable(){
       try {
         const response = await axios.post('http://localhost:3000/table', { tableNumber: this.formData.tableNumber }, {
           withCredentials: true
         });
-        alert(response.data.message)
+        
+        if(response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+        else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
       catch (error){
-        alert(error.response.data.message)
+        this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-    }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
   }
 };
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-sm w-full">
-    <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Asztal Hozzáadás</h2>
-    <form @submit.prevent="addTable">
-      <div class="mb-4">
-        <label class="block text-gray-700 dark:text-gray-300 mb-2">Asztal szám</label>
-        <input type="number" v-model="formData.tableNumber" class="w-full px-3 py-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600" required/>
-      </div>
-      <button type="submit" class="w-full bg-blue-600 text-white font-medium py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-700">
-        Hozzáadás
-      </button>
-    </form>
-  </div>
+  <div class="form-container">
+  <h2 class="form-title">Asztal Hozzáadás</h2>
+  <form @submit.prevent="createTable">
+    <div class="form-group">
+      <label class="form-label">Asztal szám</label>
+      <input type="number" v-model="formData.tableNumber" class="form-input" required />
+    </div>
+    <button type="submit" class="form-submit">Létrehozás</button>
+  </form>
+</div>
+
+<Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
 </template>
 
 <style scoped>
+.form-container {
+  background-color: #282828;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+}
 
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #49d0ce;
+  border-radius: 4px;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: #b9ebe9;
+}
+
+.form-input:hover {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a;
+}
+
+.form-submit {
+  width: 100%;
+  background-color: #49d0ce;
+  color: black;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-submit:hover {
+  background-color: #56b6b1;
+}
 </style>

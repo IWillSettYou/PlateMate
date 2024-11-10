@@ -13,7 +13,7 @@ const register = async (req, res) => {
 
   const users = await User.findOne(req.body.email)
 
-  if (users.data.length != 0) { res.send({"message" : "Az email cím már foglalt."}) }
+  if (users.data.length != 0) { res.status(409).send({"message" : "Az email cím már foglalt."}) }
 
   else {
     const salt = await bcrypt.genSalt(10);
