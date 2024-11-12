@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2024 at 07:27 PM
+-- Generation Time: Nov 12, 2024 at 07:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -335,7 +335,8 @@ ALTER TABLE `paymentmethods`
 -- Indexes for table `permissionsettings`
 --
 ALTER TABLE `permissionsettings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `section` (`section`);
 
 --
 -- Indexes for table `reservedtable`
