@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 07:06 PM
+-- Generation Time: Nov 12, 2024 at 07:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,6 +38,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`id`, `name`) VALUES
 (68, 'appetizer'),
+(89, 'dessert'),
 (67, 'drink'),
 (65, 'main course');
 
@@ -59,8 +60,9 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id`, `name`, `price`, `categoryId`) VALUES
-(28, 'Bor', 1444, 67),
-(29, 'Pizza', 14443, 65);
+(36, 'Bor', 444, 67),
+(37, 'Pizza', 333, 65),
+(38, 'Suti', 3333, 89);
 
 -- --------------------------------------------------------
 
@@ -103,6 +105,43 @@ CREATE TABLE `orders` (
   `orderedAt` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `tableId`, `itemId`, `isDone`, `isServed`, `orderedAt`) VALUES
+(68, 1, 38, 0, 0, '2024-11-12 17:53:32'),
+(69, 1, 37, 0, 0, '2024-11-12 17:53:32'),
+(70, 1, 36, 0, 1, '2024-11-12 17:53:32'),
+(71, 1, 36, 0, 1, '2024-11-12 18:11:57'),
+(72, 1, 37, 0, 0, '2024-11-12 18:11:57'),
+(73, 1, 38, 0, 0, '2024-11-12 18:11:57'),
+(74, 2, 38, 1, 1, '2024-11-12 18:12:25'),
+(75, 2, 37, 1, 1, '2024-11-12 18:12:25'),
+(76, 1, 36, 0, 1, '2024-11-12 18:13:08'),
+(77, 2, 37, 1, 1, '2024-11-12 18:31:55'),
+(78, 2, 38, 1, 1, '2024-11-12 18:31:55'),
+(79, 2, 37, 1, 1, '2024-11-12 18:31:55'),
+(80, 2, 37, 1, 1, '2024-11-12 18:32:04'),
+(81, 2, 38, 1, 1, '2024-11-12 18:32:04'),
+(82, 2, 37, 1, 1, '2024-11-12 18:32:04'),
+(83, 1, 37, 0, 0, '2024-11-12 18:32:09'),
+(84, 1, 38, 0, 0, '2024-11-12 18:32:09'),
+(85, 1, 37, 1, 1, '2024-11-12 18:32:09'),
+(86, 1, 36, 0, 1, '2024-11-12 18:32:09'),
+(87, 1, 36, 0, 1, '2024-11-12 18:32:09'),
+(88, 1, 36, 0, 1, '2024-11-12 18:32:33'),
+(89, 1, 37, 0, 0, '2024-11-12 18:32:33'),
+(90, 1, 38, 0, 0, '2024-11-12 18:32:33'),
+(91, 2, 36, 0, 1, '2024-11-12 18:33:21'),
+(92, 2, 36, 0, 1, '2024-11-12 18:33:21'),
+(93, 1, 38, 0, 0, '2024-11-12 18:34:14'),
+(94, 1, 38, 1, 0, '2024-11-12 18:34:14'),
+(95, 1, 38, 1, 0, '2024-11-12 18:34:14'),
+(96, 1, 38, 1, 0, '2024-11-12 18:34:14'),
+(97, 1, 38, 1, 0, '2024-11-12 18:34:14'),
+(98, 1, 36, 0, 1, '2024-11-12 18:45:55');
+
 -- --------------------------------------------------------
 
 --
@@ -133,8 +172,7 @@ CREATE TABLE `paymentmethods` (
 --
 
 INSERT INTO `paymentmethods` (`id`, `name`) VALUES
-(7, 'Kártya'),
-(9, 'Készpénz');
+(22, 'card');
 
 -- --------------------------------------------------------
 
@@ -200,8 +238,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `userId`, `ip`, `expires`) VALUES
-('36a6cec7-c695-4ea1-bb68-9b00a039a0df', 5, '::1', '2024-11-07 15:55:20'),
-('c22f2ab5-486d-4646-a042-8e8ef61b15be', 11, '::1', '2024-11-09 19:05:04');
+('4ec861bf-4f98-45cb-99f0-1d069c76757a', 11, '::1', '2024-11-11 12:14:41');
 
 -- --------------------------------------------------------
 
@@ -242,8 +279,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `hashedPassword`, `permissionId`, `createdAt`) VALUES
-(5, 'Jani Patrik', 'janipatrik138@gmail.com', '$2b$10$bc/JA.8dmsiBDfnsCoY.uOjndd5mqVvaTQjPdF9NfLSx76GIqqmY6', 1, '2024-10-28 13:56:07'),
-(6, 'Gere Csanad', 'gerecsani11@gmail.com', '$2b$10$xUN8VGgDb6Pmmf7z.rZKo.7ORG2nkt6X3x7Q2MaixgA9GoSkZP/4i', 2, '2024-10-28 14:28:34'),
 (11, 'admin', 'admin@admin', '$2b$10$LDiEu4BJXGwygTSSnJuKvO4ZQr1/sS.aS6MX45KFzoYqj30LcMvb6', 1, '2024-11-08 19:03:06');
 
 --
@@ -262,6 +297,7 @@ ALTER TABLE `category`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
   ADD KEY `categoryId` (`categoryId`);
 
 --
@@ -338,13 +374,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `openinghours`
@@ -356,25 +392,25 @@ ALTER TABLE `openinghours`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `paid`
 --
 ALTER TABLE `paid`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
 
 --
 -- AUTO_INCREMENT for table `paymentmethods`
 --
 ALTER TABLE `paymentmethods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `permissionsettings`
 --
 ALTER TABLE `permissionsettings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `reservedtable`
@@ -386,13 +422,13 @@ ALTER TABLE `reservedtable`
 -- AUTO_INCREMENT for table `tables`
 --
 ALTER TABLE `tables`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
