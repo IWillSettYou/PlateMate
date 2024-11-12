@@ -34,7 +34,7 @@ export default {
       this.triggerPopup("Hiba történt a betöltés során!" ,"error")
     } 
 
-    this.isMobile = window.innerWidth <= 768;
+    this.isMobile = window.innerWidth <= 1100;
     window.addEventListener("resize", this.updateIsMobile);
   },   
   methods: {
@@ -76,7 +76,7 @@ export default {
       }, 3000);
     },
     updateIsMobile() {
-      this.isMobile = window.innerWidth <= 768;
+      this.isMobile = window.innerWidth <= 1100;
     },
   },
 } 
@@ -132,145 +132,6 @@ export default {
 </template>
 
 <style scoped>
-.home-bg {
-  background-color: #121212;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
 
-.navbar {
-  background-color: #282828;
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #49d0ce;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.navbar-left,
-.navbar-center,
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-center {
-  gap: 20px;
-}
-
-.hamburger-menu {
-  display: none;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.menu-items {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.navbar-link {
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-  background-color: #282828;
-  cursor: pointer;
-}
-
-.navbar-link:hover {
-  background-color: #3f3f3f;
-}
-
-.logout-button {
-  background-color: #282828;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-  background-color: #3f3f3f;
-}
-
-.mobile-menu {
-  display: none;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  background-color: #282828;
-  width: 100%;
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.mobile-menu .navbar-link {
-  width: 100%;
-  text-align: left;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.mobile-menu .navbar-link:hover {
-  background-color: #3f3f3f;
-}
-
-.content-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  min-height: 70vh;
-  margin: 8px;
-}
-
-@media (max-width: 768px) {
-  .hamburger-menu {
-    display: block;
-  }
-
-  .navbar-center,
-  .navbar-left > .navbar-link {
-    display: none;
-  }
-
-  .mobile-menu {
-    display: flex;
-  }
-}
 </style>
 

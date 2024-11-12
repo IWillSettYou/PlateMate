@@ -1,64 +1,85 @@
 <script>
 import axios from 'axios';
+
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiLogout } from '@mdi/js';
+
 import InProcessOrderList from '../../components/orders/InProcessOrderList.vue';
 import FinishedOrderList from '../../components/orders/FinishedOrderList.vue';
 import ServedOrderList from '../../components/orders/ServedOrderList.vue';
 import NewOrder from '../../components/orders/NewOrder.vue';
+import Popup from '../../components/popup/Popup.vue';
 
 export default {
   components: {
     InProcessOrderList,
     FinishedOrderList,
     ServedOrderList,
-    NewOrder
+    NewOrder,
+    Popup,
+    SvgIcon
   },
   data(){
     return {
-      loading: true,
       currentComponent: "NewOrder",
+      isMobileMenuOpen: false,
+      isMobile: false,
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
+      iconPath: mdiLogout,
     }
   },
   async mounted(){
     try {
-        const response = await this.redirectHandler();
-
-        if(response.isAuthorized != true){  
-          if(response.message == "Invalid Credentials") this.$router.push({ name: 'Login' });
-          else { this.$router.push({ name: 'Home' }); }
-        } else {
-          this.loading = false;
-        }
+      await this.redirectHandler();
     } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+      this.triggerPopup("Hiba történt a betöltés során!" ,"error")
     } 
-  },   
+
+    this.isMobile = window.innerWidth <= 1100;
+    window.addEventListener("resize", this.updateIsMobile);
+  },
   methods: {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-            params: {
-              page: "orders"
-            },
-            withCredentials: true 
+          params: { page: "orders" },
+          withCredentials: true
         });
-        return response.data; 
+
+        if (response.data.isAuthorized !== true) {
+          if(response.data.message == "Invalid Role") this.$router.push({ name: 'Home' });
+          else this.$router.push({ name: 'Login' });
+        }
       } catch (error) {
-          console.error("Hiba az API hívás során:", error);
-          return false; 
+        this.triggerPopup("Hiba történt a betöltés során!","error");
+        return false
       }
     },
-    async logout(){
+    async logout() {
       try {
         const response = await axios.post('http://localhost:3000/logout', null, {
-      withCredentials: true 
-      });
+          withCredentials: true
+        });
 
-        if (response.status == 200) this.$router.push({ name: 'Login' });
+        if (response.status === 200) this.$router.push({ name: 'Login' });
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       } catch (error) {
-        console.log("Hiba a kijelentkezés során: " + error)
-        const errorCode = error.response.data.message
-        alert("Hiba a kijelentkezés során: " + errorCode);
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
+    updateIsMobile() {
+      this.isMobile = window.innerWidth <= 1100;
     }
   },
 } 
@@ -66,45 +87,58 @@ export default {
 </script>
 
 <template>
-<p v-if="loading">Betöltés...</p>
-<div v-if="!loading">
-    <div class="bg-gray-50 dark:bg-gray-900">
-      <nav class="bg-white dark:bg-gray-800 shadow dark:border-gray-700 p-4">
-        <div class="flex items-center">
-          <RouterLink to="/" class="mr-auto">
-            <button class="ml-auto text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-m px-4 py-2">
-              Back
-            </button>
+  <div class="home-bg">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-left">
+          <button class="hamburger-menu" @click="isMobileMenuOpen = !isMobileMenuOpen">&#9776;</button>
+          
+          <RouterLink v-if="!isMobileMenuOpen && !isMobile" to="/">
+            <button class="navbar-link">Back</button>
           </RouterLink>
-
-          <div class="flex space-x-6 mx-auto">
-            <button @click="currentComponent = 'NewOrder'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              New Order
-            </button>
-            <button @click="currentComponent = 'InProcessOrderList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              InProcess List
-            </button>
-            <button @click="currentComponent = 'FinishedOrderList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              Finished List
-            </button>
-            <button @click="currentComponent = 'ServedOrderList'" class="ml-auto text-white bg-slate-600 hover:bg-slate-700 font-medium rounded-lg text-m px-4 py-2">
-              Served List
-            </button>
-          </div>
-
-          <button @click="logout" class="ml-auto text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-m px-4 py-2">
+        </div>
+        
+        <div v-if="!isMobileMenuOpen" class="navbar-center">
+          <button @click="currentComponent = 'NewOrder'" class="navbar-link">Új rendelés</button>
+          <button @click="currentComponent = 'InProcessOrderList'" class="navbar-link">Készülő rendelések lista</button>
+          <button @click="currentComponent = 'FinishedOrderList'" class="navbar-link">Elkészült rendelések lista</button>
+          <button @click="currentComponent = 'ServedOrderList'" class="navbar-link">Felszolgált rendelések lista</button>
+        </div>
+        
+        <div class="navbar-right">
+          <button @click="logout" class="logout-button">
             Kijelentkezés
+            <svg-icon type="mdi" :path="iconPath" />
           </button>
         </div>
-      </nav>
-    </div>
+      </div>
+      
+      <div v-if="isMobileMenuOpen" class="mobile-menu">
+        <RouterLink to="/" @click="isMobileMenuOpen = false">
+          <button class="navbar-link">Back</button>
+        </RouterLink>
+        <button @click="currentComponent = 'NewOrder'" class="navbar-link">Új rendelés</button>
+          <button @click="currentComponent = 'InProcessOrderList'" class="navbar-link">Készülő rendelések lista</button>
+          <button @click="currentComponent = 'FinishedOrderList'" class="navbar-link">Elkészült rendelések lista</button>
+          <button @click="currentComponent = 'ServedOrderList'" class="navbar-link">Felszolgált rendelések lista</button>
+      </div>
+    </nav>
 
-    <div class="flex-grow flex items-center justify-center min-h-screen">
+    <div class="content-body">
       <component :is="currentComponent"></component>
     </div>
-</div>
+  </div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
+
 </template>
 
 <style scoped>
+
 </style>
 

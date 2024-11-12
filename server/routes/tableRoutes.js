@@ -9,7 +9,7 @@ const{
     deleteTable
 } = require('../controllers/tableController.js')
 
-Router.get('/', roleCheck(['admin', 'waiter', 'cashier']), getAllTables);
+Router.get('/', roleCheck(['admin', 'waiter', 'cashier', 'chef']), getAllTables);
 
 Router.get('/:id', roleCheck(['admin', 'waiter', 'cashier']), getTableById);
 

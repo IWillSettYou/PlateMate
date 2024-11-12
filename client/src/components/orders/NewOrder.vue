@@ -1,36 +1,40 @@
 <script>
 import axios from 'axios';
-import { ref, computed } from 'vue';
+
 import ScrollableTable from './table/ScrollableTable.vue';
+import Popup from '../popup/Popup.vue';
 
 export default {
-  components: { ScrollableTable },
+  components: { ScrollableTable, Popup },
   name: "NewOrder",
   data() {
     return {
-      searchTerm: '',
-      tables: [],
+      searchTermForItems: '',
+      searchTermForSelectedItems: '',
       selectedTable: 0,
+      tables: [],
       items: [], 
       selectedItems: [], 
-      selectedItemIds: []
+      selectedItemIds: [],
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
     };
   },
   computed: {
     filteredItems() {
-      return this.items.filter(item =>
-        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
+      return this.items.filter(item => item.name.toLowerCase().includes(this.searchTermForItems.toLowerCase()));
+    },
+    filteredSelectedItems() {
+      return this.selectedItems.filter(item => item.name.toLowerCase().includes(this.searchTermForSelectedItems.toLowerCase()));
     }
   },
   async mounted() {
     try {
-      const items = await this.getItems();
-      const tables = await this.getTables();
-      this.items = items.data.data; 
-      this.tables =  tables.data.data;
+      await this.getItems();
+      await this.getTables();
     } catch (error) {
-      console.error("Hiba az ellenőrzés során:", error);
+      this.triggerPopup("Sikertelen a betöltés során!", "error");
     }
   },
   methods: {
@@ -49,11 +53,11 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) return response
+        if(response.status == 200) {
+          this.tables = response.data.data;
+        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
-        console.log(error)
-        const errorCode = error.response.data.message
-        alert("Hiba a lekérés során: " + errorCode);
+        this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
     async getItems() {
@@ -62,78 +66,203 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) return response
+        if(response.status == 200) {
+          this.items = response.data.data;
+          this.loading = false;
+        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
-        console.log(error)
+        this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
     async sendOrder(){
+      if(this.selectedTable <= 0 || this.selectedItems.length < 1) {
+        this.triggerPopup("Minden mező kitöltése kötelező!", "error")
+        return
+      }
+
       try {
         await this.putSelectedItemsIdsToArray(); 
-        const itemIds = this.selectedItemIds; 
 
-        console.log(itemIds)
-        console.log(this.selectedTable)
         const response = await axios.post('http://localhost:3000/order', { 
           tableId: this.selectedTable,
-          items: itemIds,
+          items: this.selectedItemIds,
         }, 
         {
           withCredentials: true
         });
-        alert(response.data.message)
+
+        if(response.status == 200) this.triggerPopup("Sikeres létrehozás!", "success")
+        else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
       catch (error){
-        alert(error.response.data.message)
+        this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-    }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
   }
 };
 </script>
 
 <template>
- <div class="flex justify-center mt-10 bg-gray-900 min-h-fit p-8 text-white">
-    <div class="card-body w-full max-w-6xl p-8 bg-gray-800 rounded-lg shadow-lg flex flex-col space-y-8">
-      <div class="flex space-x-8">
-
-        <div class="w-1/2">
-          <h2 class="text-2xl font-semibold mb-6">Termékek listája</h2>
-          <input
-            v-model="searchTerm"
-            type="text"
-            placeholder="Keresés..."
-            class="border border-gray-700 rounded-md p-3 mb-6 w-full bg-gray-700 text-white placeholder-gray-400"
-          />
-          <ScrollableTable :items="filteredItems" @add-item="addItemToSelected" />
+  <div class="card-body">
+    <div class="tables-container">
+      <div class="table-card">
+        <h2>Termékek listája</h2>
+        <div class="search-container">
+          <input v-model="searchTermForItems" type="text" placeholder="Keresés..." class="search-input" />
         </div>
-
-        <div class="w-1/2">
-          <h2 class="text-2xl font-semibold mb-6">Hozzáadott termékek</h2>
-          <ScrollableTable :items="selectedItems" :hideAddButton="true" @remove-item="removeItemFromSelected" />
-        </div>
+        <ScrollableTable :items="filteredItems" @add-item="addItemToSelected" />
       </div>
 
-      <div class="flex justify-between items-center mt-8">
-        <div class="mb-4">
-          <label class="block text-gray-400 dark:text-gray-300 mb-2">Asztalszám</label>
-          <select
-            id="dropdown"
-            v-model="selectedTable"
-            class="border border-gray-700 rounded-md p-2 bg-gray-700 text-white"
-          >
-            <option v-for="table in tables" :key="table.id" :value="table.id">
-              {{ table.tableNumber }}
-            </option>
-          </select>
+      <div class="table-card">
+        <h2>Hozzáadott termékek</h2>
+        <div class="search-container">
+          <input v-model="searchTermForSelectedItems" type="text" placeholder="Keresés..." class="search-input" />
         </div>
-        <button @click="sendOrder()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-          Leadás
-        </button>
+        <ScrollableTable :items="filteredSelectedItems" :hideAddButton="true" @remove-item="removeItemFromSelected" class="asd"/>
       </div>
     </div>
+
+    <div class="table-dropdown">
+      <label class="table-label">Asztalszám</label>
+      <select id="dropdown" v-model="selectedTable" class="dropdown">
+        <option v-for="table in tables" :key="table.id" :value="table.id" class="select">
+          {{ table.tableNumber }}
+        </option>
+      </select>
+    </div>
+    <button @click="sendOrder()" class="submit">Leadás</button>
   </div>
+
+  <Popup
+      v-if="popupVisible"
+      :message="popupMessage"
+      :popupType="popupType"
+      :isVisible="popupVisible"
+    />
 </template>
 
 <style scoped>
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
 
+.search-input {
+  width: 50%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #49d0ce;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.search-input::placeholder {
+  text-align: center;  
+}
+
+.search-input:hover,
+.search-input:focus {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a; 
+}
+
+.submit {
+  width: 50%;
+  background-color: #49d0ce;
+  color: black;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit:hover {
+  background-color: #56b6b1;
+}
+
+.dropdown {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #49d0ce;
+  border-radius: 4px;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.dropdown:focus {
+  border-color: #b9ebe9;
+}
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #3f3f3f;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #282828;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tables-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.table-card {
+  flex: 1;
+  background-color: #2d2d2d;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.table-card h2 {
+  color: #49d0ce;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.table-dropdown {
+  padding: 20px;
+}
+
+@media (max-width: 750px) {
+  .tables-container {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 80%;
+  }
+}
 </style>

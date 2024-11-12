@@ -63,6 +63,7 @@ export default {
     :popupType="popupType"
     :isVisible="popupVisible"
   />
+  
 </template>
 
 <style scoped>

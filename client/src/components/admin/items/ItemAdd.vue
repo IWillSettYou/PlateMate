@@ -25,9 +25,9 @@ export default {
   },
   async mounted(){
     try {
-        await this.getCategories();
-      } catch (error) {
-        this.triggerPopup("Sikertelen a betöltés során!", "error");
+      await this.getCategories();
+    } catch (error) {
+      this.triggerPopup("Sikertelen a betöltés során!", "error");
     } 
   },
   methods: {

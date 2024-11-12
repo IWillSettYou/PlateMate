@@ -57,6 +57,15 @@ export default {
       } catch (error) {
         this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
     }
   },
 } 
@@ -86,103 +95,17 @@ export default {
       <component :is="currentComponent"></component>
     </div>
   </div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
+  
 </template>
 
 <style scoped>
-.home-bg {
-  background-color: #121212;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
 
-.navbar {
-  background-color: #282828;
-  padding: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #49d0ce;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.navbar-left,
-.navbar-center,
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-
-.navbar-center {
-  gap: 20px;
-}
-
-.menu-items {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-}
-
-.navbar-link {
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-  background-color: #282828;
-  cursor: pointer;
-}
-
-.navbar-link:hover {
-  background-color: #3f3f3f;
-}
-
-.logout-button {
-  background-color: #282828;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  transition: background-color 0.3s;
-}
-
-.logout-button:hover {
-  background-color: #3f3f3f;
-}
-
-.content-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: white;
-  min-height: 70vh;
-  margin: 8px;
-}
-
-@media (max-width: 768px) {
-  .navbar-center,
-  .navbar-left > .navbar-link {
-    display: none;
-  }
-}
 </style>
 

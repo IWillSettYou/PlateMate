@@ -9,7 +9,7 @@ const{
     deleteItem
 } = require('../controllers/itemController.js')
 
-Router.get('/', roleCheck(['admin', 'waiter']), getAllItems);
+Router.get('/', roleCheck(['admin', 'waiter', 'chef']), getAllItems);
 
 Router.get('/:id', roleCheck(['admin', 'waiter']), getItemById);
 

@@ -1,58 +1,77 @@
 <script>
 import axios from 'axios';
+
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiLogout } from '@mdi/js';
+
 import Cashout from '../../components/cashout/Cashout.vue';
+import Popup from '../../components/popup/Popup.vue';
 
 export default {
   components:{
-    Cashout
+    Cashout,
+    Popup,
+    SvgIcon
   },
   data(){
     return {
-      loading: true,
       currentComponent: "Cashout",
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
+      iconPath: mdiLogout,
     }
   },
   async mounted(){
     try {
-        const response = await this.redirectHandler();
-
-        if(response.isAuthorized != true){  
-          if(response.message == "Invalid Credentials") this.$router.push({ name: 'Login' });
-          else { this.$router.push({ name: 'Home' }); }
-        } else {
-          this.loading = false;
-        }
+      await this.redirectHandler();
     } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+      this.triggerPopup("Hiba történt a betöltés során!" ,"error")
     } 
+
+    this.isMobile = window.innerWidth <= 1100;
+    window.addEventListener("resize", this.updateIsMobile);
   },   
   methods: {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-            params: {
-              page: "cashout"
-            },
-            withCredentials: true 
+          params: { page: "cashout" },
+          withCredentials: true
         });
-        return response.data; 
+
+        if (response.data.isAuthorized !== true) {
+          if(response.data.message == "Invalid Role") this.$router.push({ name: 'Home' });
+          else this.$router.push({ name: 'Login' });
+        }
       } catch (error) {
-          console.error("Hiba az API hívás során:", error);
-          return false; 
+        this.triggerPopup("Hiba történt a betöltés során!","error");
+        return false
       }
     },
     async logout(){
       try {
         const response = await axios.post('http://localhost:3000/logout', null, {
-      withCredentials: true 
-      });
+          withCredentials: true
+        });
 
-        if (response.status == 200) this.$router.push({ name: 'Login' });
+        if (response.status === 200) this.$router.push({ name: 'Login' });
+        else this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       } catch (error) {
-        console.log("Hiba a kijelentkezés során: " + error)
-        const errorCode = error.response.data.message
-        alert("Hiba a kijelentkezés során: " + errorCode);
+        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
       }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
+    updateIsMobile() {
+      this.isMobile = window.innerWidth <= 1100;
     }
   },
 } 
@@ -60,28 +79,36 @@ export default {
 </script>
 
 <template>
-<p v-if="loading">Betöltés...</p>
-<div v-if="!loading">
-    <div class="bg-gray-50 dark:bg-gray-900">
-      <nav class="bg-white dark:bg-gray-800 shadow dark:border-gray-700 p-4">
-        <div class="flex items-center">
-          <RouterLink to="/" class="mr-auto">
-            <button class="ml-auto text-white bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-m px-4 py-2">
-              Back
-            </button>
+  <div class="home-bg">
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="navbar-left">
+          <RouterLink to="/">
+            <button class="navbar-link">Back</button>
           </RouterLink>
-
-          <button @click="logout" class="ml-auto text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-m px-4 py-2">
+        </div>
+        
+        <div class="navbar-right">
+          <button @click="logout" class="logout-button">
             Kijelentkezés
+            <svg-icon type="mdi" :path="iconPath" />
           </button>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
 
-    <div class="flex-grow flex items-center justify-center min-h-screen">
+    <div class="content-body">
       <component :is="currentComponent"></component>
     </div>
-</div>
+  </div>
+
+  <Popup
+    v-if="popupVisible"
+    :message="popupMessage"
+    :popupType="popupType"
+    :isVisible="popupVisible"
+  />
+
 </template>
 
 <style scoped>

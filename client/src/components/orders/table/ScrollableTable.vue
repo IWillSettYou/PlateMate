@@ -14,118 +14,46 @@ export default {
 </script>
 
 <template>
-<div class="table-container">
-  <table class="category-table">
-    <thead>
-      <tr>
-        <th scope="col" class="table-header">
-          Név
-        </th>
-        <th scope="col" class="table-header">
-          Művelet
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(item, index) in items" :key="index">
-        <td class="table-cell">{{ item.name }}</td>
-        <td class="table-cell">
-          <button
-            v-if="!hideAddButton"
-            @click="$emit('add-item', item)"
-            class="add-button"
-          >
-            Hozzáadás
-          </button>
-          <button
-            v-else
-            @click="$emit('remove-item', index)"
-            class="remove-button"
-          >
-            Eltávolítás
-          </button>
-        </td>
+  <div class="table-container">
+    <table class="item-table">
+        <thead>
+          <tr>
+            <th>Név</th>
+            <th>Művelet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in items" :key="index">
+            <td>{{ item.name }}</td>
+            <td>
+              <button
+              v-if="!hideAddButton"
+              @click="$emit('add-item', item)"
+              class="add-button"
+            >
+              Hozzáadás
+            </button>
+            <button
+              v-else
+              @click="$emit('remove-item', index)"
+              class="remove-button"
+            >
+              Eltávolítás
+            </button>
+          </td>
       </tr>
     </tbody>
   </table>
-</div>
-  </template>
+  </div>
+</template>
   
   <style scoped>
-  .table-container {
-  border: 1px solid #374151; 
-  border-radius: 0.375rem; 
+.table-container {
+  max-height: 400px;
+  min-height: 400px;
+  background-color: #3f3f3f;
   overflow-y: auto;
-  background-color: #374151;
-  height: 500px;
-}
-
-.category-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 100%;
-  color: #e5e7eb;
-}
-
-.table-header {
-  padding: 0.75rem 1.5rem; 
-  text-align: left;
-  font-size: 0.875rem;
-  font-weight: 500; 
-  text-transform: uppercase;
-  letter-spacing: 0.05em; 
-  background-color: #1f2937; 
-  color: #d1d5db; 
-}
-
-.table-cell {
-  padding: 1rem 1.5rem; 
-  text-align: left;
-  font-size: 0.875rem; 
-  color: #e5e7eb; 
-  white-space: nowrap;
-}
-
-.table-cell:last-child {
-  text-align: right;
-}
-
-.add-button,
-.remove-button {
-  font-size: 0.875rem;
-  font-weight: 500;
-  text-decoration: none;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-.add-button {
-  color: #60a5fa; 
-}
-
-.add-button:hover {
-  color: #2563eb; 
-}
-
-.remove-button {
-  color: #f87171; 
-}
-
-.remove-button:hover {
-  color: #ef4444; 
-}
-
-tbody {
-  background-color: #374151;
-}
-
-tbody tr:nth-child(odd) {
-  background-color: #4b5563; 
-}
-
-tbody tr:hover {
-  background-color: #6b7280; 
+  border: #49d0ce solid 2px;
 }
 
 .table-container::-webkit-scrollbar {
@@ -133,11 +61,62 @@ tbody tr:hover {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #60a5fa;
-  border-radius: 4px;
+  background-color: #49d0ce; 
+  border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #1f2937; 
+  background-color: #575757; 
+}
+
+.table-container::-webkit-scrollbar-corner {
+  background-color: #49d0ce; 
+}
+
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #575757;
+  text-align: left;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item-table th,
+.item-table td {
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+}
+
+.item-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #3f3f3f;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.item-table tbody tr:hover {
+  background-color: #717171;
+}
+
+.add-button,
+.remove-button {
+  background-color: #49d0ce;
+  color: black;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.add-button:hover,
+.remove-button:hover {
+  background-color: #56b6b1;
 }
 </style>
