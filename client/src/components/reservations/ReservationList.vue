@@ -1,21 +1,32 @@
 <script>
 import axios from 'axios';
 
+import Popup from '../popup/Popup.vue';
+
 export default {
   name: "ReservationList",
+  components: {
+    Popup
+  },
   data() {
     return {
-      loading: true,
-      reservations: {}
+      reservations: [],
+      searchQuery: '',
+      popupMessage: null,
+      popupType: null,
+      popupVisible: false,
+    }
+  },
+  computed: {
+    filteredReservations() {
+      return this.reservations.filter(reservation => reservation.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
     }
   },
   async mounted(){
     try {
-        const response = await this.getReservations();
-        this.reservations = response.data.data;
-        this.loading = false
+        await this.getReservations();
       } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
+        this.triggerPopup("Hiba a betöltés során!", "error")
     } 
   },
   methods: {
@@ -25,25 +36,23 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) return response
+        if(response.status == 200) this.reservations = response.data.data
       } catch (error) {
-        console.log(error)
-        const errorCode = error.response.data.message
-        alert("Hiba a lekérés során: " + errorCode);
+        this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
     async deleteReservation(id){
       try {
         const response = await axios.delete(`http://localhost:3000/reservation/${id}`, {
-        withCredentials: true 
-      });
+          withCredentials: true 
+        });
+
         if(response.status == 200) {
-          this.reservations.filter(reservation => reservation.id !== id)
-          alert(response.data.message)
+          await this.getReservations()
+          this.triggerPopup("Sikeres törlés!", "success")
         }
       } catch (error) {
-        console.log(error)
-        alert("Hiba a törlés során");
+        this.triggerPopup("Sikertelen törlés!", "error")
       }
     },
     formatDateTime(isoString) {
@@ -56,53 +65,185 @@ export default {
       const minutes = String(date.getMinutes()).padStart(2, '0'); 
 
       return `${year}-${month}-${day} ${hours}:${minutes}`;
-    }
+    },
+    triggerPopup(message, type) {
+      this.popupMessage = message;
+      this.popupType = type;
+      this.popupVisible = true;
+
+      setTimeout(() => {
+        this.popupVisible = false;
+      }, 3000);
+    },
   }
 };
 </script>
 
 <template>
-<p v-if="loading">Betöltés...</p>
-<div v-if="!loading">
-  <div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-8 max-w-fit w-full">
-  <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">Foglalások</h2>
 
-  <div class="overflow-x-auto">
-    <table class="min-w-full bg-blue-50 border border-gray-200 rounded-lg shadow-lg">
-      <thead>
-        <tr class="bg-blue-100 border-b">
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">ID</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Név</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Vendégek</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Asztalszám</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Ettől</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Eddig</th>
-          <th class="py-3 px-4 text-left text-xs font-medium text-blue-600 uppercase tracking-wider">Művelet</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(reservation, index) in reservations" :key="index" class="hover:bg-blue-100 border-b">
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ reservation.id }}</td>
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ reservation.name }}</td>
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ reservation.numberOfCustomers }}</td>
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ reservation.tableNumber }}</td>
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ formatDateTime(reservation.reservedAt) }}</td>
-          <td class="py-4 px-4 text-sm font-medium text-gray-900">{{ formatDateTime(reservation.reservedUntil) }}</td>
-          <td class="py-4 px-4 text-sm">
-            <button @click="deleteReservation(reservation.id)" class="bg-red-500 hover:bg-red-800 text-white font-bold py-1 px-3 rounded">
-              Törlés
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="form-container">
+    <h2 class="form-title">Foglalások</h2>
+    <div v-if="reservations.length <= 0">
+        <h1 class="form-title">Nincsenek elérhető foglalások</h1>
+    </div>
+    <div v-if="reservations.length > 0" class="search-container">
+      <input
+        v-model="searchQuery"
+        type="text"
+        placeholder="Keresés"
+        class="search-input"
+      />
+    </div>
+    <div v-if="reservations.length > 0" class="table-container">
+      <table class="item-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Név</th>
+            <th>Vendégek</th>
+            <th>Asztalszám</th>
+            <th>Ettől</th>
+            <th>Eddig</th>
+            <th>Művelet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(reservation, index) in filteredReservations" :key="index">
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.name }}</td>
+            <td>{{ reservation.numberOfCustomers }}</td>
+            <td>{{ reservation.tableNumber }}</td>
+            <td>{{ formatDateTime(reservation.reservedAt) }}</td>
+            <td>{{ formatDateTime(reservation.reservedUntil) }}</td>
+            <td>
+              <button @click="deleteReservation(reservation.id)" class="action-button">
+                Törlés
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <Popup
+      v-if="popupVisible"
+      :message="popupMessage"
+      :popupType="popupType"
+      :isVisible="popupVisible"
+    />
+
   </div>
-</div>
-</div>
 </template>
   
 <style scoped>
-h1 {
-  color: #42b983;
+.form-container {
+  background-color: #282828;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 50%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #49d0ce;
+  background-color: #3f3f3f;
+  color: white;
+  outline: none;
+}
+
+.search-input::placeholder {
+  text-align: center;  
+}
+
+.search-input:hover, .search-input:focus {
+  border-color: #b9ebe9;
+  background-color: #4a4a4a; 
+}
+
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: #49d0ce solid 2px;
+}
+
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #49d0ce; 
+  border-radius: 2px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background-color: #575757; 
+}
+
+.table-container::-webkit-scrollbar-corner {
+    background-color: #49d0ce; 
+}
+
+.item-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #575757;
+  text-align: left;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item-table th,
+.item-table td {
+  padding: 12px;
+  font-size: 14px;
+  color: white;
+}
+
+.item-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #3f3f3f;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.item-table tbody tr:hover {
+  background-color: #717171;
+}
+
+.action-button {
+  background-color: #49d0ce;
+  color: black;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #56b6b1;
 }
 </style>

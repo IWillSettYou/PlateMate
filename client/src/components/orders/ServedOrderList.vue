@@ -36,9 +36,9 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) this.orders = response.data.data;
+        if(response.status == 200) this.orders = response.data.data
       } catch (error) {
-        console.log(error)
+        this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
     async rollbackServedOrder(id){

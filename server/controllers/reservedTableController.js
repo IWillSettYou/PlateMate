@@ -73,10 +73,29 @@ const getReservationById = async (req, res) => {
 };
 
 const getAllReservationsOnDay = async (req, res) => {
-    const { tableId, fromDate } = req.query;
-    
-    if (!tableId || !fromDate) {
+    const { tableNumber, fromDate } = req.query;
+    let tableId = 0
+
+    if (!tableNumber || !fromDate) {
         return res.status(400).json({ message: "Az adatok megadása kötelező." });
+    }
+
+    //get tableId from the selected table number
+    try {
+        const result = await new Promise((resolve, reject) => {
+            connect.query("SELECT id FROM `tables` WHERE `tableNumber` = ?", [tableNumber], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
+        if (!result.length) {
+            return res.status(204).json({ message: "A megadott asztal nem található." });
+        }
+
+        tableId = result[0].id
+    } catch (error) {
+        res.status(500).json({ message: "Hiba történt az asztal lekérése során.", error });
     }
 
     try {
@@ -106,12 +125,32 @@ const getAllReservationsOnDay = async (req, res) => {
 };
 
 const createReservation = async (req, res) => {
-    const { tableId, name, numberOfCustomers, reservedAt, reservedUntil } = req.body;
+    const { tableNumber, name, numberOfCustomers, reservedAt, reservedUntil } = req.body;
+    let tableId = 0;
 
-    if (!tableId || !name || !numberOfCustomers || !reservedAt || !reservedUntil) {
+    if (!tableNumber || !name || !numberOfCustomers || !reservedAt || !reservedUntil) {
         return res.status(400).json({ message: "Minden mező megadása kötelező." });
     }
 
+    //get tableId from the selected table number
+    try {
+        const result = await new Promise((resolve, reject) => {
+            connect.query("SELECT id FROM `tables` WHERE `tableNumber` = ?", [tableNumber], (err, result) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
+
+        if (!result.length) {
+            return res.status(204).json({ message: "A megadott asztal nem található." });
+        }
+
+        tableId = result[0].id
+    } catch (error) {
+        res.status(500).json({ message: "Hiba történt az asztal lekérése során.", error });
+    }
+
+    //post reservation to the database
     try {
         const response = await new Promise((resolve, reject) => {
             connect.query("INSERT INTO `reservedTable` (`id`, `tableId`, `name`, `numberOfCustomers`, `reservedAt`, `reservedUntil`) VALUES (NULL, ?, ?, ?, ?, ?);", [tableId, name, numberOfCustomers, reservedAt, reservedUntil], (err, result) => {

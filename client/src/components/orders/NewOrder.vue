@@ -53,9 +53,8 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) {
-          this.tables = response.data.data;
-        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
+        if(response.status == 200) this.tables = response.data.data
+        else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -66,10 +65,8 @@ export default {
           withCredentials: true 
         });
         
-        if(response.status == 200) {
-          this.items = response.data.data;
-          this.loading = false;
-        } else this.triggerPopup("Sikertelen lekérdezés!", "error")
+        if(response.status == 200) this.items = response.data.data
+        else this.triggerPopup("Sikertelen lekérdezés!", "error")
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -247,7 +244,8 @@ export default {
 }
 
 .table-card h2 {
-  color: #49d0ce;
+  color: white;
+  font-weight: 500;
   text-align: center;
   margin-bottom: 16px;
 }

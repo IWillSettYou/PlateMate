@@ -1,75 +1,3 @@
-<template>
-  <div class="p-5 border-2 border-gray-800 rounded-lg bg-gray-800 shadow-lg">
-    <h2 class="text-lg font-semibold text-center mb-4">Asztalfoglalás</h2>
-    <table class="table-auto w-full max-w-5xl border-separate border-spacing-2">
-      <tbody>
-        <tr>
-          <td class="w-1/6 text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(1)" @click="selectTable(1)">1</div>
-          </td>
-          <td class="w-1/6 text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(2)" @click="selectTable(2)">2</div>
-          </td>
-          <td class="w-1/3 text-center bg-gray-500 text-white rounded-md" colspan="2">
-            <div class="flex items-center justify-center h-full">Pult</div>
-          </td>
-          <td class="w-1/6 text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(9)" @click="selectTable(9)">9</div>
-          </td>
-          <td class="w-1/6 text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(10)" @click="selectTable(10)">10</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(3)" @click="selectTable(3)">3</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(4)" @click="selectTable(4)">4</div>
-          </td>
-          <td colspan="2" class="text-center"></td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(11)" @click="selectTable(11)">11</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(12)" @click="selectTable(12)">12</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(5)" @click="selectTable(5)">5</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(6)" @click="selectTable(6)">6</div>
-          </td>
-          <td colspan="2" class="text-center"></td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(13)" @click="selectTable(13)">13</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(14)" @click="selectTable(14)">14</div>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(7)" @click="selectTable(7)">7</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(8)" @click="selectTable(8)">8</div>
-          </td>
-          <td colspan="2" class="text-center"></td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(15)" @click="selectTable(15)">15</div>
-          </td>
-          <td class="text-center">
-            <div class="text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer" :class="tableClass(16)" @click="selectTable(16)">16</div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
 <script>
 export default {
   data() {
@@ -83,16 +11,157 @@ export default {
       this.$emit("tableSelected", id);
     },
     tableClass(id) {
-      return [
-        this.selectedTable === id ? "bg-blue-700" : "bg-gray-600",
-      ];
+      return this.selectedTable === id ? "table-selected" : "table-unselected";
     },
   },
 };
 </script>
 
+<template>
+  <div class="reservation-container">
+    <h2 class="title">Asztalfoglalás</h2>
+    <table class="reservation-table">
+      <tbody>
+        <tr>
+          <td class="table-cell">
+            <div :class="tableClass(1)" @click="selectTable(1)">1</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(2)" @click="selectTable(2)">2</div>
+          </td>
+          <td class="table-counter" colspan="2">
+            <div class="counter-content">Pult</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(9)" @click="selectTable(9)">9</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(10)" @click="selectTable(10)">10</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-cell">
+            <div :class="tableClass(3)" @click="selectTable(3)">3</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(4)" @click="selectTable(4)">4</div>
+          </td>
+          <td colspan="2" class="empty-cell"></td>
+          <td class="table-cell">
+            <div :class="tableClass(11)" @click="selectTable(11)">11</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(12)" @click="selectTable(12)">12</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-cell">
+            <div :class="tableClass(5)" @click="selectTable(5)">5</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(6)" @click="selectTable(6)">6</div>
+          </td>
+          <td colspan="2" class="empty-cell"></td>
+          <td class="table-cell">
+            <div :class="tableClass(13)" @click="selectTable(13)">13</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(14)" @click="selectTable(14)">14</div>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-cell">
+            <div :class="tableClass(7)" @click="selectTable(7)">7</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(8)" @click="selectTable(8)">8</div>
+          </td>
+          <td colspan="2" class="empty-cell"></td>
+          <td class="table-cell">
+            <div :class="tableClass(15)" @click="selectTable(15)">15</div>
+          </td>
+          <td class="table-cell">
+            <div :class="tableClass(16)" @click="selectTable(16)">16</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
 <style scoped>
-  td {
-  min-width:50px;
+.reservation-container {  
+  flex: 1;
+  background-color: #2d2d2d;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #ffffff;
+}
+
+.reservation-table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: separate;
+  border-spacing: 8px;
+}
+
+.table-cell {
+  width: 16.666%;
+  text-align: center;
+}
+
+.table-counter {
+  width: 33.333%;
+  text-align: center;
+  background-color: #49d0ce;
+  color: black;
+  border-radius: 4px;
+}
+
+.counter-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.table-unselected {
+  color: #ffffff;
+  background-color: #4a4a4a;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.table-selected {
+  color: black;
+  background-color: #49d0ce;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.empty-cell {
+  text-align: center;
+}
+
+td {
+  min-width: 50px;
 }
 </style>
