@@ -90,12 +90,15 @@ export default {
 </template>
 
 <style scoped>
-.reservation-container {  
+.reservation-container {
   flex: 1;
   background-color: #2d2d2d;
   padding: 16px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
@@ -133,7 +136,7 @@ export default {
   height: 100%;
 }
 
-.table-unselected {
+.table-unselected, .table-selected {
   color: #ffffff;
   background-color: #4a4a4a;
   width: 48px;
@@ -148,13 +151,6 @@ export default {
 .table-selected {
   color: black;
   background-color: #49d0ce;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
 }
 
 .empty-cell {
@@ -163,5 +159,49 @@ export default {
 
 td {
   min-width: 50px;
+}
+
+@media (max-width: 600) {
+  td {
+    min-width: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  td {
+    min-width: 30px;
+  }
+  .reservation-table {
+    max-width: 100%;
+  }
+  .table-cell, .table-counter {
+    width: auto;
+  }
+  .table-unselected, .table-selected {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (max-width: 320px) {
+  .title {
+    font-size: 0.875rem;
+    margin-bottom: 12px;
+  }
+  .reservation-container {
+    padding: 8px;
+  }
+  .table-unselected, .table-selected {
+    width: 24px;
+    height: 24px;
+    font-size: 0.75rem;
+  }
+  .reservation-table {
+    border-spacing: 4px;
+  }
+  .table-counter {
+    font-size: 0.75rem;
+    padding: 4px;
+  }
 }
 </style>

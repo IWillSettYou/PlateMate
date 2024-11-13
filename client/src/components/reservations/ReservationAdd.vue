@@ -52,7 +52,8 @@ export default {
       }
     },
     async getReservationOnDayByTable() {
-      try {
+      if(this.selectedTableId != null && this.date != null){
+        try {
         const response = await axios.get(`http://localhost:3000/reservation/reservations-on-day`, {
           params: {
             tableNumber: this.selectedTableId,
@@ -65,6 +66,7 @@ export default {
         return response;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
+      }
       }
     },
     async postReservation() {
@@ -99,23 +101,24 @@ export default {
       const year = dateg.getFullYear();
       const month = String(dateg.getMonth() + 1).padStart(2, '0');
       const day = String(dateg.getDate()).padStart(2, '0');
-
+ 
       return `${year}-${month}-${day}`;
     },
     handleTableSelection(id) {
       this.selectedTableId = id;
+      this.loadDropdowns()
     },
     async loadDropdowns() {
       this.day = new Intl.DateTimeFormat('hu-HU', { weekday: 'long', timeZone: 'Europe/Budapest' }).format(new Date(this.date));
       this.day = this.day.charAt(0).toUpperCase() + this.day.slice(1);
 
       await this.getAvailableTimes();
-      const resp = await this.getReservationOnDayByTable();
+      const response = await this.getReservationOnDayByTable();
       
       this.availableStartTimes = [];
       this.availableEndTimes = [];
-
-      if (resp.status == 200) {        
+      
+      if (response.status == 200) {        
         let time = new Date(this.startTime);
         while (time <= this.endTime) {
           const timeString = time.toTimeString().slice(0, 5);
@@ -141,7 +144,7 @@ export default {
           const endDateTime = new Date(`${this.date}T${endTime}:00`);
           return !this.reservedTimes.some(reserved => endDateTime > reserved.start && endDateTime <= reserved.end);
         });
-      } else if (resp.status == 204) {  
+      } else if (response.status == 204) {  
         let time = new Date(this.startTime);
         while (time <= this.endTime) {
           const timeString = time.toTimeString().slice(0, 5);
@@ -180,7 +183,7 @@ export default {
           <div class="form-group">
             <input type="text" v-model="name" placeholder="Név" class="input-field" />
             <input type="number" v-model="nOfCustomers" placeholder="Fők száma" class="input-field" />
-            <input type="date" @change="loadDropdowns" v-model="date" class="input-field" />
+            <input type="date" v-model="date" @change="loadDropdowns" class="input-field" />
             <div class="dropdown-group">
               <label>Ettől</label>
               <select v-model="selectedStartTime" class="dropdown">
