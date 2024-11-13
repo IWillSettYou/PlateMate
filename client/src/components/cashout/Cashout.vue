@@ -87,6 +87,7 @@ export default {
       }
     },
     async onTableChange() {
+      console.log(this.selectedTable)
       try {
         await this.getConsumedItems(this.selectedTable); 
         this.sumPrice = this.items.reduce((total, item) => total + (item.itemPrice || 0), 0);

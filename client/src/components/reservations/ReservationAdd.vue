@@ -79,6 +79,11 @@ export default {
         this.triggerPopup("Minden mező megadása közelező!", "error")
         return
       }
+      
+      if(this.selectedStartTime.split(':')[0] > this.selectedEndTime.split(':')[0]) {
+        this.triggerPopup("Érvénytelen időzóna!", "error")
+        return
+      }
 
       try {
         const response = await axios.post('http://localhost:3000/reservation', {

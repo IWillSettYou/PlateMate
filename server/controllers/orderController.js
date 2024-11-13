@@ -359,7 +359,7 @@ const getOrdersByTableId = async (req, res) => {
                 JOIN
                     tables t ON o.tableId = t.id
                 WHERE 
-                    t.tableNumber  = ?
+                    t.id  = ?
                     `, id, (err, result) => {
                 if (err) reject(err);
                 else resolve(result);

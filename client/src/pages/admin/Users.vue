@@ -7,7 +7,6 @@ import { mdiLogout } from '@mdi/js';
 import UserAdd from '../../components/admin/users/UserAdd.vue';
 import UserList from '../../components/admin/users/UserList.vue';
 import Popup from '../../components/popup/Popup.vue';
-import { popScopeId } from 'vue';
 
 export default {
   components : {
@@ -18,7 +17,7 @@ export default {
   },
   data(){
     return {
-      currentComponent: "UserList",
+      currentComponent: "UserAdd",
       isMobileMenuOpen: false,
       isMobile: false,
       popupMessage: null,
