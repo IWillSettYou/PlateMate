@@ -174,7 +174,7 @@ export default {
         </option>
       </select>
 
-      <h1>Végösszeg:  {{ sumPrice }}</h1>
+      <h2 class="form-label">Végösszeg:  {{ sumPrice }}</h2>
 
       <button @click="sendPaid()" class="form-submit">
           Kifizetés
