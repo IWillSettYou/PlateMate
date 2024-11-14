@@ -35,8 +35,8 @@ export default {
             params: { page: "login"},
             withCredentials: true 
         });
-
-        if(response.isAuthorized == true) this.$router.push({ name: 'Home' });
+        
+        if(response.data.isAuthorized == true) this.$router.push({ name: 'Home' });
       } catch (error) {
           this.triggerPopup("Hiba történt a betöltés során!", "error")
       }

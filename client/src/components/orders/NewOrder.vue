@@ -1,11 +1,11 @@
 <script>
 import axios from 'axios';
 
-import ScrollableTable from './table/ScrollableTable.vue';
+import ScrollableTableForItemHandling from './table/ScrollableTableForItemHandling.vue';
 import Popup from '../popup/Popup.vue';
 
 export default {
-  components: { ScrollableTable, Popup },
+  components: { ScrollableTableForItemHandling, Popup },
   name: "NewOrder",
   data() {
     return {
@@ -116,7 +116,7 @@ export default {
         <div class="search-container">
           <input v-model="searchTermForItems" type="text" placeholder="Keresés..." class="search-input" />
         </div>
-        <ScrollableTable :items="filteredItems" @add-item="addItemToSelected" />
+        <ScrollableTableForItemHandling :items="filteredItems" @add-item="addItemToSelected" />
       </div>
 
       <div class="table-card">
@@ -124,7 +124,7 @@ export default {
         <div class="search-container">
           <input v-model="searchTermForSelectedItems" type="text" placeholder="Keresés..." class="search-input" />
         </div>
-        <ScrollableTable :items="filteredSelectedItems" :hideAddButton="true" @remove-item="removeItemFromSelected" class="asd"/>
+        <ScrollableTableForItemHandling :items="filteredSelectedItems" :hideAddButton="true" @remove-item="removeItemFromSelected" class="asd"/>
       </div>
     </div>
 
