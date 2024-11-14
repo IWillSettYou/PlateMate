@@ -102,7 +102,7 @@ export default {
 }
 
 .title {
-  font-size: 1.125rem;
+  font-size: 2rem;
   font-weight: 600;
   text-align: center;
   margin-bottom: 16px;
