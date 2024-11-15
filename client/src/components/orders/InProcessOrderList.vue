@@ -113,7 +113,7 @@ export default {
             <td>{{ formatDateTime(order.orderedAt) }}</td>
             <td>
               <button @click="pushOrder(order.id)" class="action-button">
-                Vissza
+                Kész
               </button>
             </td>
           </tr>
