@@ -17,7 +17,7 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
       await this.getTables();
     } catch (error) {
@@ -28,20 +28,20 @@ export default {
     async getTables() {
       try {
         const response = await axios.get(`http://localhost:3000/table/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.tables = response.data.data.sort((a, b) => a.tableNumber - b.tableNumber)
+
+        if (response.status == 200) this.tables = response.data.data.sort((a, b) => a.tableNumber - b.tableNumber)
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }
     },
-    async deleteTable(id){
+    async deleteTable(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/table/${id}`, {
-        withCredentials: true 
-      });
-        if(response.status == 200) {
+          withCredentials: true
+        });
+        if (response.status == 200) {
           this.getTables();
           this.triggerPopup("Sikeres törlés!", "success");
         } else this.triggerPopup("Sikertelen törlés!", "error");
@@ -67,8 +67,8 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Asztalok</h2>
     <div v-if="tables.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető asztalok</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető asztalok</h1>
+    </div>
     <div v-if="tables.length > 0" class="table-container">
       <table class="table-table">
         <thead>
@@ -92,15 +92,10 @@ export default {
       </table>
     </div>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -131,16 +126,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .table-table {

@@ -8,12 +8,12 @@ import Cashout from '../../components/cashout/Cashout.vue';
 import Popup from '../../components/popup/Popup.vue';
 
 export default {
-  components:{
+  components: {
     Cashout,
     Popup,
     SvgIcon
   },
-  data(){
+  data() {
     return {
       currentComponent: "Cashout",
       popupMessage: null,
@@ -22,16 +22,16 @@ export default {
       iconPath: mdiLogout,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
       await this.redirectHandler();
     } catch (error) {
-      this.triggerPopup("Hiba történt a betöltés során!" ,"error")
-    } 
+      this.triggerPopup("Hiba történt a betöltés során!", "error")
+    }
 
     this.isMobile = window.innerWidth <= 1100;
     window.addEventListener("resize", this.updateIsMobile);
-  },   
+  },
   methods: {
     async redirectHandler() {
       try {
@@ -41,24 +41,24 @@ export default {
         });
 
         if (response.data.isAuthorized !== true) {
-          if(response.data.message == "Invalid Role") this.$router.push({ name: 'Home' });
+          if (response.data.message == "Invalid Role") this.$router.push({ name: 'Home' });
           else this.$router.push({ name: 'Login' });
         }
       } catch (error) {
-        this.triggerPopup("Hiba történt a betöltés során!","error");
+        this.triggerPopup("Hiba történt a betöltés során!", "error");
         return false
       }
     },
-    async logout(){
+    async logout() {
       try {
         const response = await axios.post('http://localhost:3000/logout', null, {
           withCredentials: true
         });
 
         if (response.status === 200) this.$router.push({ name: 'Login' });
-        else this.triggerPopup("Hiba történt a kijelentkezés során!","error");
+        else this.triggerPopup("Hiba történt a kijelentkezés során!", "error");
       } catch (error) {
-        this.triggerPopup("Hiba történt a kijelentkezés során!","error");
+        this.triggerPopup("Hiba történt a kijelentkezés során!", "error");
       }
     },
     triggerPopup(message, type) {
@@ -74,7 +74,7 @@ export default {
       this.isMobile = window.innerWidth <= 1100;
     }
   },
-} 
+}
 
 </script>
 
@@ -87,7 +87,7 @@ export default {
             <button class="navbar-link">Back</button>
           </RouterLink>
         </div>
-        
+
         <div class="navbar-right">
           <button @click="logout" class="logout-button">
             Kijelentkezés
@@ -102,15 +102,8 @@ export default {
     </div>
   </div>
 
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
-  
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
+
 </template>
 
-<style scoped>
-</style>
-
+<style scoped></style>

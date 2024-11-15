@@ -1,4 +1,3 @@
-
 <script>
 import axios from 'axios';
 
@@ -24,8 +23,8 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
-    try { 
+  async mounted() {
+    try {
       await this.getTables();
       await this.getPaymentMethods();
     } catch (error) {
@@ -36,11 +35,11 @@ export default {
     async getTables() {
       try {
         const response = await axios.get(`http://localhost:3000/table/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) {
-          this.tables =  response.data.data;
+
+        if (response.status == 200) {
+          this.tables = response.data.data;
           this.tablesLoading = false;
         }
       } catch (error) {
@@ -50,13 +49,13 @@ export default {
     async getPaymentMethods() {
       try {
         const response = await axios.get(`http://localhost:3000/payment-method/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) {
+
+        if (response.status == 200) {
           this.paymentMethods = response.data.data;
           this.paymentsLoading = false;
-        } 
+        }
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
 
@@ -65,10 +64,10 @@ export default {
     async getConsumedItems(id) {
       try {
         const response = await axios.get(`http://localhost:3000/order/for-checkout/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.items = response.data.data;
+
+        if (response.status == 200) this.items = response.data.data;
         else this.items = []
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
@@ -76,19 +75,19 @@ export default {
     },
     async deleteOrders(ids) {
       try {
-        const response = await axios.delete(`http://localhost:3000/order/mass-delete/`,  
-        {
-          data: { items: ids },
-          withCredentials: true
-        });
-        
+        const response = await axios.delete(`http://localhost:3000/order/mass-delete/`,
+          {
+            data: { items: ids },
+            withCredentials: true
+          });
+
       } catch (error) {
         this.triggerPopup("Sikertelen törlés!", "error")
       }
     },
     async onTableChange() {
       try {
-        await this.getConsumedItems(this.selectedTable); 
+        await this.getConsumedItems(this.selectedTable);
         this.sumPrice = this.items.reduce((total, item) => total + (item.itemPrice || 0), 0);
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
@@ -98,17 +97,17 @@ export default {
       const ids = this.items.map(item => item.itemId);
 
       try {
-        const response = await axios.post('http://localhost:3000/paid/', 
-        { 
-          tableId: this.selectedTable,
-          paymentMethodId: this.selectedPaymentMethod,
-          items: ids
-        }, 
-        {
-          withCredentials: true
-        });
+        const response = await axios.post('http://localhost:3000/paid/',
+          {
+            tableId: this.selectedTable,
+            paymentMethodId: this.selectedPaymentMethod,
+            items: ids
+          },
+          {
+            withCredentials: true
+          });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           this.triggerPopup("Sikeres kifizetés!", "success")
           const orderIds = this.items.map(item => item.id)
           await this.deleteOrders(orderIds)
@@ -133,7 +132,7 @@ export default {
 
 <template>
 
-<div class="form-container">
+  <div class="form-container">
     <h2 class="form-title">Elfogyasztott termékek</h2>
     <div class="table-container">
       <table class="item-table">
@@ -155,37 +154,32 @@ export default {
     </div>
 
     <label class="form-label">Asztalszám</label>
-      <div class="loading-spinner" v-if="tablesLoading">
-        <div class="spinner"></div>
-      </div>
-      <select id="dropdown" v-model="selectedTable" @change="onTableChange" v-if="!tablesLoading" class="form-input">
-        <option v-for="table in tables" :key="table.id" :value="table.id">
-          {{ table.tableNumber }}
-        </option>
-      </select>
+    <div class="loading-spinner" v-if="tablesLoading">
+      <div class="spinner"></div>
+    </div>
+    <select id="dropdown" v-model="selectedTable" @change="onTableChange" v-if="!tablesLoading" class="form-input">
+      <option v-for="table in tables" :key="table.id" :value="table.id">
+        {{ table.tableNumber }}
+      </option>
+    </select>
 
-      <label class="form-label">Fizetési mód</label>
-      <div class="loading-spinner" v-if="paymentsLoading">
-        <div class="spinner"></div>
-      </div>
-      <select id="dropdown" v-model="selectedPaymentMethod" v-if="!paymentsLoading" class="form-input">
-        <option v-for="paymentMethod in paymentMethods" :key="paymentMethod.id" :value="paymentMethod.id">
-          {{ paymentMethod.name }}
-        </option>
-      </select>
+    <label class="form-label">Fizetési mód</label>
+    <div class="loading-spinner" v-if="paymentsLoading">
+      <div class="spinner"></div>
+    </div>
+    <select id="dropdown" v-model="selectedPaymentMethod" v-if="!paymentsLoading" class="form-input">
+      <option v-for="paymentMethod in paymentMethods" :key="paymentMethod.id" :value="paymentMethod.id">
+        {{ paymentMethod.name }}
+      </option>
+    </select>
 
-      <h2 class="form-label">Végösszeg:  {{ sumPrice }}</h2>
+    <h2 class="form-label">Végösszeg: {{ sumPrice }}</h2>
 
-      <button @click="sendPaid()" class="form-submit">
-          Kifizetés
-        </button>
+    <button @click="sendPaid()" class="form-submit">
+      Kifizetés
+    </button>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
 
@@ -266,12 +260,13 @@ export default {
 }
 
 .search-input::placeholder {
-  text-align: center;  
+  text-align: center;
 }
 
-.search-input:hover, .search-input:focus {
+.search-input:hover,
+.search-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .table-container {
@@ -286,16 +281,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .item-table {
@@ -347,7 +342,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px; 
+  height: 30px;
   margin-top: 10px;
   margin-bottom: 15px;
 }
@@ -355,7 +350,7 @@ export default {
 .spinner {
   border: 8px solid #4a4a4a;
   border-top: 8px solid #49d0ce;
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
@@ -369,7 +364,12 @@ export default {
 
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

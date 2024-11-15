@@ -16,21 +16,21 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
       await this.getOpeningHours();
     } catch (error) {
       this.triggerPopup("Hiba a betöltés során!", "error")
-    } 
+    }
   },
   methods: {
     async getOpeningHours() {
       try {
         const response = await axios.get(`http://localhost:3000/opening-hours/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) {
+
+        if (response.status == 200) {
           const data = response.data.data;
           this.hours = this.sortDaysOfWeek(data);
         }
@@ -38,14 +38,14 @@ export default {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async deleteOpeningHour(id){
+    async deleteOpeningHour(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/opening-hours/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
 
-        if(response.status == 200) {
-          const data  = await this.getOpeningHours();
+        if (response.status == 200) {
+          const data = await this.getOpeningHours();
           this.hours = this.sortDaysOfWeek(data)
           this.triggerPopup("Sikeres törlés!", "success")
         } else this.triggerPopup("Sikertelen törlés!", "error")
@@ -55,7 +55,7 @@ export default {
     },
     sortDaysOfWeek(days) {
       const weekOrder = ['Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Vasárnap'];
-  
+
       return days.sort((a, b) => weekOrder.indexOf(a.dayName) - weekOrder.indexOf(b.dayName));
     },
     triggerPopup(message, type) {
@@ -75,8 +75,8 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Nyitvatartás</h2>
     <div v-if="hours.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető időpontok</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető időpontok</h1>
+    </div>
     <div v-if="hours.length > 0" class="table-container">
       <table class="hours-table">
         <thead>
@@ -105,14 +105,9 @@ export default {
     </div>
   </div>
 
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -142,16 +137,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .hours-table {
@@ -162,7 +157,8 @@ export default {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.hours-table th, .hours-table td {
+.hours-table th,
+.hours-table td {
   padding: 12px;
   font-size: 14px;
   color: white;

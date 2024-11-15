@@ -1,4 +1,3 @@
-
 <script>
 import axios from 'axios';
 
@@ -6,7 +5,7 @@ import Popup from '../../popup/Popup.vue';
 
 export default {
   name: "TableAdd",
-  components:{
+  components: {
     Popup
   },
   data() {
@@ -20,16 +19,16 @@ export default {
     }
   },
   methods: {
-    async createTable(){
+    async createTable() {
       try {
         const response = await axios.post('http://localhost:3000/table', { tableNumber: this.formData.tableNumber }, {
           withCredentials: true
         });
-        
-        if(response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+
+        if (response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-      catch (error){
+      catch (error) {
         this.triggerPopup("Sikertelen létrehozás!", "error")
       }
     },
@@ -48,22 +47,17 @@ export default {
 
 <template>
   <div class="form-container">
-  <h2 class="form-title">Asztal Hozzáadás</h2>
-  <form @submit.prevent="createTable">
-    <div class="form-group">
-      <label class="form-label">Asztal szám</label>
-      <input type="number" v-model="formData.tableNumber" class="form-input" required />
-    </div>
-    <button type="submit" class="form-submit">Létrehozás</button>
-  </form>
-</div>
+    <h2 class="form-title">Asztal Hozzáadás</h2>
+    <form @submit.prevent="createTable">
+      <div class="form-group">
+        <label class="form-label">Asztal szám</label>
+        <input type="number" v-model="formData.tableNumber" class="form-input" required />
+      </div>
+      <button type="submit" class="form-submit">Létrehozás</button>
+    </form>
+  </div>
 
-<Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>

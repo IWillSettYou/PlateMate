@@ -16,39 +16,39 @@ export default {
       popupType: null,
       popupVisible: false,
     }
-  },  
+  },
   computed: {
     filteredOrders() {
       return this.orders.filter(item => item.itemName.toLowerCase().includes(this.searchQuery.toLowerCase()));
     }
   },
-  async mounted(){
+  async mounted() {
     try {
-        await this.getFinishedOrders();
-      } catch (error) {
-        this.triggerPopup("Hiba a betöltés során!", "error")
-    } 
+      await this.getFinishedOrders();
+    } catch (error) {
+      this.triggerPopup("Hiba a betöltés során!", "error")
+    }
   },
   methods: {
     async getFinishedOrders() {
       try {
         const response = await axios.get(`http://localhost:3000/order/finished`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.orders = response.data.data;
+
+        if (response.status == 200) this.orders = response.data.data;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async rollbackUpdatedOrder(id){
+    async rollbackUpdatedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/rollback-updated/${id}`, {}, 
-        {
-          withCredentials: true
-        });
+        const response = await axios.put(`http://localhost:3000/order/rollback-updated/${id}`, {},
+          {
+            withCredentials: true
+          });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           await this.getFinishedOrders()
           this.triggerPopup("Sikeres áthelyezés!", "success")
         }
@@ -56,14 +56,14 @@ export default {
         this.triggerPopup("Sikertelen törlés!", "error")
       }
     },
-    async setServedOrder(id){
+    async setServedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/set-serve/${id}`, {}, 
-        {
-          withCredentials: true
-        });
+        const response = await axios.put(`http://localhost:3000/order/set-serve/${id}`, {},
+          {
+            withCredentials: true
+          });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           await this.getFinishedOrders()
           this.triggerPopup("Sikeres áthelyezés!", "success")
         }
@@ -73,12 +73,12 @@ export default {
     },
     formatDateTime(isoString) {
       const date = new Date(isoString);
-      
+
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); 
-      const day = String(date.getDate()).padStart(2, '0'); 
-      const hours = String(date.getHours()).padStart(2, '0'); 
-      const minutes = String(date.getMinutes()).padStart(2, '0'); 
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
 
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     },
@@ -99,15 +99,10 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Elkészült termékek</h2>
     <div v-if="orders.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető elkészült termékek</h1>
+      <h1 class="form-title">Nincsenek elérhető elkészült termékek</h1>
     </div>
     <div v-if="orders.length > 0" class="search-container">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Keresés"
-        class="search-input"
-      />
+      <input v-model="searchQuery" type="text" placeholder="Keresés" class="search-input" />
     </div>
     <div v-if="orders.length > 0" class="table-container">
       <table class="item-table">
@@ -142,12 +137,7 @@ export default {
       </table>
     </div>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 
   </div>
 </template>
@@ -189,12 +179,13 @@ export default {
 }
 
 .search-input::placeholder {
-  text-align: center;  
+  text-align: center;
 }
 
-.search-input:hover, .search-input:focus {
+.search-input:hover,
+.search-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .table-container {
@@ -208,16 +199,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .item-table {

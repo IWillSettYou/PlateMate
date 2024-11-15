@@ -30,7 +30,7 @@ export default {
 <style scoped>
 .popup {
   position: fixed;
-  top: 90px; 
+  top: 90px;
   left: 50%;
   transform: translateX(-50%);
   width: 350px;
@@ -56,6 +56,6 @@ export default {
 .popup-message {
   padding: 20px;
   font-size: 16px;
-  text-align: center; 
+  text-align: center;
 }
 </style>

@@ -5,7 +5,7 @@ import Popup from '../../popup/Popup.vue';
 
 export default {
   name: "CategoryAdd",
-  components:{
+  components: {
     Popup
   },
   data() {
@@ -19,16 +19,16 @@ export default {
     }
   },
   methods: {
-    async createCategory(){
+    async createCategory() {
       try {
         const response = await axios.post('http://localhost:3000/category', { name: this.formData.categoryName }, {
           withCredentials: true
         });
 
-        if(response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+        if (response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-      catch (error){
+      catch (error) {
         this.triggerPopup("Sikertelen létrehozás!", "error")
       }
     },
@@ -46,24 +46,19 @@ export default {
 </script>
 
 <template>
-<div class="form-container">
-  <h2 class="form-title">Kategória készítés</h2>
-  <form @submit.prevent="createCategory">
-    <div class="form-group">
-      <label class="form-label">Kategória név</label>
-      <input type="text" v-model="formData.categoryName" class="form-input" required />
-    </div>
-    <button type="submit" class="form-submit">Létrehozás</button>
-  </form>
-</div>
+  <div class="form-container">
+    <h2 class="form-title">Kategória készítés</h2>
+    <form @submit.prevent="createCategory">
+      <div class="form-group">
+        <label class="form-label">Kategória név</label>
+        <input type="text" v-model="formData.categoryName" class="form-input" required />
+      </div>
+      <button type="submit" class="form-submit">Létrehozás</button>
+    </form>
+  </div>
 
-<Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
-  
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
+
 </template>
 
 <style scoped>

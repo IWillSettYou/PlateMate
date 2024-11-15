@@ -160,7 +160,7 @@ h2 {
   }
 
   .navbar-center,
-  .navbar-left > .navbar-link {
+  .navbar-left>.navbar-link {
     display: none;
   }
 
@@ -172,4 +172,3 @@ h2 {
     display: none;
   }
 }
-

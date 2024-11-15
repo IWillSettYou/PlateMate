@@ -22,24 +22,24 @@ export default {
     }
   },
   methods: {
-    async createOpeningHour(){
-      if(this.validateTimeFormat(this.formData.from) & this.validateTimeFormat(this.formData.until)){
+    async createOpeningHour() {
+      if (this.validateTimeFormat(this.formData.from) & this.validateTimeFormat(this.formData.until)) {
         try {
-        const response = await axios.post('http://localhost:3000/opening-hours', { 
-          day: this.formData.day,
-          from: this.formData.from,
-          until: this.formData.until
-        }, 
-        {
-          withCredentials: true
-        });
+          const response = await axios.post('http://localhost:3000/opening-hours', {
+            day: this.formData.day,
+            from: this.formData.from,
+            until: this.formData.until
+          },
+            {
+              withCredentials: true
+            });
 
-        if(response.status == 200) this.triggerPopup("Sikeres létrehozás!", "success")
-        else this.triggerPopup("Sikertelen létrehozás!", "error")
-      }
-      catch (error){
-        this.triggerPopup("Sikertelen létrehozás!", "error")
-      }
+          if (response.status == 200) this.triggerPopup("Sikeres létrehozás!", "success")
+          else this.triggerPopup("Sikertelen létrehozás!", "error")
+        }
+        catch (error) {
+          this.triggerPopup("Sikertelen létrehozás!", "error")
+        }
       } else this.triggerPopup("Érvénytelen időformátum!", "error")
     },
     validateTimeFormat(value) {
@@ -61,11 +61,11 @@ export default {
 
 <template>
   <div class="form-container">
-  <h2 class="form-title">Termék Létrehozás</h2>
-  <form @submit.prevent="createOpeningHour">
-    <div class="form-group">
-      <label class="form-label">Nap</label>
-      <select id="dropdown" v-model="formData.day" class="form-input" required>
+    <h2 class="form-title">Termék Létrehozás</h2>
+    <form @submit.prevent="createOpeningHour">
+      <div class="form-group">
+        <label class="form-label">Nap</label>
+        <select id="dropdown" v-model="formData.day" class="form-input" required>
           <option>Héftő</option>
           <option>Kedd</option>
           <option>Szerda</option>
@@ -74,21 +74,16 @@ export default {
           <option>Szombat</option>
           <option>Vasárnap</option>
         </select>
-      <label class="form-label">Ettől</label>
-      <input type="text" placeholder="09:00" v-model="formData.from" class="form-input" required />
-      <label class="form-label">Eddig</label>
-      <input id="dropdown" placeholder="18:00" v-model="formData.until" class="form-input" required />
-    </div>
-    <button type="submit" class="form-submit">Létrehozás</button>
-  </form>
-</div>
+        <label class="form-label">Ettől</label>
+        <input type="text" placeholder="09:00" v-model="formData.from" class="form-input" required />
+        <label class="form-label">Eddig</label>
+        <input id="dropdown" placeholder="18:00" v-model="formData.until" class="form-input" required />
+      </div>
+      <button type="submit" class="form-submit">Létrehozás</button>
+    </form>
+  </div>
 
-<Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>
@@ -148,9 +143,10 @@ export default {
   background-color: #56b6b1;
 }
 
-.form-input:hover, .form-input:focus {
+.form-input:hover,
+.form-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .input-select {

@@ -1,4 +1,3 @@
-
 <script>
 import axios from 'axios';
 
@@ -6,7 +5,7 @@ import Popup from '../../popup/Popup.vue';
 
 export default {
   name: "SectionAdd",
-  components:{
+  components: {
     Popup
   },
   data() {
@@ -20,16 +19,16 @@ export default {
     }
   },
   methods: {
-    async createSection(){
+    async createSection() {
       try {
         const response = await axios.post('http://localhost:3000/permission-setting', { section: this.formData.sectionName }, {
           withCredentials: true
         });
-        
-        if(response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+
+        if (response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-      catch (error){
+      catch (error) {
         this.triggerPopup("Sikertelen létrehozás!", "error")
       }
     },
@@ -47,23 +46,18 @@ export default {
 </script>
 
 <template>
- <div class="form-container">
-  <h2 class="form-title">Szekció készítés</h2>
-  <form @submit.prevent="createSection">
-    <div class="form-group">
-      <label class="form-label">Szekció név</label>
-      <input type="text" v-model="formData.sectionName" class="form-input" required />
-    </div>
-    <button type="submit" class="form-submit">Létrehozás</button>
-  </form>
-</div>
+  <div class="form-container">
+    <h2 class="form-title">Szekció készítés</h2>
+    <form @submit.prevent="createSection">
+      <div class="form-group">
+        <label class="form-label">Szekció név</label>
+        <input type="text" v-model="formData.sectionName" class="form-input" required />
+      </div>
+      <button type="submit" class="form-submit">Létrehozás</button>
+    </form>
+  </div>
 
-<Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>

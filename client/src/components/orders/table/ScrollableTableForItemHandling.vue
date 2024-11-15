@@ -16,38 +16,30 @@ export default {
 <template>
   <div class="table-container">
     <table class="item-table">
-        <thead>
-          <tr>
-            <th>Név</th>
-            <th>Művelet</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in items" :key="index">
-            <td>{{ item.name }}</td>
-            <td>
-              <button
-              v-if="!hideAddButton"
-              @click="$emit('add-item', item)"
-              class="add-button"
-            >
+      <thead>
+        <tr>
+          <th>Név</th>
+          <th>Művelet</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in items" :key="index">
+          <td>{{ item.name }}</td>
+          <td>
+            <button v-if="!hideAddButton" @click="$emit('add-item', item)" class="add-button">
               Hozzáadás
             </button>
-            <button
-              v-else
-              @click="$emit('remove-item', index)"
-              class="remove-button"
-            >
+            <button v-else @click="$emit('remove-item', index)" class="remove-button">
               Eltávolítás
             </button>
           </td>
-      </tr>
-    </tbody>
-  </table>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
-  
-  <style scoped>
+
+<style scoped>
 .table-container {
   max-height: 400px;
   min-height: 400px;
@@ -61,16 +53,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .item-table {

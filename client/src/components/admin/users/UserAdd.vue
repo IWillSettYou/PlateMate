@@ -1,4 +1,3 @@
-
 <script>
 import axios from 'axios';
 
@@ -17,7 +16,7 @@ export default {
         email: "",
         password: "",
         permissionId: "",
-        sections:  []
+        sections: []
       },
       loading: true,
       popupMessage: null,
@@ -25,21 +24,21 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
-        await this.getSections();
-      } catch (error) {
-        this.triggerPopup("Sikertelen a betöltés során!", "error");
-    } 
+      await this.getSections();
+    } catch (error) {
+      this.triggerPopup("Sikertelen a betöltés során!", "error");
+    }
   },
   methods: {
     async getSections() {
       try {
         const response = await axios.get(`http://localhost:3000/permission-setting/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) {
+
+        if (response.status == 200) {
           this.sections = response.data.data;
           this.loading = false;
         } else this.triggerPopup("Sikertelen lekérdezés!", "error")
@@ -47,22 +46,22 @@ export default {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async createUser(){
+    async createUser() {
       try {
-        const response = await axios.post('http://localhost:3000/register', { 
+        const response = await axios.post('http://localhost:3000/register', {
           name: this.formData.name,
           email: this.formData.email,
           password: this.formData.password,
           permissionId: this.formData.permissionId
-        }, 
-        {
-          withCredentials: true
-        });
-        
-        if(response.status === 200) this.triggerPopup("Sikeres létrehozás!", "success")
+        },
+          {
+            withCredentials: true
+          });
+
+        if (response.status === 200) this.triggerPopup("Sikeres létrehozás!", "success")
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-      catch (error){
+      catch (error) {
         this.triggerPopup("Sikertelen létrehozás!", "error")
       }
     },
@@ -81,36 +80,31 @@ export default {
 
 <template>
 
-<div class="form-container">
-  <h2 class="form-title">Felhasználó Létrehozás</h2>
-  <form @submit.prevent="createUser">
-    <div class="form-group">
-      <label class="form-label">Név</label>
-      <input type="text" v-model="formData.name" class="form-input" required />
-      <label class="form-label">Email</label>
-      <input type="text" v-model="formData.email" class="form-input" required />
-      <label class="form-label">Jelszó</label>
-      <input type="text" v-model="formData.password" class="form-input" required />
-      <label class="form-label">Szekció</label>
-      <div class="loading-spinner" v-if="loading">
-        <div class="spinner"></div>
+  <div class="form-container">
+    <h2 class="form-title">Felhasználó Létrehozás</h2>
+    <form @submit.prevent="createUser">
+      <div class="form-group">
+        <label class="form-label">Név</label>
+        <input type="text" v-model="formData.name" class="form-input" required />
+        <label class="form-label">Email</label>
+        <input type="text" v-model="formData.email" class="form-input" required />
+        <label class="form-label">Jelszó</label>
+        <input type="text" v-model="formData.password" class="form-input" required />
+        <label class="form-label">Szekció</label>
+        <div class="loading-spinner" v-if="loading">
+          <div class="spinner"></div>
+        </div>
+        <select id="dropdown" v-model="formData.permissionId" v-if="!loading" class="form-input" required>
+          <option v-for="section in sections" :key="section.id" :value="section.id" class="input-select">
+            {{ section.section }}
+          </option>
+        </select>
       </div>
-      <select id="dropdown" v-model="formData.permissionId" v-if="!loading" class="form-input" required>
-        <option v-for="section in sections" :key="section.id" :value="section.id" class="input-select">
-          {{ section.section }}
-        </option>
-      </select>
-    </div>
-    <button type="submit" class="form-submit">Létrehozás</button>
-  </form>
-</div>
+      <button type="submit" class="form-submit">Létrehozás</button>
+    </form>
+  </div>
 
-<Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>
@@ -170,9 +164,10 @@ export default {
   background-color: #56b6b1;
 }
 
-.form-input:hover, .form-input:focus {
+.form-input:hover,
+.form-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .input-select {
@@ -190,7 +185,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30px; 
+  height: 30px;
   margin-top: 10px;
   margin-bottom: 15px;
 }
@@ -198,14 +193,19 @@ export default {
 .spinner {
   border: 8px solid #4a4a4a;
   border-top: 8px solid #49d0ce;
-  border-radius: 50%; 
+  border-radius: 50%;
   width: 40px;
   height: 40px;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

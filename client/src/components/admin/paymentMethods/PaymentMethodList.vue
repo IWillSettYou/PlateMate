@@ -27,18 +27,18 @@ export default {
     async getPaymentMethods() {
       try {
         const response = await axios.get(`http://localhost:3000/payment-method/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
+
         if (response.status === 200) this.paymentMethods = response.data.data;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }
     },
-    async deletePaymentMethod(id){
+    async deletePaymentMethod(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/payment-method/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
 
         if (response.status === 200) {
@@ -63,11 +63,11 @@ export default {
 </script>
 
 <template>
-<div class="form-container">
+  <div class="form-container">
     <h2 class="form-title">Fizetési módok</h2>
     <div v-if="paymentMethods.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető fizetési módok</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető fizetési módok</h1>
+    </div>
     <div v-if="paymentMethods.length > 0" class="table-container">
       <table class="payment-table">
         <thead>
@@ -91,15 +91,10 @@ export default {
       </table>
     </div>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -129,16 +124,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .payment-table {

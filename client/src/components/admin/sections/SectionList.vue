@@ -17,7 +17,7 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
       await this.getSections();
     } catch (error) {
@@ -28,18 +28,18 @@ export default {
     async getSections() {
       try {
         const response = await axios.get(`http://localhost:3000/permission-setting/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.sections = response.data.data
+
+        if (response.status == 200) this.sections = response.data.data
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }
     },
-    async deleteSection(id){
+    async deleteSection(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/permission-setting/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
 
         if (response.status === 200) {
@@ -67,8 +67,8 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Szekciók</h2>
     <div v-if="sections.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető szekciók</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető szekciók</h1>
+    </div>
     <div v-if="sections.length > 0" class="table-container">
       <table class="section-table">
         <thead>
@@ -92,15 +92,10 @@ export default {
       </table>
     </div>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -131,16 +126,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .section-table {

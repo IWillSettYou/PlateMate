@@ -20,16 +20,16 @@ export default {
     }
   },
   methods: {
-    async createPaymentMethod(){
+    async createPaymentMethod() {
       try {
         const response = await axios.post('http://localhost:3000/payment-method', { name: this.formData.PaymentMethodName }, {
           withCredentials: true
         });
 
-        if(response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+        if (response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
-      catch (error){
+      catch (error) {
         this.triggerPopup("Sikertelen létrehozás!", "error")
       }
     },
@@ -57,14 +57,9 @@ export default {
       <button type="submit" class="form-submit">Létrehozás</button>
     </form>
   </div>
-  
-  <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
-  </template>
+
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
+</template>
 
 <style scoped>
 .form-container {

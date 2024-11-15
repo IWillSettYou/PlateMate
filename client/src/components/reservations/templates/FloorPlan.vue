@@ -136,7 +136,8 @@ export default {
   height: 100%;
 }
 
-.table-unselected, .table-selected {
+.table-unselected,
+.table-selected {
   color: #ffffff;
   background-color: #4a4a4a;
   width: 48px;
@@ -171,13 +172,18 @@ td {
   td {
     min-width: 30px;
   }
+
   .reservation-table {
     max-width: 100%;
   }
-  .table-cell, .table-counter {
+
+  .table-cell,
+  .table-counter {
     width: auto;
   }
-  .table-unselected, .table-selected {
+
+  .table-unselected,
+  .table-selected {
     width: 32px;
     height: 32px;
   }
@@ -188,17 +194,22 @@ td {
     font-size: 0.875rem;
     margin-bottom: 12px;
   }
+
   .reservation-container {
     padding: 8px;
   }
-  .table-unselected, .table-selected {
+
+  .table-unselected,
+  .table-selected {
     width: 24px;
     height: 24px;
     font-size: 0.75rem;
   }
+
   .reservation-table {
     border-spacing: 4px;
   }
+
   .table-counter {
     font-size: 0.75rem;
     padding: 4px;

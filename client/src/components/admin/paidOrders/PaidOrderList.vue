@@ -16,12 +16,12 @@ export default {
       popupVisible: false,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
-        await this.getPaidOrders();
-      } catch (error) {
-        console.error("Hiba az ellenőrzés során:", error);
-    } 
+      await this.getPaidOrders();
+    } catch (error) {
+      console.error("Hiba az ellenőrzés során:", error);
+    }
   },
   methods: {
     async getPaidOrders() {
@@ -32,19 +32,19 @@ export default {
             return status >= 200 && status < 500;
           }
         });
-        
-        if(response.status == 200) this.paidOrders = response.data.data;
+
+        if (response.status == 200) this.paidOrders = response.data.data;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async deletePaidOrder(id){
+    async deletePaidOrder(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/paid/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           await this.getPaidOrders();
           this.triggerPopup("Sikeres törlés!", "success")
         } else this.triggerPopup("Sikertelen törlés!", "error")
@@ -54,12 +54,12 @@ export default {
     },
     formatDateTime(isoString) {
       const date = new Date(isoString);
-      
+
       const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); 
-      const day = String(date.getDate()).padStart(2, '0'); 
-      const hours = String(date.getHours()).padStart(2, '0'); 
-      const minutes = String(date.getMinutes()).padStart(2, '0'); 
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const hours = String(date.getHours()).padStart(2, '0');
+      const minutes = String(date.getMinutes()).padStart(2, '0');
 
       return `${year}-${month}-${day} ${hours}:${minutes}`;
     },
@@ -75,13 +75,13 @@ export default {
   }
 };
 </script>
-  
+
 <template>
   <div class="form-container">
     <h2 class="form-title">Kifizetett Termékek</h2>
     <div v-if="paidOrders.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető Kifizetett Termékek</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető Kifizetett Termékek</h1>
+    </div>
     <div v-if="paidOrders.length > 0" class="table-container">
       <table class="paid-table">
         <thead>
@@ -97,29 +97,24 @@ export default {
         </thead>
         <tbody>
           <tr v-for="(paidOrder, index) in paidOrders" :key="index">
-          <td >{{ paidOrder.id }}</td>
-          <td >{{ paidOrder.tableNumber }}</td>
-          <td >{{ paidOrder.itemName }}</td>
-          <td >{{ paidOrder.itemPrice }}</td>
-          <td >{{ paidOrder.paymentMethodName }}</td>
-          <td >{{ formatDateTime(paidOrder.paidAt) }}</td>
-          <td >
-            <button @click="deletePaidOrder(paidOrder.id)" class="delete-button">
-              Törlés
-            </button>
-          </td>
-        </tr>
+            <td>{{ paidOrder.id }}</td>
+            <td>{{ paidOrder.tableNumber }}</td>
+            <td>{{ paidOrder.itemName }}</td>
+            <td>{{ paidOrder.itemPrice }}</td>
+            <td>{{ paidOrder.paymentMethodName }}</td>
+            <td>{{ formatDateTime(paidOrder.paidAt) }}</td>
+            <td>
+              <button @click="deletePaidOrder(paidOrder.id)" class="delete-button">
+                Törlés
+              </button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>
@@ -152,16 +147,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .paid-table {

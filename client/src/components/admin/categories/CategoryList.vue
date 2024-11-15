@@ -72,15 +72,10 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Kategóriák</h2>
     <div v-if="categories.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető kategóriák</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető kategóriák</h1>
+    </div>
     <div v-if="categories.length > 0" class="search-container">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Keresés"
-        class="search-input"
-      />
+      <input v-model="searchQuery" type="text" placeholder="Keresés" class="search-input" />
     </div>
     <div v-if="categories.length > 0" class="table-container">
       <table class="category-table">
@@ -105,12 +100,7 @@ export default {
       </table>
     </div>
 
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
 
@@ -151,12 +141,13 @@ export default {
 }
 
 .search-input::placeholder {
-  text-align: center;  
+  text-align: center;
 }
 
-.search-input:hover, .search-input:focus {
+.search-input:hover,
+.search-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .table-container {
@@ -170,16 +161,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .category-table {

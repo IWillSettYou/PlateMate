@@ -7,11 +7,11 @@ import { mdiLogin } from '@mdi/js';
 import Popup from '../../components/popup/Popup.vue';
 
 export default {
-  components:{
+  components: {
     Popup,
     SvgIcon
   },
-  data(){
+  data() {
     return {
       email: null,
       password: null,
@@ -21,24 +21,24 @@ export default {
       iconPath: mdiLogin,
     }
   },
-  async mounted(){
+  async mounted() {
     try {
       await this.redirectHandler();
     } catch (error) {
       this.triggerPopup("Hiba történt a betöltés során!", "error")
-    } 
-  },  
+    }
+  },
   methods: {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-            params: { page: "login"},
-            withCredentials: true 
+          params: { page: "login" },
+          withCredentials: true
         });
-        
-        if(response.data.isAuthorized == true) this.$router.push({ name: 'Home' });
+
+        if (response.data.isAuthorized == true) this.$router.push({ name: 'Home' });
       } catch (error) {
-          this.triggerPopup("Hiba történt a betöltés során!", "error")
+        this.triggerPopup("Hiba történt a betöltés során!", "error")
       }
     },
     async login() {
@@ -52,7 +52,7 @@ export default {
             return status >= 200 && status < 500;
           }
         });
-        
+
         if (response.status == 200) this.$router.push({ name: 'Home' });
         else this.triggerPopup("Érvénytelen bejelentkezési adatok!", "error");
       } catch (error) {
@@ -82,25 +82,23 @@ export default {
           <form @submit.prevent="login" class="form">
             <div class="input-group">
               <label for="email" class="email-label">Email</label>
-              <input type="email" v-model="email" name="email" id="email" class="email-input" placeholder="name@gmail.com"  required/>
+              <input type="email" v-model="email" name="email" id="email" class="email-input"
+                placeholder="name@gmail.com" required />
             </div>
             <div class="input-group">
               <label for="password" class="password-label">Jelszó</label>
-              <input type="password"  v-model="password" name="password" id="password" placeholder="••••••••" class="password-input"  required/>
+              <input type="password" v-model="password" name="password" id="password" placeholder="••••••••"
+                class="password-input" required />
             </div>
-            <button type="submit" class="login-button">Bejelentkezés<svg-icon type="mdi" :path="iconPath"></svg-icon></button>
+            <button type="submit" class="login-button">Bejelentkezés<svg-icon type="mdi"
+                :path="iconPath"></svg-icon></button>
           </form>
         </div>
       </div>
     </div>
   </section>
 
-  <Popup
-    v-if="popupVisible"
-    :message="popupMessage"
-    :popupType="popupType"
-    :isVisible="popupVisible"
-  />
+  <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
 <style scoped>
@@ -226,4 +224,3 @@ button {
   }
 }
 </style>
-

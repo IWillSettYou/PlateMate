@@ -22,32 +22,32 @@ export default {
       return this.users.filter(user => user.userName.toLowerCase().includes(this.searchQuery.toLowerCase()));
     }
   },
-  async mounted(){
+  async mounted() {
     try {
-        await this.getUsers();
-      } catch (error) {
-        this.triggerPopup("Hiba a betöltés során!", "error")
-    } 
+      await this.getUsers();
+    } catch (error) {
+      this.triggerPopup("Hiba a betöltés során!", "error")
+    }
   },
   methods: {
     async getUsers() {
       try {
         const response = await axios.get(`http://localhost:3000/user/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.users = response.data.data
+
+        if (response.status == 200) this.users = response.data.data
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async deleteUser(id){
+    async deleteUser(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/user/${id}`, {
-          withCredentials: true 
+          withCredentials: true
         });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           this.getUsers()
           this.triggerPopup("Sikeres törlés!", "success")
         } else this.triggerPopup("Sikertelen törlés!", "error")
@@ -70,18 +70,13 @@ export default {
 
 <template>
 
-<div class="form-container">
+  <div class="form-container">
     <h2 class="form-title">Felhasználók</h2>
     <div v-if="users.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető felhasználók</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető felhasználók</h1>
+    </div>
     <div v-if="users.length > 0" class="search-container">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Keresés"
-        class="search-input"
-      />
+      <input v-model="searchQuery" type="text" placeholder="Keresés" class="search-input" />
     </div>
     <div v-if="users.length > 0" class="table-container">
       <table class="user-table">
@@ -109,15 +104,12 @@ export default {
         </tbody>
       </table>
     </div>
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
+    
   </div>
 </template>
-  
+
 <style scoped>
 .form-container {
   background-color: #282828;
@@ -155,12 +147,13 @@ export default {
 }
 
 .search-input::placeholder {
-  text-align: center;  
+  text-align: center;
 }
 
-.search-input:hover, .search-input:focus {
+.search-input:hover,
+.search-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .table-container {
@@ -174,16 +167,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .user-table {

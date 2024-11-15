@@ -22,19 +22,19 @@ import Orders from '../pages/orders/Orders.vue'
 
 
 const routes = [
-  { path: '/', name:  'Home', component: Home },
+  { path: '/', name: 'Home', component: Home },
   { path: '/login', name: 'Login', component: Login },
-  { path: '/cashout',  name: 'Cashout', component: Cashout },
-  { path: '/items',  name: 'Items', component: Items },
-  { path: '/opening-hours',  name: 'OpeningHours', component: OpeningHours },
-  { path: '/categories',  name: 'Categories', component: Categories },
-  { path: '/tables',  name: 'Tables', component: Tables },
-  { path: '/payment-methods',  name: 'PaymentMethods', component: PaymentMethods },
-  { path: '/paid-orders',  name: 'PaidOrders', component: PaidOrders },
-  { path: '/sections',  name: 'Sections', component: Sections },
-  { path: '/users',  name: 'Users', component: Users },
-  { path: '/reservations',  name: 'Reservations', component: Reservation },
-  { path: '/orders',  name: 'Orders', component: Orders }
+  { path: '/cashout', name: 'Cashout', component: Cashout },
+  { path: '/items', name: 'Items', component: Items },
+  { path: '/opening-hours', name: 'OpeningHours', component: OpeningHours },
+  { path: '/categories', name: 'Categories', component: Categories },
+  { path: '/tables', name: 'Tables', component: Tables },
+  { path: '/payment-methods', name: 'PaymentMethods', component: PaymentMethods },
+  { path: '/paid-orders', name: 'PaidOrders', component: PaidOrders },
+  { path: '/sections', name: 'Sections', component: Sections },
+  { path: '/users', name: 'Users', component: Users },
+  { path: '/reservations', name: 'Reservations', component: Reservation },
+  { path: '/orders', name: 'Orders', component: Orders }
 ]
 
 const router = createRouter({

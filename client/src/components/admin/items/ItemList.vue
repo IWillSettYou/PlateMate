@@ -22,32 +22,32 @@ export default {
       return this.items.filter(item => item.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
     }
   },
-  async mounted(){
+  async mounted() {
     try {
-        await this.getItems();
-      } catch (error) {
-        this.triggerPopup("Hiba a betöltés során!", "error")
-    } 
+      await this.getItems();
+    } catch (error) {
+      this.triggerPopup("Hiba a betöltés során!", "error")
+    }
   },
   methods: {
     async getItems() {
       try {
         const response = await axios.get(`http://localhost:3000/item/`, {
-          withCredentials: true 
+          withCredentials: true
         });
-        
-        if(response.status == 200) this.items = response.data.data;
+
+        if (response.status == 200) this.items = response.data.data;
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
     },
-    async deleteItem(id){
+    async deleteItem(id) {
       try {
         const response = await axios.delete(`http://localhost:3000/item/${id}`, {
-        withCredentials: true 
-      });
+          withCredentials: true
+        });
 
-        if(response.status == 200) {
+        if (response.status == 200) {
           this.getItems()
           this.triggerPopup("Sikeres törlés!", "success")
         } else this.triggerPopup("Sikertelen törlés!", "error")
@@ -72,15 +72,10 @@ export default {
   <div class="form-container">
     <h2 class="form-title">Termékek</h2>
     <div v-if="items.length <= 0">
-        <h1 class="form-title">Nincsenek elérhető Termékek</h1>
-      </div>
+      <h1 class="form-title">Nincsenek elérhető Termékek</h1>
+    </div>
     <div v-if="items.length > 0" class="search-container">
-      <input
-        v-model="searchQuery"
-        type="text"
-        placeholder="Keresés"
-        class="search-input"
-      />
+      <input v-model="searchQuery" type="text" placeholder="Keresés" class="search-input" />
     </div>
     <div v-if="items.length > 0" class="table-container">
       <table class="item-table">
@@ -108,12 +103,7 @@ export default {
         </tbody>
       </table>
     </div>
-    <Popup
-      v-if="popupVisible"
-      :message="popupMessage"
-      :popupType="popupType"
-      :isVisible="popupVisible"
-    />
+    <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
   </div>
 </template>
 
@@ -154,12 +144,13 @@ export default {
 }
 
 .search-input::placeholder {
-  text-align: center;  
+  text-align: center;
 }
 
-.search-input:hover, .search-input:focus {
+.search-input:hover,
+.search-input:focus {
   border-color: #b9ebe9;
-  background-color: #4a4a4a; 
+  background-color: #4a4a4a;
 }
 
 .table-container {
@@ -173,16 +164,16 @@ export default {
 }
 
 .table-container::-webkit-scrollbar-thumb {
-  background-color: #49d0ce; 
+  background-color: #49d0ce;
   border-radius: 2px;
 }
 
 .table-container::-webkit-scrollbar-track {
-  background-color: #575757; 
+  background-color: #575757;
 }
 
 .table-container::-webkit-scrollbar-corner {
-    background-color: #49d0ce; 
+  background-color: #49d0ce;
 }
 
 .item-table {

@@ -1,15 +1,15 @@
 <script>
 export default {
-    props: {
-        title: String,
-        items: Array,
-        isOpen: Boolean,
+  props: {
+    title: String,
+    items: Array,
+    isOpen: Boolean,
+  },
+  methods: {
+    toggleDropdown() {
+      this.$emit('toggle');
     },
-    methods: {
-        toggleDropdown() {
-        this.$emit('toggle');
-        },
-    },
+  },
 };
 </script>
 
@@ -85,11 +85,13 @@ export default {
   width: 100%;
 }
 
-.dropdown-enter-active, .dropdown-leave-active {
+.dropdown-enter-active,
+.dropdown-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.dropdown-enter-from, .dropdown-leave-to {
+.dropdown-enter-from,
+.dropdown-leave-to {
   opacity: 0;
   transform: translateY(-10px);
 }
@@ -115,6 +117,4 @@ export default {
     font-size: 14px;
   }
 }
-
 </style>
-  
