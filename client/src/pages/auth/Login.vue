@@ -1,63 +1,73 @@
 <script>
 import axios from 'axios';
-
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiLogin } from '@mdi/js';
+import { mdiEye, mdiEyeOff, mdiLogin } from '@mdi/js'; 
 
 import Popup from '../../components/popup/Popup.vue';
 
 export default {
   components: {
     Popup,
-    SvgIcon
+    SvgIcon,
   },
   data() {
     return {
       email: null,
       password: null,
+      showPassword: false, 
       popupMessage: null,
       popupType: null,
       popupVisible: false,
       iconPath: mdiLogin,
-    }
+    };
+  },
+  computed: {
+    passwordToggleIcon() {
+      return this.showPassword ? mdiEyeOff : mdiEye;
+    },
   },
   async mounted() {
     try {
       await this.redirectHandler();
     } catch (error) {
-      this.triggerPopup("Hiba történt a betöltés során!", "error")
+      this.triggerPopup('Hiba történt a betöltés során!', 'error');
     }
   },
   methods: {
     async redirectHandler() {
       try {
         const response = await axios.get('http://localhost:3000/redirect', {
-          params: { page: "login" },
-          withCredentials: true
+          params: { page: 'login' },
+          withCredentials: true,
         });
 
         if (response.data.isAuthorized == true) this.$router.push({ name: 'Home' });
       } catch (error) {
-        this.triggerPopup("Hiba történt a betöltés során!", "error")
+        this.triggerPopup('Hiba történt a betöltés során!', 'error');
       }
     },
     async login() {
       try {
         const response = await axios.post('http://localhost:3000/login', {
-          email: this.email,
-          password: this.password
-        }, {
-          withCredentials: true,
-          validateStatus: function (status) {
-            return status >= 200 && status < 500;
+            email: this.email,
+            password: this.password,
+          },
+          {
+            withCredentials: true,
+            validateStatus: function (status) {
+              return status >= 200 && status < 500;
+            },
           }
-        });
+        );
 
         if (response.status == 200) this.$router.push({ name: 'Home' });
-        else this.triggerPopup("Érvénytelen bejelentkezési adatok!", "error");
+        else this.triggerPopup('Érvénytelen bejelentkezési adatok!', 'error');
       } catch (error) {
-        this.triggerPopup("Hiba a szerverre történő csatlakozás során!", "error")
+        this.triggerPopup('Hiba a szerverre történő csatlakozás során!', 'error');
       }
+    },
+    togglePassword() {
+      this.showPassword = !this.showPassword;
     },
     triggerPopup(message, type) {
       this.popupMessage = message;
@@ -67,10 +77,9 @@ export default {
       setTimeout(() => {
         this.popupVisible = false;
       }, 3000);
-    }
+    },
   },
-}
-
+};
 </script>
 
 <template>
@@ -82,16 +91,18 @@ export default {
           <form @submit.prevent="login" class="form">
             <div class="input-group">
               <label for="email" class="email-label">Email</label>
-              <input type="email" v-model="email" name="email" id="email" class="email-input"
-                placeholder="name@gmail.com" required />
+              <input type="email" v-model="email" name="email" id="email" class="email-input" placeholder="name@gmail.com" required />
             </div>
-            <div class="input-group">
+            <div class="input-group password-container">
               <label for="password" class="password-label">Jelszó</label>
-              <input type="password" v-model="password" name="password" id="password" placeholder="••••••••"
-                class="password-input" required />
+              <input :type="showPassword ? 'text' : 'password'" v-model="password" name="password" id="password" placeholder="••••••••" class="password-input" required />
+              <span class="password-toggle" @click="togglePassword">
+                <svg-icon type="mdi" :path="passwordToggleIcon" />
+              </span>
             </div>
-            <button type="submit" class="login-button">Bejelentkezés<svg-icon type="mdi"
-                :path="iconPath"></svg-icon></button>
+            <button type="submit" class="login-button">
+              Bejelentkezés<svg-icon type="mdi" :path="iconPath"></svg-icon>
+            </button>
           </form>
         </div>
       </div>
@@ -143,6 +154,10 @@ export default {
   margin-bottom: 20px;
 }
 
+.password-container {
+  position: relative;
+}
+
 .email-label,
 .password-label {
   display: block;
@@ -165,15 +180,16 @@ export default {
   transition: border-color 0.2s ease;
 }
 
-.email-input:focus,
-.password-input:focus {
-  border-color: #b9ebe9;
-}
-
-.email-input:hover,
-.password-input:hover {
-  border-color: #b9ebe9;
-  background-color: #4a4a4a;
+.password-toggle {
+  color: rgba(255, 255, 255, 0.667);
+  position: absolute;
+  top: 69%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-button {
@@ -196,10 +212,6 @@ export default {
 
 .login-button:hover {
   background-color: #56b6b1;
-}
-
-button {
-  margin-top: 20px;
 }
 
 @media (max-width: 768px) {
