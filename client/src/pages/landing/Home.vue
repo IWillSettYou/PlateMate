@@ -24,7 +24,19 @@ export default {
       popupMessage: "",
       popupType: "",
       popupVisible: false,
-      iconPath: mdiLogout
+      iconPath: mdiLogout,
+      motivationalQuotes: [
+        "A siker kulcsa a kitartásban rejlik, ne add fel!",
+        "Minden nap egy új lehetőség, hogy jobbá válj.",
+        "Ne félj a hibáktól, ők vezetnek a fejlődéshez.",
+        "Higgy magadban, és a világ is hinni fog benned.",
+        "A legnagyobb erő a pozitív gondolkodásban rejlik.",
+        "Minden nap egy új lehetőség a sikerhez.",
+        "Ha ma jobbat teszel, mint tegnap, akkor már előrébb jársz.",
+        "A legnagyobb változások kis lépésekkel kezdődnek.",
+        "A kemény munka meghozza a gyümölcsét, légy türelmes!",
+        "A legjobb idő most van, ne várj holnapra!"
+      ]
     };
   },
   async mounted() {
@@ -90,6 +102,9 @@ export default {
     toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;
     },
+    getQuote() {
+      return this.motivationalQuotes[Math.floor(Math.random() * this.motivationalQuotes.length)]
+    },
     triggerPopup(message, type) {
       this.popupMessage = message;
       this.popupType = type;
@@ -150,13 +165,43 @@ export default {
       </div>
     </nav>
 
-    <div class="content-body">
-      <h1>Üdvözözzek az oldalon!</h1>
-      <h2>Válaszd ki a számodra szükséges oldalt!</h2>
+    <div class="above-body">
+      <h1>Kellemes munkát kívánunk a mai napra!</h1>
+      <h1>Ha bármire szükséged van, keresd a vezetőséget.</h1>
+    </div>
+
+    <div class="content">
+      <div class="card-body">
+        <h2>Elérhetőségek</h2>
+        <h3>Email: platemate@gmail.com</h3>
+        <h3>Tel: +36 30 123 4567</h3>
+        
+      </div>
     </div>
   </div>
 
   <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>
 
-<style scoped></style>
+<style scoped>
+.above-body {
+  margin: auto;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.content {
+  display: flex;
+  margin: auto;
+}
+
+.card-body {
+  background-color: #282828;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 32px;
+  max-width: 400px;
+  width: 100%;
+}
+</style>
