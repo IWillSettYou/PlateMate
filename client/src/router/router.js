@@ -18,7 +18,8 @@ import OpeningHours from '../pages/admin/OpeningHours.vue'
 import Reservation from '../pages/reservations/Reservations.vue'
 //Orders
 import Orders from '../pages/orders/Orders.vue'
-
+//NotFound
+import NotFound from '../pages/404/NotFound.vue'
 
 
 const routes = [
@@ -34,7 +35,8 @@ const routes = [
   { path: '/sections', name: 'Sections', component: Sections },
   { path: '/users', name: 'Users', component: Users },
   { path: '/reservations', name: 'Reservations', component: Reservation },
-  { path: '/orders', name: 'Orders', component: Orders }
+  { path: '/orders', name: 'Orders', component: Orders },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
 
 const router = createRouter({
