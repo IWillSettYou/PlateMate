@@ -84,7 +84,8 @@ export default {
 </script>
 
 <template>
-  <section class="background">
+  <div>
+    <section class="background">
     <div class="wrapper">
       <div class="content-box">
         <div class="form-container">
@@ -109,6 +110,7 @@ export default {
       </div>
     </div>
   </section>
+  </div>
 
   <Popup v-if="popupVisible" :message="popupMessage" :popupType="popupType" :isVisible="popupVisible" />
 </template>

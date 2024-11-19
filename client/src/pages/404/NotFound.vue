@@ -5,13 +5,15 @@ export default {
 </script>
 
 <template>
-  <section class="not-found">
+  <div>
+    <section class="not-found">
     <div class="not-found-body">
       <h2>404 - Az oldal nem található</h2>
       <p>Kérlek ellenőrizd az URL-t, vagy menj vissza a kezdőlapra.</p>
       <button class="to-home-button"><router-link to="/" class="router-link">Kezdőlap</router-link></button>
     </div>
   </section>
+  </div>
 </template>
 
 <style scoped>
