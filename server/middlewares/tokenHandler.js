@@ -39,7 +39,7 @@ const refreshToken = async (req, res) => {
     const token = req.cookies.token;
     const refreshToken = req.cookies.refreshToken;
     if (!token) return res.status(401).send({ message : "Jogosultság megtagadva, nincs token." });
-    if (!refreshToken) return res.status(400).send({ message : "Rossz kérés." });
+    if (!refreshToken) return res.status(400).send({ message : "Jogosultság megtagadva, nincs refresh token." });
 
     try {
         const verified = jwt.verify(token, process.env.TOKEN_SECRET);
