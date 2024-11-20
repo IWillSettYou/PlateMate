@@ -62,7 +62,7 @@ export default {
         );
 
         if (response.status == 200) this.$router.push({ name: 'Home' });
-        else this.triggerPopup('Érvénytelen bejelentkezési adatok!', 'error');
+        else this.triggerPopup('Érvénytelen bejelentkezési adatok!', 'warning');
       } catch (error) {
         this.triggerPopup('Hiba a szerverre történő csatlakozás során!', 'error');
       }

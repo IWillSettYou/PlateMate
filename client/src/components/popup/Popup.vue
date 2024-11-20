@@ -88,21 +88,22 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: #fff;
+  color: white;
   gap: 12px;
   z-index: 9999;
 }
 
 .alert-success {
-  background-color: #4caf50; /* Zöld */
+  background-color: #4caf50; 
 }
 
 .alert-warning {
-  background-color: #ffc107; /* Sárga */
+  background-color: #ffc107; 
+  color: black;
 }
 
 .alert-error {
-  background-color: #f44336; /* Piros */
+  background-color: #f44336;
 }
 
 .icon {
