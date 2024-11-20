@@ -88,13 +88,13 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: white;
   gap: 12px;
   z-index: 9999;
 }
 
 .alert-success {
   background-color: #4caf50; 
+  color: black;
 }
 
 .alert-warning {
@@ -104,6 +104,7 @@ export default {
 
 .alert-error {
   background-color: #f44336;
+  color: white;
 }
 
 .icon {
