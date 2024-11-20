@@ -194,7 +194,7 @@ export default {
         </p>
         <p class="footer-text">
           <i class="fas fa-copyright"></i>
-          © 2024 PlateMate. Minden jog fenntartva.
+          2024 PlateMate. Minden jog fenntartva.
         </p>
       </div>
     </footer>
