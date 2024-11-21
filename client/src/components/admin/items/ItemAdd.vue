@@ -55,7 +55,12 @@ export default {
             withCredentials: true
           });
 
-        if (response.status == 200) this.triggerPopup("Sikeres létrehozás!", "success")
+        if (response.status == 200) { 
+          this.triggerPopup("Sikeres létrehozás!", "success")
+          this.formData.name = null; 
+          this.formData.price = null;
+          this.formData.categoryId = null;
+        }
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
       catch (error) {

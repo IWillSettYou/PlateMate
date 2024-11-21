@@ -111,7 +111,7 @@ export default {
           this.triggerPopup("Sikeres kifizetés!", "success")
           const orderIds = this.items.map(item => item.id)
           await this.deleteOrders(orderIds)
-          this.items = []
+          window.location.reload()
         }
       } catch (error) {
         this.triggerPopup("Sikertelen kifizetés!", "error")

@@ -25,7 +25,10 @@ export default {
           withCredentials: true
         });
 
-        if (response.status == 200) this.triggerPopup("Sikeres létrehozás", "success")
+        if (response.status == 200) { 
+          this.triggerPopup("Sikeres létrehozás", "success")
+          this.formData.categoryName = "";
+        }
         else this.triggerPopup("Sikertelen létrehozás!", "error")
       }
       catch (error) {
