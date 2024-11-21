@@ -34,6 +34,7 @@ export default {
           const data = response.data.data;
           this.hours = this.sortDaysOfWeek(data);
         }
+        if (response.status == 204) this.hours = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }

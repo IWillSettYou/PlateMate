@@ -76,12 +76,12 @@ export default {
         !this.selectedStartTime ||
         !this.selectedEndTime
       ) {
-        this.triggerPopup("Minden mező megadása közelező!", "error")
+        this.triggerPopup("Minden mező megadása közelező!", "warning")
         return
       }
 
       if (this.selectedStartTime.split(':')[0] > this.selectedEndTime.split(':')[0]) {
-        this.triggerPopup("Érvénytelen időzóna!", "error")
+        this.triggerPopup("Érvénytelen időzóna!", "warning")
         return
       }
 

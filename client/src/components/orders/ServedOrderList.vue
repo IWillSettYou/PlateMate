@@ -37,6 +37,7 @@ export default {
         });
 
         if (response.status == 200) this.orders = response.data.data
+        if (response.status == 204) this.orders = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }
@@ -53,6 +54,22 @@ export default {
           this.triggerPopup("Sikeres áthelyezés!", "success")
         }
       } catch (error) {
+        this.triggerPopup("Sikertelen törlés!", "error")
+      }
+    },
+    async deleteOrder(id) {
+      try {
+        const response = await axios.delete(`http://localhost:3000/order/${id}`,
+          {
+            withCredentials: true
+          });
+
+        if (response.status == 200) {
+          await this.getServedOrders()
+          this.triggerPopup("Sikeres törlés!", "success")
+        }
+      } catch (error) {
+        console.log(error)
         this.triggerPopup("Sikertelen törlés!", "error")
       }
     },
@@ -98,6 +115,7 @@ export default {
             <th>Termék</th>
             <th>Felvéve</th>
             <th>Művelet</th>
+            <th>Művelet</th>
           </tr>
         </thead>
         <tbody>
@@ -109,6 +127,11 @@ export default {
             <td>
               <button @click="rollbackServedOrder(order.id)" class="action-button">
                 Vissza
+              </button>
+            </td>
+            <td>
+              <button @click="deleteOrder(order.id)" class="action-button">
+                Törlés
               </button>
             </td>
           </tr>

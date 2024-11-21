@@ -34,6 +34,7 @@ export default {
         });
 
         if (response.status == 200) this.paidOrders = response.data.data;
+        if (response.status === 204) this.paidOrders = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }

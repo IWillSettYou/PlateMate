@@ -40,7 +40,7 @@ export default {
         catch (error) {
           this.triggerPopup("Sikertelen létrehozás!", "error")
         }
-      } else this.triggerPopup("Érvénytelen időformátum!", "error")
+      } else this.triggerPopup("Érvénytelen időformátum!", "warning")
     },
     validateTimeFormat(value) {
       const regex = /^(?:[01]\d|2[0-3]):00$/;

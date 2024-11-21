@@ -32,6 +32,7 @@ export default {
         });
 
         if (response.status == 200) this.tables = response.data.data.sort((a, b) => a.tableNumber - b.tableNumber)
+        if (response.status == 204) this.tables = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }

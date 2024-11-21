@@ -36,7 +36,8 @@ export default {
           withCredentials: true
         });
 
-        if (response.status == 200) this.users = response.data.data
+        if (response.status == 200) this.users = response.data.data;
+        if (response.status == 204) this.users = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }

@@ -37,6 +37,7 @@ export default {
         });
 
         if (response.status == 200) this.items = response.data.data;
+        if (response.status == 204) this.items = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error")
       }

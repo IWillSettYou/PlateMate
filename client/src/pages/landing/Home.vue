@@ -25,18 +25,6 @@ export default {
       popupType: "",
       popupVisible: false,
       iconPath: mdiLogout,
-      motivationalQuotes: [
-        "A siker kulcsa a kitartásban rejlik, ne add fel!",
-        "Minden nap egy új lehetőség, hogy jobbá válj.",
-        "Ne félj a hibáktól, ők vezetnek a fejlődéshez.",
-        "Higgy magadban, és a világ is hinni fog benned.",
-        "A legnagyobb erő a pozitív gondolkodásban rejlik.",
-        "Minden nap egy új lehetőség a sikerhez.",
-        "Ha ma jobbat teszel, mint tegnap, akkor már előrébb jársz.",
-        "A legnagyobb változások kis lépésekkel kezdődnek.",
-        "A kemény munka meghozza a gyümölcsét, légy türelmes!",
-        "A legjobb idő most van, ne várj holnapra!"
-      ]
     };
   },
   async mounted() {

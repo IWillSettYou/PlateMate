@@ -31,6 +31,7 @@ export default {
         });
 
         if (response.status === 200) this.paymentMethods = response.data.data;
+        if (response.status === 204) this.paymentMethods = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }

@@ -31,7 +31,8 @@ export default {
           withCredentials: true
         });
 
-        if (response.status == 200) this.sections = response.data.data
+        if (response.status == 200) this.sections = response.data.data;
+        if (response.status == 204) this.sections = [];
       } catch (error) {
         this.triggerPopup("Sikertelen lekérdezés!", "error");
       }
