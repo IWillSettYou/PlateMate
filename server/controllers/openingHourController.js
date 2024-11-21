@@ -1,6 +1,6 @@
 const connect = require("../config/db");
 
-const getAllHours = async (req, res) => {
+const getAllOpeningHours = async (req, res) => {
     try {
         const users = await new Promise((resolve, reject) => {
             connect.query(`SELECT * FROM openinghours`, (err, result) => {
@@ -41,7 +41,7 @@ const createOpeningHour = async (req, res) => {
     }
 };
 
-const deleteHour = async (req, res) => {
+const deleteOpeningHour = async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
@@ -67,7 +67,7 @@ const deleteHour = async (req, res) => {
 };
 
 module.exports = {
-    getAllHours,
+    getAllOpeningHours,
     createOpeningHour,
-    deleteHour
+    deleteOpeningHour
 };

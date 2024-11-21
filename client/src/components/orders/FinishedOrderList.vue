@@ -44,7 +44,7 @@ export default {
     },
     async rollbackUpdatedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/rollback-updated/${id}`, {},
+        const response = await axios.put(`http://localhost:3000/order/rollback-done/${id}`, {},
           {
             withCredentials: true
           });
@@ -59,7 +59,7 @@ export default {
     },
     async setServedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/set-serve/${id}`, {},
+        const response = await axios.put(`http://localhost:3000/order/set-served/${id}`, {},
           {
             withCredentials: true
           });

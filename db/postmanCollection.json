@@ -1,13 +1,13 @@
 {
   "collection": {
     "info": {
-      "_postman_id": "abb17203-d438-4fff-8274-cb6338b9d8c0",
+      "_postman_id": "22af1f71-4c31-4166-8f60-22e2351fbf8a",
       "name": "Vizsgaremek",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-      "updatedAt": "2024-10-28T20:52:51.000Z",
-      "createdAt": "2024-10-28T12:23:33.000Z",
+      "updatedAt": "2024-11-21T22:33:30.000Z",
+      "createdAt": "2024-11-06T03:09:25.000Z",
       "lastUpdatedBy": "38461072",
-      "uid": "38461072-abb17203-d438-4fff-8274-cb6338b9d8c0"
+      "uid": "38461072-22af1f71-4c31-4166-8f60-22e2351fbf8a"
     },
     "item": [
       {
@@ -15,7 +15,7 @@
         "item": [
           {
             "name": "login",
-            "id": "a9f9dc1b-954a-49ee-875a-e5f49c52d66c",
+            "id": "2343ea40-4a49-486c-aa38-c36e45f355a8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -43,11 +43,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-a9f9dc1b-954a-49ee-875a-e5f49c52d66c"
+            "uid": "38461072-2343ea40-4a49-486c-aa38-c36e45f355a8"
           },
           {
             "name": "register",
-            "id": "fefa6053-c322-4d9d-9470-868dfd1b37dd",
+            "id": "7cadc74a-cd53-4f4a-b894-a5b2d9a3dde0",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -75,11 +75,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-fefa6053-c322-4d9d-9470-868dfd1b37dd"
+            "uid": "38461072-7cadc74a-cd53-4f4a-b894-a5b2d9a3dde0"
           },
           {
             "name": "logout",
-            "id": "8701b4a4-61c3-4d07-bd3a-ec20a4a6573e",
+            "id": "6da9f1aa-2cd6-4f0a-a822-e7a76048fe5a",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -98,18 +98,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-8701b4a4-61c3-4d07-bd3a-ec20a4a6573e"
+            "uid": "38461072-6da9f1aa-2cd6-4f0a-a822-e7a76048fe5a"
           }
         ],
-        "id": "4e0647fc-3f2a-4609-ab32-9b816209cb6f",
-        "uid": "38461072-4e0647fc-3f2a-4609-ab32-9b816209cb6f"
+        "id": "2f130f79-8287-42d8-ba07-a8e92b26f456",
+        "uid": "38461072-2f130f79-8287-42d8-ba07-a8e92b26f456"
       },
       {
         "name": "categories",
         "item": [
           {
             "name": "getAllCategories",
-            "id": "da6a6ec7-aa2c-46ff-b2d9-32f00af95e8a",
+            "id": "08e988e1-1aac-4749-81ce-3c8b09bfe88f",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -129,11 +129,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-da6a6ec7-aa2c-46ff-b2d9-32f00af95e8a"
+            "uid": "38461072-08e988e1-1aac-4749-81ce-3c8b09bfe88f"
           },
           {
             "name": "getCategoryById",
-            "id": "ff8a977d-dc55-43c7-9e15-c854c9811976",
+            "id": "6172d5d8-ae4e-41bf-a7a5-63d25d6de2df",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -161,6 +161,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "a4b591c3-4068-4ccf-9948-d87512343d20",
                     "key": "id",
                     "value": ""
                   }
@@ -168,11 +169,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-ff8a977d-dc55-43c7-9e15-c854c9811976"
+            "uid": "38461072-6172d5d8-ae4e-41bf-a7a5-63d25d6de2df"
           },
           {
             "name": "createCategory",
-            "id": "a9256fc0-fe64-4b88-ad6a-0877546c8e27",
+            "id": "fff78285-0e38-4962-8929-8e38b5682e35",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -200,11 +201,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-a9256fc0-fe64-4b88-ad6a-0877546c8e27"
+            "uid": "38461072-fff78285-0e38-4962-8929-8e38b5682e35"
           },
           {
             "name": "deleteCategory",
-            "id": "b1cebc44-f145-489e-beae-57bb3625e1fd",
+            "id": "52b6d385-df87-4e9b-bb0e-e0c1cb9fe02c",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -223,6 +224,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "c35a989d-50c5-4cc3-af3f-e4fb114f9910",
                     "key": "id",
                     "value": ""
                   }
@@ -230,18 +232,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-b1cebc44-f145-489e-beae-57bb3625e1fd"
+            "uid": "38461072-52b6d385-df87-4e9b-bb0e-e0c1cb9fe02c"
           }
         ],
-        "id": "e669bb47-6be7-4f4b-8e65-80a44f31ccc7",
-        "uid": "38461072-e669bb47-6be7-4f4b-8e65-80a44f31ccc7"
+        "id": "8c879262-99d3-4d18-a354-de3ace815b73",
+        "uid": "38461072-8c879262-99d3-4d18-a354-de3ace815b73"
       },
       {
         "name": "items",
         "item": [
           {
             "name": "getAllItems",
-            "id": "bc8b143a-7802-4953-8f41-9f49a171439f",
+            "id": "f3958df9-3b79-4931-a302-ea368cc6beae",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -261,11 +263,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-bc8b143a-7802-4953-8f41-9f49a171439f"
+            "uid": "38461072-f3958df9-3b79-4931-a302-ea368cc6beae"
           },
           {
             "name": "getItemById",
-            "id": "388debcc-87a4-41c3-a000-7448115b663d",
+            "id": "b8ed9406-1776-40aa-aeb4-46e5b9833738",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -284,6 +286,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "f842553c-d894-49ab-a9f8-e5b6d74272ae",
                     "key": "id",
                     "value": ""
                   }
@@ -291,11 +294,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-388debcc-87a4-41c3-a000-7448115b663d"
+            "uid": "38461072-b8ed9406-1776-40aa-aeb4-46e5b9833738"
           },
           {
             "name": "createItem",
-            "id": "bcbf9337-461d-4345-a54f-9d61886153a2",
+            "id": "3cfc8db9-de33-4279-9ea8-12f1d69ebda6",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -324,11 +327,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-bcbf9337-461d-4345-a54f-9d61886153a2"
+            "uid": "38461072-3cfc8db9-de33-4279-9ea8-12f1d69ebda6"
           },
           {
             "name": "deleteItem",
-            "id": "8ed58867-42df-4b98-8b76-e8b4a2fbedca",
+            "id": "8db32b51-959b-456d-a977-50024c22f26f",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -347,6 +350,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "3c2ae782-606e-435e-a8a6-88e7c79d7150",
                     "key": "id",
                     "value": ""
                   }
@@ -354,18 +358,112 @@
               }
             },
             "response": [],
-            "uid": "38461072-8ed58867-42df-4b98-8b76-e8b4a2fbedca"
+            "uid": "38461072-8db32b51-959b-456d-a977-50024c22f26f"
           }
         ],
-        "id": "d6059fb4-ec35-45c1-8203-64b7da39d2ba",
-        "uid": "38461072-d6059fb4-ec35-45c1-8203-64b7da39d2ba"
+        "id": "053b3718-3afc-4e59-ac46-e4b8399817f9",
+        "uid": "38461072-053b3718-3afc-4e59-ac46-e4b8399817f9"
+      },
+      {
+        "name": "openingHours",
+        "item": [
+          {
+            "name": "getAllHours",
+            "id": "54e14e00-cce2-4e90-b6a3-3c3a38640a49",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/opening-hours/",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "opening-hours",
+                  ""
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-54e14e00-cce2-4e90-b6a3-3c3a38640a49"
+          },
+          {
+            "name": "createOpeningHour",
+            "id": "66719ef9-4b88-4764-ae75-d10e7db23d27",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"day\": \"Kedd\",\r\n    \"from\": \"09:00\",\r\n    \"until\": \"21:00\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/opening-hours/",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "opening-hours",
+                  ""
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-66719ef9-4b88-4764-ae75-d10e7db23d27"
+          },
+          {
+            "name": "deleteHour",
+            "id": "cd824b79-4a8e-49d1-9740-d21153a2a8db",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/opening-hours/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "opening-hours",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-cd824b79-4a8e-49d1-9740-d21153a2a8db"
+          }
+        ],
+        "id": "003bea9e-c2c7-4a6f-a923-9e270438ea0f",
+        "uid": "38461072-003bea9e-c2c7-4a6f-a923-9e270438ea0f"
       },
       {
         "name": "order",
         "item": [
           {
             "name": "getAllOrders",
-            "id": "7c958efc-e9af-44e3-8d9e-d68e8a73c627",
+            "id": "5584fc91-257e-4d65-b6e9-d85a06fa850c",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -385,11 +483,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-7c958efc-e9af-44e3-8d9e-d68e8a73c627"
+            "uid": "38461072-5584fc91-257e-4d65-b6e9-d85a06fa850c"
           },
           {
             "name": "getOrderById",
-            "id": "ab062d7d-c1e0-4fd4-9287-2686f230d656",
+            "id": "ee2a4f41-6fb4-4bcd-abf6-2c6f74e14acc",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -408,6 +506,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "fc4978e1-8c9f-4a35-bf4d-e63d13cd1723",
                     "key": "id",
                     "value": ""
                   }
@@ -415,11 +514,114 @@
               }
             },
             "response": [],
-            "uid": "38461072-ab062d7d-c1e0-4fd4-9287-2686f230d656"
+            "uid": "38461072-ee2a4f41-6fb4-4bcd-abf6-2c6f74e14acc"
+          },
+          {
+            "name": "getAllInProcessOrders",
+            "id": "c053de4e-9061-46f1-9cbb-e1494644853c",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/order/in-process",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "in-process"
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-c053de4e-9061-46f1-9cbb-e1494644853c"
+          },
+          {
+            "name": "getAllFinishedOrders",
+            "id": "f128316e-3ec0-478a-bebd-689cf4206122",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/order/finished",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "finished"
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-f128316e-3ec0-478a-bebd-689cf4206122"
+          },
+          {
+            "name": "getAllServedOrders",
+            "id": "621d6722-d185-4e34-87ef-734da2d58801",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/order/served",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "served"
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-621d6722-d185-4e34-87ef-734da2d58801"
+          },
+          {
+            "name": "getOrdersByTableId",
+            "id": "7c6778c7-eb45-4c8d-8ff6-6e0123a58a4b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "localhost:3000/order/for-checkout/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "for-checkout",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-7c6778c7-eb45-4c8d-8ff6-6e0123a58a4b"
           },
           {
             "name": "createOrder",
-            "id": "4ee041e1-5d5b-4f41-b222-c77b3f468ba0",
+            "id": "df5bfa2c-210a-4a57-815f-6548b14fc639",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -448,11 +650,171 @@
               }
             },
             "response": [],
-            "uid": "38461072-4ee041e1-5d5b-4f41-b222-c77b3f468ba0"
+            "uid": "38461072-df5bfa2c-210a-4a57-815f-6548b14fc639"
+          },
+          {
+            "name": "setDoneOrder",
+            "id": "4529a8a2-65a9-4108-875b-91cc857e741b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"tableId\" : 1,\r\n    \"items\" : [4,5]\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/order/set-done/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "set-done",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-4529a8a2-65a9-4108-875b-91cc857e741b"
+          },
+          {
+            "name": "rollbackDoneOrder",
+            "id": "eaf66d90-86c8-4316-b3ec-cb99532e1c3b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"tableId\" : 1,\r\n    \"items\" : [4,5]\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/order/rollback-done/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "rollback-done",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-eaf66d90-86c8-4316-b3ec-cb99532e1c3b"
+          },
+          {
+            "name": "setServedOrder",
+            "id": "be823ea7-d535-43da-a88c-bbf418a9d990",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"tableId\" : 1,\r\n    \"items\" : [4,5]\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/order/set-served/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "set-served",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-be823ea7-d535-43da-a88c-bbf418a9d990"
+          },
+          {
+            "name": "rollbackServedOrder",
+            "id": "6441f84b-d54e-4945-89bf-0b11cd253b38",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PUT",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"tableId\" : 1,\r\n    \"items\" : [4,5]\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/order/rollback-served/:id",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "rollback-served",
+                  ":id"
+                ],
+                "variable": [
+                  {
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-6441f84b-d54e-4945-89bf-0b11cd253b38"
           },
           {
             "name": "deleteOrder",
-            "id": "84117877-7205-4f4c-92c1-cfffbdb0f588",
+            "id": "4f96394e-12f6-4b91-9459-6ec17ba8a000",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -478,18 +840,51 @@
               }
             },
             "response": [],
-            "uid": "38461072-84117877-7205-4f4c-92c1-cfffbdb0f588"
+            "uid": "38461072-4f96394e-12f6-4b91-9459-6ec17ba8a000"
+          },
+          {
+            "name": "deleteOrderByArray",
+            "id": "0aa24286-3d1f-4af5-8f16-fa9a10bb64c1",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"items\" : [1,2]\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/order/mass-delete",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "order",
+                  "mass-delete"
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-0aa24286-3d1f-4af5-8f16-fa9a10bb64c1"
           }
         ],
-        "id": "7717de2a-45ce-401b-81dc-2c0ace611294",
-        "uid": "38461072-7717de2a-45ce-401b-81dc-2c0ace611294"
+        "id": "34304051-c22e-4e01-a8f3-542d8ddfbcc2",
+        "uid": "38461072-34304051-c22e-4e01-a8f3-542d8ddfbcc2"
       },
       {
         "name": "paid",
         "item": [
           {
             "name": "getAllPayments",
-            "id": "19ca41f9-082a-4700-95b6-b9dba73ad2ae",
+            "id": "55a1e022-3f05-4c05-9043-afabf530486d",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -508,11 +903,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-19ca41f9-082a-4700-95b6-b9dba73ad2ae"
+            "uid": "38461072-55a1e022-3f05-4c05-9043-afabf530486d"
           },
           {
             "name": "getPaymentById",
-            "id": "4a43f570-0122-488b-80dd-b55a843f3f34",
+            "id": "70e2dfef-b642-4049-8388-9f2a79601f29",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -531,6 +926,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "b05c1157-66a6-423c-9246-447e37f5d414",
                     "key": "id",
                     "value": ""
                   }
@@ -538,11 +934,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-4a43f570-0122-488b-80dd-b55a843f3f34"
+            "uid": "38461072-70e2dfef-b642-4049-8388-9f2a79601f29"
           },
           {
             "name": "createPayment",
-            "id": "6f8a86db-04f8-4aa7-9459-4bbb14113ab1",
+            "id": "fc0bb7e4-5c43-4a3b-891f-9dce895247e8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -570,11 +966,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-6f8a86db-04f8-4aa7-9459-4bbb14113ab1"
+            "uid": "38461072-fc0bb7e4-5c43-4a3b-891f-9dce895247e8"
           },
           {
             "name": "deletePayment",
-            "id": "86407cf3-3c9e-4928-9344-ea0da9ad3cd7",
+            "id": "aafa29d5-6f69-4ef8-bfcd-387840f68135",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -593,6 +989,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "e45e8fb9-3337-4dcd-8b12-00468d934b38",
                     "key": "id",
                     "value": ""
                   }
@@ -600,18 +997,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-86407cf3-3c9e-4928-9344-ea0da9ad3cd7"
+            "uid": "38461072-aafa29d5-6f69-4ef8-bfcd-387840f68135"
           }
         ],
-        "id": "1d5143d9-d69f-4fe7-bfcb-49a10ac16466",
-        "uid": "38461072-1d5143d9-d69f-4fe7-bfcb-49a10ac16466"
+        "id": "c760ed7a-d7f6-4c58-a1ea-c59e0aae688c",
+        "uid": "38461072-c760ed7a-d7f6-4c58-a1ea-c59e0aae688c"
       },
       {
         "name": "paymentMethods",
         "item": [
           {
             "name": "getAllMethods",
-            "id": "9f86b964-d648-44f7-8d9e-1dd453a76e8f",
+            "id": "15c4d7c4-cea8-4700-87d6-d50ab387756c",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -631,11 +1028,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-9f86b964-d648-44f7-8d9e-1dd453a76e8f"
+            "uid": "38461072-15c4d7c4-cea8-4700-87d6-d50ab387756c"
           },
           {
             "name": "getMethodById",
-            "id": "0435fb1b-9787-4be6-84bf-9391bde534c8",
+            "id": "3473eb15-e0a7-447a-b0af-6a49e47286dc",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -654,6 +1051,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "22a4783b-abad-4b34-b373-f922122303d6",
                     "key": "id",
                     "value": ""
                   }
@@ -661,11 +1059,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-0435fb1b-9787-4be6-84bf-9391bde534c8"
+            "uid": "38461072-3473eb15-e0a7-447a-b0af-6a49e47286dc"
           },
           {
             "name": "createMethod",
-            "id": "bca64185-e704-45f9-bc8f-026fa0c4104d",
+            "id": "73c0334c-737f-47c5-957e-7a6dbefeef60",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -694,11 +1092,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-bca64185-e704-45f9-bc8f-026fa0c4104d"
+            "uid": "38461072-73c0334c-737f-47c5-957e-7a6dbefeef60"
           },
           {
             "name": "deleteMethod",
-            "id": "25fa9a6d-fa49-48bd-9bac-a2ebc60cbf42",
+            "id": "474e61e3-e9f9-4229-9abd-4966996d2cc8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -717,6 +1115,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "d4365e20-8258-4bcb-8af0-95621283c318",
                     "key": "id",
                     "value": ""
                   }
@@ -724,18 +1123,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-25fa9a6d-fa49-48bd-9bac-a2ebc60cbf42"
+            "uid": "38461072-474e61e3-e9f9-4229-9abd-4966996d2cc8"
           }
         ],
-        "id": "7813dbaa-0020-4f9c-a40d-1e57d4a07929",
-        "uid": "38461072-7813dbaa-0020-4f9c-a40d-1e57d4a07929"
+        "id": "8d07eb6d-189a-440f-b6fd-9d17a32da091",
+        "uid": "38461072-8d07eb6d-189a-440f-b6fd-9d17a32da091"
       },
       {
         "name": "permissionSetting",
         "item": [
           {
             "name": "getAllSettings",
-            "id": "f5dc0b0f-614e-436c-9bf3-737a25285122",
+            "id": "a54f02e3-39f3-4445-bbb0-bc84ab91c35b",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -755,11 +1154,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-f5dc0b0f-614e-436c-9bf3-737a25285122"
+            "uid": "38461072-a54f02e3-39f3-4445-bbb0-bc84ab91c35b"
           },
           {
             "name": "getSettingById",
-            "id": "5771e443-9664-48b6-b810-775b56c1fc88",
+            "id": "13852f50-dc7b-4ea2-b500-cc91e331c129",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -778,6 +1177,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "d08f7afe-b449-4192-b642-ed208e0d29dc",
                     "key": "id",
                     "value": ""
                   }
@@ -785,11 +1185,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-5771e443-9664-48b6-b810-775b56c1fc88"
+            "uid": "38461072-13852f50-dc7b-4ea2-b500-cc91e331c129"
           },
           {
             "name": "createSetting",
-            "id": "29d6649d-74b8-4b83-a986-f344ba7ca0e6",
+            "id": "becf0c38-78e3-488e-8b44-995f813d16f8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -818,11 +1218,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-29d6649d-74b8-4b83-a986-f344ba7ca0e6"
+            "uid": "38461072-becf0c38-78e3-488e-8b44-995f813d16f8"
           },
           {
             "name": "deleteSetting",
-            "id": "1f0802f2-8fe7-48c3-a3df-3ea5d31d8551",
+            "id": "e8fcff1d-17d1-4765-9777-0f07b6bc552b",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -841,6 +1241,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "87966037-ca29-456a-b329-c2d78d3fa710",
                     "key": "id",
                     "value": ""
                   }
@@ -848,18 +1249,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-1f0802f2-8fe7-48c3-a3df-3ea5d31d8551"
+            "uid": "38461072-e8fcff1d-17d1-4765-9777-0f07b6bc552b"
           }
         ],
-        "id": "9c2bc349-ee52-4d1d-af40-47d00a65fb07",
-        "uid": "38461072-9c2bc349-ee52-4d1d-af40-47d00a65fb07"
+        "id": "f5c30632-477a-4b39-809a-c35eddd1a060",
+        "uid": "38461072-f5c30632-477a-4b39-809a-c35eddd1a060"
       },
       {
         "name": "reservedTables",
         "item": [
           {
             "name": "getAllReservations",
-            "id": "35715c78-c1f7-49c9-af14-9ad3b50b7b0e",
+            "id": "1c58b55d-8ced-434e-a8ac-e25d06b75ec8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -879,11 +1280,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-35715c78-c1f7-49c9-af14-9ad3b50b7b0e"
+            "uid": "38461072-1c58b55d-8ced-434e-a8ac-e25d06b75ec8"
           },
           {
             "name": "getReservationById",
-            "id": "a9be5f6a-ea04-45b6-820a-75853394de9b",
+            "id": "fb1333e3-8006-4e01-a237-62c3d1c42f47",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -902,6 +1303,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "8815941e-aadb-49ee-ad99-1784937ef849",
                     "key": "id",
                     "value": ""
                   }
@@ -909,11 +1311,56 @@
               }
             },
             "response": [],
-            "uid": "38461072-a9be5f6a-ea04-45b6-820a-75853394de9b"
+            "uid": "38461072-fb1333e3-8006-4e01-a237-62c3d1c42f47"
+          },
+          {
+            "name": "getAllReservationsOnDay",
+            "id": "9e5e9d3b-9e38-4382-a33a-255aa5e67878",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"tableNumber\" : 1,\r\n    \"fromDate\" : \"Kedd\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "localhost:3000/reservation/reservations-on-day?tableNumber=1&fromDate=Kedd",
+                "host": [
+                  "localhost"
+                ],
+                "port": "3000",
+                "path": [
+                  "reservation",
+                  "reservations-on-day"
+                ],
+                "query": [
+                  {
+                    "key": "tableNumber",
+                    "value": "1",
+                    "type": "text"
+                  },
+                  {
+                    "key": "fromDate",
+                    "value": "Kedd",
+                    "type": "text"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "uid": "38461072-9e5e9d3b-9e38-4382-a33a-255aa5e67878"
           },
           {
             "name": "createReservation",
-            "id": "03435b97-e724-49c5-a9c9-372360c83a1a",
+            "id": "5f56c662-22e7-4e6e-8d79-a9a5f43b7798",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -942,11 +1389,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-03435b97-e724-49c5-a9c9-372360c83a1a"
+            "uid": "38461072-5f56c662-22e7-4e6e-8d79-a9a5f43b7798"
           },
           {
             "name": "deleteReservation",
-            "id": "e30fd836-59e3-4eb7-b851-74a41d3249ec",
+            "id": "6c10e749-8e2b-4bea-8589-5e437e93ba3b",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -965,6 +1412,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "c5da3118-a186-46f8-babd-305363701b9e",
                     "key": "id",
                     "value": ""
                   }
@@ -972,18 +1420,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-e30fd836-59e3-4eb7-b851-74a41d3249ec"
+            "uid": "38461072-6c10e749-8e2b-4bea-8589-5e437e93ba3b"
           }
         ],
-        "id": "557bbf45-f109-419c-8927-b3adc0d5951f",
-        "uid": "38461072-557bbf45-f109-419c-8927-b3adc0d5951f"
+        "id": "cf846d92-2aa5-47c4-a444-528776a333bf",
+        "uid": "38461072-cf846d92-2aa5-47c4-a444-528776a333bf"
       },
       {
         "name": "tables",
         "item": [
           {
             "name": "getAllTables",
-            "id": "5dd59870-5e5a-4c81-8d43-1fd5ddad5d2f",
+            "id": "2dba674a-e70e-44ee-bd25-7f9d5523aef8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1003,11 +1451,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-5dd59870-5e5a-4c81-8d43-1fd5ddad5d2f"
+            "uid": "38461072-2dba674a-e70e-44ee-bd25-7f9d5523aef8"
           },
           {
             "name": "getTableById",
-            "id": "72bb5979-ebed-4c2f-a651-65aa89eb267f",
+            "id": "4e4f9cd2-5f27-4a15-8297-b278db776e8a",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1026,6 +1474,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "96b2e290-bcab-46da-ba74-6dc3b51a6a9b",
                     "key": "id",
                     "value": ""
                   }
@@ -1033,11 +1482,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-72bb5979-ebed-4c2f-a651-65aa89eb267f"
+            "uid": "38461072-4e4f9cd2-5f27-4a15-8297-b278db776e8a"
           },
           {
             "name": "createTable",
-            "id": "61470c7c-82fb-4f06-a430-951c707319c6",
+            "id": "001aac01-dfc5-4fa3-9a15-66c7df9e53ea",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1066,11 +1515,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-61470c7c-82fb-4f06-a430-951c707319c6"
+            "uid": "38461072-001aac01-dfc5-4fa3-9a15-66c7df9e53ea"
           },
           {
             "name": "deleteTable",
-            "id": "e4304963-02f3-4ebf-b73a-062ba97b6838",
+            "id": "b71e913c-d316-466f-9272-9bd48e27f9d4",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1089,6 +1538,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "668243a5-36d3-4476-b84e-6c382746e798",
                     "key": "id",
                     "value": ""
                   }
@@ -1096,18 +1546,18 @@
               }
             },
             "response": [],
-            "uid": "38461072-e4304963-02f3-4ebf-b73a-062ba97b6838"
+            "uid": "38461072-b71e913c-d316-466f-9272-9bd48e27f9d4"
           }
         ],
-        "id": "7c695a8d-cd56-495d-a19c-19452a626529",
-        "uid": "38461072-7c695a8d-cd56-495d-a19c-19452a626529"
+        "id": "6d7eeafc-01f4-4143-a458-565511d2c1ee",
+        "uid": "38461072-6d7eeafc-01f4-4143-a458-565511d2c1ee"
       },
       {
         "name": "user",
         "item": [
           {
             "name": "getAllUsers",
-            "id": "13ecd133-0b04-42e6-b31d-1b9e6aa8b748",
+            "id": "d14f7fc5-116b-4cc8-ab76-bf3f362be5c9",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1127,11 +1577,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-13ecd133-0b04-42e6-b31d-1b9e6aa8b748"
+            "uid": "38461072-d14f7fc5-116b-4cc8-ab76-bf3f362be5c9"
           },
           {
             "name": "getUserById",
-            "id": "9f19d5a6-5fa4-4e6f-a2f5-8bc98bd77acc",
+            "id": "81906e9c-6eec-4172-94df-74a0d2a1d2b2",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1150,6 +1600,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "ebd04933-480f-45d4-86bd-d06ac842bd78",
                     "key": "id",
                     "value": ""
                   }
@@ -1157,11 +1608,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-9f19d5a6-5fa4-4e6f-a2f5-8bc98bd77acc"
+            "uid": "38461072-81906e9c-6eec-4172-94df-74a0d2a1d2b2"
           },
           {
             "name": "deleteUser",
-            "id": "941ff0af-bb76-49e3-aab9-64226dd35971",
+            "id": "7b56751a-5313-4b86-9bbf-ca8d2d7eebc8",
             "protocolProfileBehavior": {
               "disableBodyPruning": true
             },
@@ -1180,6 +1631,7 @@
                 ],
                 "variable": [
                   {
+                    "id": "132a3b08-8ff0-453c-a41d-038019eca439",
                     "key": "id",
                     "value": ""
                   }
@@ -1187,11 +1639,11 @@
               }
             },
             "response": [],
-            "uid": "38461072-941ff0af-bb76-49e3-aab9-64226dd35971"
+            "uid": "38461072-7b56751a-5313-4b86-9bbf-ca8d2d7eebc8"
           }
         ],
-        "id": "fe0447cd-83d6-4697-98be-0965ec9c1c8b",
-        "uid": "38461072-fe0447cd-83d6-4697-98be-0965ec9c1c8b"
+        "id": "cd7db212-880a-4689-908a-1908ccc9d586",
+        "uid": "38461072-cd7db212-880a-4689-908a-1908ccc9d586"
       }
     ]
   }

@@ -11,8 +11,8 @@ const{
     getAllInProcessOrders,
     getAllFinishedOrders,
     getAllServedOrders,
-    setUpdateOrder,
-    rollbackUpdatedOrder,
+    setDoneOrder,
+    rollbackDoneOrder,
     setServedOrder,
     rollbackServedOrder,
     getOrdersByTableId
@@ -30,11 +30,11 @@ Router.get('/for-checkout/:id', roleCheck(['admin', 'cashier']), getOrdersByTabl
 
 Router.get('/:id', roleCheck(['admin', 'waiter', 'cashier']), getOrderById);
 
-Router.put('/set-update/:id', roleCheck(['admin', 'waiter', 'cashier']), setUpdateOrder);
+Router.put('/set-done/:id', roleCheck(['admin', 'waiter', 'cashier']), setDoneOrder);
 
-Router.put('/rollback-updated/:id', roleCheck(['admin', 'waiter', 'cashier']), rollbackUpdatedOrder);
+Router.put('/rollback-done/:id', roleCheck(['admin', 'waiter', 'cashier']), rollbackDoneOrder);
 
-Router.put('/set-serve/:id', roleCheck(['admin', 'waiter', 'cashier']), setServedOrder);
+Router.put('/set-served/:id', roleCheck(['admin', 'waiter', 'cashier']), setServedOrder);
 
 Router.put('/rollback-served/:id', roleCheck(['admin', 'waiter', 'cashier']), rollbackServedOrder);
 

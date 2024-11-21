@@ -2,18 +2,18 @@ const connect = require("../config/db");
 
 const getAllOrders = async (req, res) => {
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query("SELECT * FROM `orders`", (err, result) => {
                 if (err) reject(err);
                 else resolve(result);
             });
         });
 
-        if (!users.length) {
+        if (!response.length) {
             return res.status(204).json({ message: "Nincsenek elérhető rendelések." });
         }
 
-        return res.status(200).json({ message: "Rendelések sikeresen lekérve.", data: users });
+        return res.status(200).json({ message: "Rendelések sikeresen lekérve.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a rendelések lekérése során.", error });
     }
@@ -115,11 +115,11 @@ const deleteOrderByArray = async (req, res) => {
             })
         );
 
-        if (response.affectedRows === 0) {
-            return res.status(204).json({ message: "A megadott rendelések nem találhatók." });
-        }
+        response.forEach((result) => {
+            if (!res.headersSent && result.affectedRows === 0) res.status(204).json({ message: "Rendelés nem található." });
+        });
 
-        return res.status(200).json({ message: "Rendelések sikeresen törölve.", data: response });
+        if (!res.headersSent) return res.status(200).json({ message: "Rendelések sikeresen törölve.", data: response });
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "Hiba történt a rendelések törlése során.", error });
@@ -169,7 +169,7 @@ const getAllInProcessOrders = async (req, res) => {
 
 const getAllFinishedOrders = async (req, res) => {
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`
                 SELECT 
                     o.id as id,
@@ -200,11 +200,11 @@ const getAllFinishedOrders = async (req, res) => {
             });
         });
 
-        if (!users.length) {
+        if (!response.length) {
             return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
-        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
+        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a kész rendelések lekérése során.", error });
     }
@@ -212,7 +212,7 @@ const getAllFinishedOrders = async (req, res) => {
 
 const getAllServedOrders = async (req, res) => {
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`
                 SELECT 
                     o.id as id,
@@ -235,17 +235,17 @@ const getAllServedOrders = async (req, res) => {
             });
         });
 
-        if (!users.length) {
+        if (!response.length) {
             return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
-        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
+        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a kész rendelések lekérése során.", error });
     }
 };
 
-const setUpdateOrder = async (req, res) => {
+const setDoneOrder = async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
@@ -253,7 +253,7 @@ const setUpdateOrder = async (req, res) => {
     }
 
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`UPDATE orders SET isDone = true WHERE id = ?`, id, (err, result) => {
 
                 if (err) reject(err);
@@ -261,13 +261,15 @@ const setUpdateOrder = async (req, res) => {
             });
         });
 
-        return res.status(200).json({ message: "Rendelés sikeresen átállitva.", data: users });
+        if(response.affectedRows == 0) return res.status(204).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
+
+        return res.status(200).json({ message: "Rendelés sikeresen átállitva.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a rendelés átállitása során.", error });
     }
 };
 
-const rollbackUpdatedOrder = async (req, res) => {
+const rollbackDoneOrder = async (req, res) => {
     const { id } = req.params;
 
     if (!id) {
@@ -275,7 +277,7 @@ const rollbackUpdatedOrder = async (req, res) => {
     }
 
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`UPDATE orders SET isDone = false WHERE id = ?`, id, (err, result) => {
 
                 if (err) reject(err);
@@ -283,7 +285,9 @@ const rollbackUpdatedOrder = async (req, res) => {
             });
         });
 
-        return res.status(200).json({ message: "Rendelés sikeresen visszaállitva.", data: users });
+        if(response.affectedRows == 0) return res.status(204).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
+
+        return res.status(200).json({ message: "Rendelés sikeresen visszaállitva.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a rendelés visszaállitása során.", error });
     }
@@ -297,7 +301,7 @@ const setServedOrder = async (req, res) => {
     }
 
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`UPDATE orders SET isServed = true WHERE id = ?`, id, (err, result) => {
 
                 if (err) reject(err);
@@ -305,7 +309,9 @@ const setServedOrder = async (req, res) => {
             });
         });
 
-        return res.status(200).json({ message: "Rendelés sikeresen átállitva.", data: users });
+        if(response.affectedRows == 0) return res.status(204).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
+
+        return res.status(200).json({ message: "Rendelés sikeresen átállitva.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a rendelés átállitva során.", error });
     }
@@ -319,7 +325,7 @@ const rollbackServedOrder = async (req, res) => {
     }
 
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`UPDATE orders SET isServed = false WHERE id = ?`, id, (err, result) => {
 
                 if (err) reject(err);
@@ -327,7 +333,9 @@ const rollbackServedOrder = async (req, res) => {
             });
         });
 
-        return res.status(200).json({ message: "Rendelés sikeresen visszaállitva.", data: users });
+        if(response.affectedRows == 0) return res.status(204).json({ message: "A megadott ID-hoz tartozó rendelés nem található." });
+
+        return res.status(200).json({ message: "Rendelés sikeresen visszaállitva.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a rendelés visszaállitása során.", error });
     }
@@ -341,7 +349,7 @@ const getOrdersByTableId = async (req, res) => {
     }
 
     try {
-        const users = await new Promise((resolve, reject) => {
+        const response = await new Promise((resolve, reject) => {
             connect.query(`
                 SELECT 
                     o.id as id,
@@ -366,11 +374,11 @@ const getOrdersByTableId = async (req, res) => {
             });
         });
 
-        if (!users.length) {
+        if (!response.length) {
             return res.status(204).json({ message: "Nincsenek elérhető kész rendelések." });
         }
 
-        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: users });
+        return res.status(200).json({ message: "Kész rendelések sikeresen lekérve.", data: response });
     } catch (error) {
         res.status(500).json({ message: "Hiba történt a kész rendelések lekérése során.", error });
     }
@@ -386,8 +394,8 @@ module.exports = {
     getAllInProcessOrders,
     getAllFinishedOrders,
     getAllServedOrders,
-    setUpdateOrder,
-    rollbackUpdatedOrder,
+    setDoneOrder,
+    rollbackDoneOrder,
     setServedOrder,
     rollbackServedOrder,
     getOrdersByTableId
