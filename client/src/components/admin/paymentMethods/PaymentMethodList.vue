@@ -26,7 +26,7 @@ export default {
   methods: {
     async getPaymentMethods() {
       try {
-        const response = await axios.get(`http://localhost:3000/payment-method/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/payment-method/`, {
           withCredentials: true
         });
 
@@ -38,7 +38,7 @@ export default {
     },
     async deletePaymentMethod(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/payment-method/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/payment-method/${id}`, {
           withCredentials: true
         });
 

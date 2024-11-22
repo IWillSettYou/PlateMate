@@ -49,7 +49,7 @@ export default {
     },
     async getTables() {
       try {
-        const response = await axios.get(`http://localhost:3000/table/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/table/`, {
           withCredentials: true 
         });
         
@@ -61,7 +61,7 @@ export default {
     },
     async getItems() {
       try {
-        const response = await axios.get(`http://localhost:3000/item`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/item`, {
           withCredentials: true 
         });
         
@@ -80,7 +80,7 @@ export default {
       try {
         await this.putSelectedItemsIdsToArray(); 
 
-        const response = await axios.post('http://localhost:3000/order', { 
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order`, { 
           tableId: this.selectedTable,
           items: this.selectedItemIds,
         }, 

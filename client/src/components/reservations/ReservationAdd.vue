@@ -35,7 +35,7 @@ export default {
   methods: {
     async getAvailableTimes() {
       try {
-        const response = await axios.get(`http://localhost:3000/opening-hours/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/opening-hours/`, {
           withCredentials: true
         });
 
@@ -54,7 +54,7 @@ export default {
     async getReservationOnDayByTable() {
       if (this.selectedTableId != null && this.date != null) {
         try {
-          const response = await axios.get(`http://localhost:3000/reservation/reservations-on-day`, {
+          const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/reservation/reservations-on-day`, {
             params: {
               tableNumber: this.selectedTableId,
               fromDate: this.date
@@ -86,7 +86,7 @@ export default {
       }
 
       try {
-        const response = await axios.post('http://localhost:3000/reservation', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/reservation`, {
           tableNumber: this.selectedTableId,
           name: this.name,
           numberOfCustomers: this.nOfCustomers,

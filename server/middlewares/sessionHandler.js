@@ -13,23 +13,28 @@ const checkSessionMiddleware = async (req, res, next) => {
     
     const sessionValidty = await checkSession(req, res)
 
-    if (req.cookies['connect.sid'].split(':')[1].split('.')[0] && sessionValidty.response) {
-        req.session = await findSession(req.cookies['connect.sid'].split(':')[1].split('.')[0]).response;
-        return next();
-    } else {
-        try {
-            await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
-        
-            req.session.destroy((err) => {
-              if (err) {
-                res.status(400).send({ message : "Hiba kijelentkeztetéskor: ", error : err});
+    try {
+        if (req.cookies['connect.sid'].split(':')[1].split('.')[0] && sessionValidty.response) {
+            req.session = await findSession(req.cookies['connect.sid'].split(':')[1].split('.')[0]).response;
+            return next();
+        } else {
+            try {
+                await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
+            
+                req.session.destroy((err) => {
+                  if (err) {
+                    res.status(400).send({ message : "Hiba kijelentkeztetéskor: ", error : err});
+                  }
+                  res.status(200).send({ message: "Engedélytelen munkamenet, kijelentkeztetve" });
+                });
               }
-              res.status(200).send({ message: "Engedélytelen munkamenet, kijelentkeztetve" });
-            });
-          }
-          catch(error) {
-            res.status(500).send({ message : "Hiba kijelentkeztetéskor", error : error })
-          };
+              catch(error) {
+                res.status(500).send({ message : "Hiba kijelentkeztetéskor", error : error })
+              };
+        }
+    }
+    catch(error) {
+        res.status(500).send({ message : "Hiba hitelesítéskor", error : error })
     }
 };
 

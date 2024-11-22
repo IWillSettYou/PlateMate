@@ -34,7 +34,7 @@ export default {
   methods: {
     async getSections() {
       try {
-        const response = await axios.get(`http://localhost:3000/permission-setting/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/permission-setting/`, {
           withCredentials: true
         });
 
@@ -48,7 +48,7 @@ export default {
     },
     async createUser() {
       try {
-        const response = await axios.post('http://localhost:3000/register', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/register`, {
           name: this.formData.name,
           email: this.formData.email,
           password: this.formData.password,

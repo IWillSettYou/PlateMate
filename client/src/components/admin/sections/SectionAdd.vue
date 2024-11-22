@@ -21,7 +21,7 @@ export default {
   methods: {
     async createSection() {
       try {
-        const response = await axios.post('http://localhost:3000/permission-setting', { section: this.formData.sectionName }, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/permission-setting`, { section: this.formData.sectionName }, {
           withCredentials: true
         });
 

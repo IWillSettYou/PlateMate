@@ -32,7 +32,7 @@ export default {
   methods: {
     async getCategories() {
       try {
-        const response = await axios.get(`http://localhost:3000/category/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/category/`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async deleteCategory(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/category/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/category/${id}`, {
           withCredentials: true
         });
 

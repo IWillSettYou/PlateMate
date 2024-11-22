@@ -32,7 +32,7 @@ export default {
   methods: {
     async getUsers() {
       try {
-        const response = await axios.get(`http://localhost:3000/user/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async deleteUser(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/user/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/user/${id}`, {
           withCredentials: true
         });
 

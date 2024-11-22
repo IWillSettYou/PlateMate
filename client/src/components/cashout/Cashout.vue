@@ -34,7 +34,7 @@ export default {
   methods: {
     async getTables() {
       try {
-        const response = await axios.get(`http://localhost:3000/table/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/table/`, {
           withCredentials: true
         });
 
@@ -48,7 +48,7 @@ export default {
     },
     async getPaymentMethods() {
       try {
-        const response = await axios.get(`http://localhost:3000/payment-method/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/payment-method/`, {
           withCredentials: true
         });
 
@@ -63,7 +63,7 @@ export default {
     },
     async getConsumedItems(id) {
       try {
-        const response = await axios.get(`http://localhost:3000/order/for-checkout/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/for-checkout/${id}`, {
           withCredentials: true
         });
 
@@ -75,7 +75,7 @@ export default {
     },
     async deleteOrders(ids) {
       try {
-        const response = await axios.delete(`http://localhost:3000/order/mass-delete/`,
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/mass-delete/`,
           {
             data: { items: ids },
             withCredentials: true
@@ -97,7 +97,7 @@ export default {
       const ids = this.items.map(item => item.itemId);
 
       try {
-        const response = await axios.post('http://localhost:3000/paid/',
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/paid/`,
           {
             tableId: this.selectedTable,
             paymentMethodId: this.selectedPaymentMethod,

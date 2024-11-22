@@ -25,7 +25,7 @@ export default {
     async createOpeningHour() {
       if (this.validateTimeFormat(this.formData.from) & this.validateTimeFormat(this.formData.until)) {
         try {
-          const response = await axios.post('http://localhost:3000/opening-hours', {
+          const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/opening-hours`, {
             day: this.formData.day,
             from: this.formData.from,
             until: this.formData.until

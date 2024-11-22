@@ -27,7 +27,7 @@ export default {
   methods: {
     async getSections() {
       try {
-        const response = await axios.get(`http://localhost:3000/permission-setting/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/permission-setting/`, {
           withCredentials: true
         });
 
@@ -39,7 +39,7 @@ export default {
     },
     async deleteSection(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/permission-setting/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/permission-setting/${id}`, {
           withCredentials: true
         });
 

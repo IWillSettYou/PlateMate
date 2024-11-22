@@ -32,7 +32,7 @@ export default {
   methods: {
     async getFinishedOrders() {
       try {
-        const response = await axios.get(`http://localhost:3000/order/finished`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/finished`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async rollbackUpdatedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/rollback-done/${id}`, {},
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/rollback-done/${id}`, {},
           {
             withCredentials: true
           });
@@ -59,7 +59,7 @@ export default {
     },
     async setServedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/set-served/${id}`, {},
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/set-served/${id}`, {},
           {
             withCredentials: true
           });
@@ -74,7 +74,7 @@ export default {
     },
     async deleteOrder(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/order/${id}`,
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/${id}`,
           {
             withCredentials: true
           });

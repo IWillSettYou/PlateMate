@@ -22,7 +22,7 @@ export default {
   methods: {
     async createPaymentMethod() {
       try {
-        const response = await axios.post('http://localhost:3000/payment-method', { name: this.formData.PaymentMethodName }, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/payment-method`, { name: this.formData.PaymentMethodName }, {
           withCredentials: true
         });
 

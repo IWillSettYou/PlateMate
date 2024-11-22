@@ -32,7 +32,7 @@ export default {
   methods: {
     async getServedOrders() {
       try {
-        const response = await axios.get(`http://localhost:3000/order/served`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/served`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async rollbackServedOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/rollback-served/${id}`, {},
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/rollback-served/${id}`, {},
           {
             withCredentials: true
           });
@@ -59,7 +59,7 @@ export default {
     },
     async deleteOrder(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/order/${id}`,
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/${id}`,
           {
             withCredentials: true
           });

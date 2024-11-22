@@ -21,7 +21,7 @@ export default {
   methods: {
     async createCategory() {
       try {
-        const response = await axios.post('http://localhost:3000/category', { name: this.formData.categoryName }, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/category`, { name: this.formData.categoryName }, {
           withCredentials: true
         });
 

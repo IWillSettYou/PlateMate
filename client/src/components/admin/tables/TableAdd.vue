@@ -21,7 +21,7 @@ export default {
   methods: {
     async createTable() {
       try {
-        const response = await axios.post('http://localhost:3000/table', { tableNumber: this.formData.tableNumber }, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/table`, { tableNumber: this.formData.tableNumber }, {
           withCredentials: true
         });
 

@@ -26,7 +26,7 @@ export default {
   methods: {
     async getOpeningHours() {
       try {
-        const response = await axios.get(`http://localhost:3000/opening-hours/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/opening-hours/`, {
           withCredentials: true
         });
 
@@ -41,7 +41,7 @@ export default {
     },
     async deleteOpeningHour(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/opening-hours/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/opening-hours/${id}`, {
           withCredentials: true
         });
 

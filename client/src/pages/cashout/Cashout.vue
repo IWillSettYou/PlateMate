@@ -35,7 +35,7 @@ export default {
   methods: {
     async redirectHandler() {
       try {
-        const response = await axios.get('http://localhost:3000/redirect', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/redirect`, {
           params: { page: "cashout" },
           withCredentials: true
         });
@@ -51,7 +51,7 @@ export default {
     },
     async logout() {
       try {
-        const response = await axios.post('http://localhost:3000/logout', null, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/logout`, null, {
           withCredentials: true
         });
 

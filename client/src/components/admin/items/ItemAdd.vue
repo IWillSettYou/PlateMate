@@ -32,7 +32,7 @@ export default {
   methods: {
     async getCategories() {
       try {
-        const response = await axios.get(`http://localhost:3000/category/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/category/`, {
           withCredentials: true
         });
 
@@ -46,7 +46,7 @@ export default {
     },
     async createItem() {
       try {
-        const response = await axios.post('http://localhost:3000/item', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/item`, {
           name: this.formData.name,
           price: this.formData.price,
           categoryId: this.formData.categoryId

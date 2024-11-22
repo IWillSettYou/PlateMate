@@ -32,7 +32,7 @@ export default {
   methods: {
     async getItems() {
       try {
-        const response = await axios.get(`http://localhost:3000/item/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/item/`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async deleteItem(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/item/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/item/${id}`, {
           withCredentials: true
         });
 

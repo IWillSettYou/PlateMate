@@ -27,7 +27,7 @@ export default {
   methods: {
     async getTables() {
       try {
-        const response = await axios.get(`http://localhost:3000/table/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/table/`, {
           withCredentials: true
         });
 
@@ -39,7 +39,7 @@ export default {
     },
     async deleteTable(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/table/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/table/${id}`, {
           withCredentials: true
         });
         if (response.status == 200) {

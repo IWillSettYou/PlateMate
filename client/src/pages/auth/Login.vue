@@ -28,6 +28,7 @@ export default {
     },
   },
   async mounted() {
+    console.log(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}`)
     try {
       await this.redirectHandler();
     } catch (error) {
@@ -37,7 +38,7 @@ export default {
   methods: {
     async redirectHandler() {
       try {
-        const response = await axios.get('http://localhost:3000/redirect', {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/redirect`, {
           params: { page: 'login' },
           withCredentials: true,
         });
@@ -49,7 +50,7 @@ export default {
     },
     async login() {
       try {
-        const response = await axios.post('http://localhost:3000/login', {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/login`, {
             email: this.email,
             password: this.password,
           },

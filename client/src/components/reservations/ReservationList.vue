@@ -32,7 +32,7 @@ export default {
   methods: {
     async getReservations() {
       try {
-        const response = await axios.get(`http://localhost:3000/reservation/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/reservation/`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async deleteReservation(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/reservation/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/reservation/${id}`, {
           withCredentials: true
         });
 

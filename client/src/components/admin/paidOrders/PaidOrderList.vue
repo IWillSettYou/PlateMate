@@ -26,7 +26,7 @@ export default {
   methods: {
     async getPaidOrders() {
       try {
-        const response = await axios.get(`http://localhost:3000/paid/`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/paid/`, {
           withCredentials: true,
           validateStatus: function (status) {
             return status >= 200 && status < 500;
@@ -41,7 +41,7 @@ export default {
     },
     async deletePaidOrder(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/paid/${id}`, {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/paid/${id}`, {
           withCredentials: true
         });
 

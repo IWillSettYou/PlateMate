@@ -32,7 +32,7 @@ export default {
   methods: {
     async getInProcessOrders() {
       try {
-        const response = await axios.get(`http://localhost:3000/order/in-process`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/in-process`, {
           withCredentials: true
         });
 
@@ -44,7 +44,7 @@ export default {
     },
     async pushOrder(id) {
       try {
-        const response = await axios.put(`http://localhost:3000/order/set-done/${id}`, {},
+        const response = await axios.put(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/set-done/${id}`, {},
           {
             withCredentials: true
           });
@@ -59,7 +59,7 @@ export default {
     },
     async deleteOrder(id) {
       try {
-        const response = await axios.delete(`http://localhost:3000/order/${id}`,
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}/order/${id}`,
           {
             withCredentials: true
           });
