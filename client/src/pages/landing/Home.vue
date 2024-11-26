@@ -90,9 +90,6 @@ export default {
     toggleMobileMenu() {
       this.isMobileMenuOpen = !this.isMobileMenuOpen;
     },
-    getQuote() {
-      return this.motivationalQuotes[Math.floor(Math.random() * this.motivationalQuotes.length)]
-    },
     triggerPopup(message, type) {
       this.popupMessage = message;
       this.popupType = type;
