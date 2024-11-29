@@ -90,9 +90,7 @@ export default {
         <div class="navbar-left">
           <button class="hamburger-menu" @click="isMobileMenuOpen = !isMobileMenuOpen">&#9776;</button>
 
-          <RouterLink v-if="!isMobileMenuOpen && !isMobile" to="/">
-            <button class="navbar-link">Back</button>
-          </RouterLink>
+          <RouterLink v-if="!isMobileMenuOpen && !isMobile" to="/"><button class="navbar-link">Back</button></RouterLink>
         </div>
 
         <div v-if="!isMobileMenuOpen" class="navbar-center">
