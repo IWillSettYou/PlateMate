@@ -122,7 +122,7 @@ const deleteOrderByArray = async (req, res) => {
         if (!res.headersSent) return res.status(200).json({ message: "Rendelések sikeresen törölve.", data: response });
     } catch (error) {
         console.log(error)
-        res.status(500).json({ message: "Hiba történt a rendelések törlése során.", error });
+        return res.status(500).json({ message: "Hiba történt a rendelések törlése során.", error });
     }
 };
 
@@ -130,40 +130,45 @@ const getAllInProcessOrders = async (req, res) => {
     try {
         const orders = await new Promise((resolve, reject) => {
             connect.query(`
-                SELECT 
+                SELECT
                     o.id as id,
                     o.tableId as tableId,
                     o.itemId as itemId,
-                    o.orderedAt as orderedAt, 
-                    i.name as itemName, 
+                    o.orderedAt as orderedAt,
+                    i.name as itemName,
                     i.categoryId as itemCategoryId,
                     t.tableNumber as tableNumber,
                     c.id as categoryId,
                     c.name as categoryName
-                FROM 
+                FROM
                     orders o
-                JOIN 
-                    item i  ON o.itemId = i.id 
-                JOIN
-                	category c ON i.categoryId = c.id
-                JOIN
+                        JOIN
+                    item i ON o.itemId = i.id
+                        JOIN
+                    category c ON i.categoryId = c.id
+                        JOIN
                     tables t ON o.tableId = t.id
-                WHERE 
-                    isDone = false AND
+                WHERE
+                    o.isDone = false AND
                     c.name != "drink"
-                    `, (err, result) => {
-                if (err) reject(err);
-                else resolve(result);
+            `, (err, result) => {
+                if (err) {
+                    console.debug('Database query error:', err);
+                    reject(err);
+                } else {
+                    console.debug('Database query result:', result);
+                    resolve(result);
+                }
             });
         });
 
-        if (!orders.length) {
+        if (orders.length === 0) {
             return res.status(204).json({ message: "Nincsenek elérhető készülő rendelések." });
         }
-
         return res.status(200).json({ message: "Készülő rendelések sikeresen lekérve.", data: orders });
     } catch (error) {
-        res.status(500).json({ message: "Hiba történt a készülő rendelések lekérése során.", error });
+        console.debug('Error fetching in-process orders:', error);
+        return res.status(500).json({ message: "Hiba történt a készülő rendelések lekérése során.", error });
     }
 };
 

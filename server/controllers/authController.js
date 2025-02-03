@@ -32,97 +32,109 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const sessionCheck = await checkSession(req, res);
+  const { email, password} = req.body;
+  try {
+    const sessionCheck = await checkSession(req, res);
 
-  const sessionId = await uuidv4();
+    if (!sessionCheck) {
+      return res.status(400).send({ message: "Session check failed." });
+    }
 
-  if(sessionCheck.response) { 
-    const users = await User.findOne(req.body.email);
-    const user = users.data[0]
+    const sessionId = uuidv4();
 
-    const jti = await uuidv4();
-    const token = jwt.sign(
-    {
-      jti: jti,
-      sub: user.email,
-      iss: process.env.ISSUER,
-      typ: "Bearer",
-      preferred_username: user.name,
-      sid: sessionId,
-    },
-    process.env.TOKEN_SECRET,
-    {
-      expiresIn: "3h",
-    });
+    let jti, user, users;
 
-    const refreshToken = await generateRefreshToken(jti, user, sessionId);
+    if (sessionCheck.response) {
+      users = await User.findOne(email);
+      user = users.data[0];
 
-    res.cookie("token", token, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === "production", 
-      maxAge: 3 * 60 * 60 * 1000,
-    });
+      jti = uuidv4();
+      const token = jwt.sign(
+          {
+            jti: jti,
+            sub: user.email,
+            iss: process.env.ISSUER,
+            typ: "Bearer",
+            preferred_username: user.name,
+            sid: sessionId,
+          },
+          process.env.TOKEN_SECRET,
+          {
+            expiresIn: "3h",
+          }
+      );
 
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true, 
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 30 * 24 * 60 * 60 * 1000, 
-    });
-
-    res.send({ "message" : "Belépve érvényes munkamenet alapján." })
-  } else {
-    const users = await User.findOne(req.body.email);
-    const user = users.data[0]
-
-    if (!user) return res.status(400).send({ message : "Érvénytelen email cím." });
-
-    const validPass = await bcrypt.compare(req.body.password, user.hashedPassword);
-
-    if (!validPass) return res.status(400).send({ message : "Érvénytelen jelszó." });
-
-    const jti = await uuidv4();
-    const token = jwt.sign(
-    {
-      jti: jti,
-      sub: user.email,
-      iss: process.env.ISSUER,
-      typ: "Bearer",
-      preferred_username: user.name,
-      sid: sessionId,
-    },
-    process.env.TOKEN_SECRET,
-    { expiresIn: "3h"}
-    );
-    
-    try{
       const refreshToken = await generateRefreshToken(jti, user, sessionId);
 
-      const expires = formatDateToMySQL(Date.now() + 86400000);
-
-      await uploadSession(req, sessionId, user.id, expires)
-
-      res.cookie('connect.sid', `s:${sessionId}`, { 
-        httpOnly: true, 
-        maxAge: 86400000 
-      });
-
       res.cookie("token", token, {
-        httpOnly: true, 
-        secure: process.env.NODE_ENV === "production", 
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 3 * 60 * 60 * 1000,
       });
 
       res.cookie("refreshToken", refreshToken, {
-        httpOnly: true, 
+        httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 30 * 24 * 60 * 60 * 1000, 
+        maxAge: 30 * 24 * 60 * 60 * 1000,
       });
 
-      res.status(200).send({ "message" : "Belépve új munkamenettel." })
+      res.send({ message: "Belépve érvényes munkamenet alapján." });
+    } else {
+
+      users = await User.findOne(email);
+      user = users.data[0];
+
+      if (!user) return res.status(400).send({ message: "Érvénytelen email cím." });
+
+      const validPass = await bcrypt.compare(password, user.hashedPassword);
+
+      if (!validPass) return res.status(400).send({ message: "Érvénytelen jelszó." });
+
+      const jti = uuidv4();
+      const token = jwt.sign(
+          {
+            jti: jti,
+            sub: user.email,
+            iss: process.env.ISSUER,
+            typ: "Bearer",
+            preferred_username: user.name,
+            sid: sessionId,
+          },
+          process.env.TOKEN_SECRET,
+          { expiresIn: "3h" }
+      );
+
+      try {
+        const refreshToken = await generateRefreshToken(jti, user, sessionId);
+
+        const expires = formatDateToMySQL(Date.now() + 86400000);
+
+        await uploadSession(req, sessionId, user.id, expires);
+
+        res.cookie('connect.sid', `s:${sessionId}`, {
+          httpOnly: true,
+          maxAge: 86400000,
+        });
+
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: 3 * 60 * 60 * 1000,
+        });
+
+        res.cookie("refreshToken", refreshToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: 30 * 24 * 60 * 60 * 1000,
+        });
+
+        res.status(200).send({ message: "Belépve új munkamenettel." });
+      } catch (error) {
+        res.status(500).send({ error: error });
+      }
     }
-    catch (error){
-      res.status(500).send({ error : error })
-    }
+  } catch (error) {
+    res.status(500).send({ message: "Error occurred during login.", error: error });
   }
 };
 
@@ -142,21 +154,33 @@ const generateRefreshToken = async (jti, user, sid) => {
 
 const logout = async (req, res) => {
   try {
-    const response = await deleteSession(req.cookies['connect.sid'].split(':')[1].split('.')[0])
+    const sessionId = req.cookies['connect.sid']?.split(':')[1]?.split('.')[0];
+    if (!sessionId) {
+      return res.status(400).send({ message: "Invalid session ID." });
+    }
 
-    if(response.response.affectedRows == 0) res.status(400).send({ message : "Hiba történt a kilépéskor"});
+    const response = await deleteSession(sessionId);
+
+    if (!response || response.response.affectedRows === 0) {
+      return res.status(400).send({ message: "Error occurred during logout." });
+    }
 
     req.session.destroy((err) => {
       if (err) {
-        if(!res.headersSent) res.status(400).send({ message : "Hiba történt a kilépéskor", error : err });
+        if (!res.headersSent) {
+          return res.status(400).send({ message: "Error occurred during logout.", error: err });
+        }
       }
-      if(!res.headersSent) res.status(200).send({ message : "Sikeresen kilépve." });
+      if (!res.headersSent) {
+        return res.status(200).send({ message: "Successfully logged out." });
+      }
     });
+  } catch (error) {
+    if (!res.headersSent) {
+      return res.status(500).send({ message: "Hiba kijelentkezéskor.", error: error });
+    }
   }
-  catch(error) {
-    if(!res.headersSent) res.status(500).send({ message : "Hiba kijelentkezéskor.", error : error })
-  };
-}
+};
 
 const formatDateToMySQL = (timestamp) => {
   const date = new Date(timestamp);
