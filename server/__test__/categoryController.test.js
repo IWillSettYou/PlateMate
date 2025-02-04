@@ -3,7 +3,7 @@ const categoryController = require('../controllers/categoryController');
 const connect = require('../config/db');
 
 beforeAll(async () => {
-    // Ensure the connection is established
+
     await new Promise((resolve, reject) => {
         connect.connect((err) => {
             if (err) reject(err);
@@ -11,7 +11,6 @@ beforeAll(async () => {
         });
     });
 
-    // Set up the test database
     await new Promise((resolve, reject) => {
         connect.query("CREATE DATABASE IF NOT EXISTS test_vizsgaremek", (err) => {
             if (err) reject(err);
@@ -33,7 +32,7 @@ beforeAll(async () => {
         });
     });
 
-    // Insert test data into the category table
+
     await new Promise((resolve, reject) => {
         connect.query("INSERT INTO category (name) VALUES ('Category 1'), ('Category 2'), ('Category 3')", (err) => {
             if (err) reject(err);
@@ -43,7 +42,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    // Tear down the test tables
+
     await new Promise((resolve, reject) => {
         connect.query("DROP TABLE IF EXISTS category", (err) => {
             if (err) reject(err);
@@ -51,7 +50,6 @@ afterAll(async () => {
         });
     });
 
-    // Close the connection
     await new Promise((resolve, reject) => {
         connect.end((err) => {
             if (err) reject(err);
@@ -89,10 +87,6 @@ describe('Category Controller tests', () => {
         };
 
         await categoryController.getCategoryById(req, res);
-
-        console.log('res.status calls:', res.status.mock.calls);
-        console.log('res.json calls:', res.json.mock.calls);
-
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
             message: "Kategória sikeresen lekérve."
@@ -111,9 +105,6 @@ describe('Category Controller tests', () => {
         };
 
         await categoryController.createCategory(req, res);
-
-        console.log('res.status calls:', res.status.mock.calls);
-        console.log('res.json calls:', res.json.mock.calls);
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
@@ -134,10 +125,6 @@ describe('Category Controller tests', () => {
         };
 
         await categoryController.deleteCategory(req, res);
-
-        console.log('res.status calls:', res.status.mock.calls);
-        console.log('res.json calls:', res.json.mock.calls);
-
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
             message: "Kategória sikeresen törölve."
@@ -152,9 +139,6 @@ describe('Category Controller tests', () => {
         };
 
         await categoryController.getAllCategories(req, res);
-
-        console.log('res.status calls:', res.status.mock.calls);
-        console.log('res.json calls:', res.json.mock.calls);
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({

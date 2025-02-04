@@ -5,6 +5,10 @@ const { verifyToken, refreshToken } = require("./tokenHandler");
 const { getEmailFromToken, getSectionFromId } = require("./roleHandler");
 
 const redirectHandler = async (req, res) => {
+    const cookies = req.cookies;
+    if (!cookies || !cookies.token) {
+        return res.status(400).json({ error: 'Token is missing' });
+    }
     const pages = {
         home : ['admin', 'chef', 'waiter', 'cashier'], 
         login : ['admin', 'chef', 'waiter', 'cashier'], 

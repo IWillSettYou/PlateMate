@@ -21,7 +21,7 @@ beforeAll(async () => {
         });
     });
 
-    // Set up the test database
+    // Set up the __test__ database
     await new Promise((resolve, reject) => {
         connect.query("CREATE DATABASE IF NOT EXISTS test_vizsgaremek", (err) => {
             if (err) reject(err);
@@ -61,7 +61,7 @@ beforeAll(async () => {
         });
     });
 
-    // Insert test data into the category table
+    // Insert __test__ data into the category table
     await new Promise((resolve, reject) => {
         connect.query("INSERT INTO category (name) VALUES ('Category 1'), ('Category 2'), ('Category 3')", (err) => {
             if (err) reject(err);
@@ -69,7 +69,7 @@ beforeAll(async () => {
         });
     });
 
-    // Insert test data into the item table
+    // Insert __test__ data into the item table
     await new Promise((resolve, reject) => {
         connect.query("INSERT INTO item (name, price, categoryId) VALUES ('Item 1', 10.99, 1), ('Item 2', 12.99, 2), ('Item 3', 15.99, 3)", (err) => {
             if (err) reject(err);
@@ -79,7 +79,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    // Tear down the test tables
+    // Tear down the __test__ tables
     await new Promise((resolve, reject) => {
         connect.query("DROP TABLE IF EXISTS item", (err) => {
             if (err) reject(err);

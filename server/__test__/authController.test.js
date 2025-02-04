@@ -1,4 +1,4 @@
-// server/test/authController.test.js
+// server/__test__/authController.__test__.js
 const { describe, it, expect, beforeEach } = require('@jest/globals');
 const authController = require('../controllers/authController');
 const User = require('../models/user');
@@ -42,7 +42,7 @@ describe('Auth Controller', () => {
         });
 
         it('should return 409 if email is already taken', async () => {
-            req.body = { name: 'Test', email: 'test@example.com', password: 'password', permissionId: 1 };
+            req.body = { name: 'Test', email: '__test__@example.com', password: 'password', permissionId: 1 };
             User.findOne.mockResolvedValue({ data: [{}] });
             await authController.register(req, res);
             expect(res.status).toHaveBeenCalledWith(409);
@@ -50,14 +50,14 @@ describe('Auth Controller', () => {
         });
 
         it('should return 200 and save user if registration is successful', async () => {
-            req.body = { name: 'Test', email: 'test@example.com', password: 'password', permissionId: 1 };
+            req.body = { name: 'Test', email: '__test__@example.com', password: 'password', permissionId: 1 };
             User.findOne.mockResolvedValue({ data: [] });
             bcrypt.genSalt.mockResolvedValue('salt');
             bcrypt.hash.mockResolvedValue('hashedPassword');
-            User.prototype.save.mockResolvedValue({ id: 1, name: 'Test', email: 'test@example.com' });
+            User.prototype.save.mockResolvedValue({ id: 1, name: 'Test', email: '__test__@example.com' });
             await authController.register(req, res);
             expect(res.status).toHaveBeenCalledWith(200);
-            expect(res.send).toHaveBeenCalledWith({ id: 1, name: 'Test', email: 'test@example.com' });
+            expect(res.send).toHaveBeenCalledWith({ id: 1, name: 'Test', email: '__test__@example.com' });
         });
     });
 
@@ -66,7 +66,6 @@ describe('Auth Controller', () => {
             req.body = { email: 'idkbro@idk.com', password: 'password' };
             checkSession.mockResolvedValue(false); // Mock session check failure
             await authController.login(req, res);
-
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.send).toHaveBeenCalledWith({ message: "Session check failed." });
         });
@@ -76,9 +75,6 @@ describe('Auth Controller', () => {
             User.findOne.mockResolvedValue({ data: [] }); // No user found
             checkSession.mockResolvedValue({ response: false }); // Mock session check failure
             await authController.login(req, res);
-
-            console.log('res.status calls:', res.status.mock.calls);
-            console.log('res.send calls:', res.send.mock.calls);
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.send).toHaveBeenCalledWith({ message: "Érvénytelen email cím." });
         });
@@ -86,8 +82,8 @@ describe('Auth Controller', () => {
 
 
         it('should return 400 if password is invalid', async () => {
-            req.body = { email: 'test@example.com', password: 'invalidPassword' };
-            User.findOne.mockResolvedValue({ data: [{ email: 'test@example.com', hashedPassword: 'hashedPassword' }] });
+            req.body = { email: '__test__@example.com', password: 'invalidPassword' };
+            User.findOne.mockResolvedValue({ data: [{ email: '__test__@example.com', hashedPassword: 'hashedPassword' }] });
             bcrypt.compare.mockResolvedValue(false); // Password does not match
             checkSession.mockResolvedValue({ response: false }); // Mock session check failure
             await authController.login(req, res);
@@ -96,8 +92,8 @@ describe('Auth Controller', () => {
         });
 
         it('should return 200 and set cookies if login is successful', async () => {
-            req.body = { email: 'test@example.com', password: 'password' };
-            User.findOne.mockResolvedValue({ data: [{ email: 'test@example.com', hashedPassword: 'hashedPassword' }] });
+            req.body = { email: '__test__@example.com', password: 'password' };
+            User.findOne.mockResolvedValue({ data: [{ email: '__test__@example.com', hashedPassword: 'hashedPassword' }] });
             bcrypt.compare.mockResolvedValue(true);
             uuidv4.mockReturnValue('uuid');
             jwt.sign.mockReturnValue('token');
@@ -110,8 +106,8 @@ describe('Auth Controller', () => {
 
     describe('logout', () => {
         it('should return 200 and set cookies if login is successful', async () => {
-            req.body = { email: 'test@example.com', password: 'password' };
-            User.findOne.mockResolvedValue({ data: [{ email: 'test@example.com', hashedPassword: 'hashedPassword' }] });
+            req.body = { email: '__test__@example.com', password: 'password' };
+            User.findOne.mockResolvedValue({ data: [{ email: '__test__@example.com', hashedPassword: 'hashedPassword' }] });
             bcrypt.compare.mockResolvedValue(true);
             uuidv4.mockReturnValue('uuid');
             jwt.sign.mockReturnValue('token');
@@ -125,8 +121,6 @@ describe('Auth Controller', () => {
             req.cookies['connect.sid'] = 's:sessionId';
             deleteSession.mockRejectedValue(new Error('Error'));
             await authController.logout(req, res);
-            console.log('res.status calls:', res.status.mock.calls);
-            console.log('res.send calls:', res.send.mock.calls);
             expect(res.status).toHaveBeenCalledWith(500);
             expect(res.send).toHaveBeenCalledWith({ message: "Hiba kijelentkezéskor.", error: expect.any(Error) });
         });

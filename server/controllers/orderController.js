@@ -153,10 +153,8 @@ const getAllInProcessOrders = async (req, res) => {
                     c.name != "drink"
             `, (err, result) => {
                 if (err) {
-                    console.debug('Database query error:', err);
                     reject(err);
                 } else {
-                    console.debug('Database query result:', result);
                     resolve(result);
                 }
             });
@@ -167,7 +165,6 @@ const getAllInProcessOrders = async (req, res) => {
         }
         return res.status(200).json({ message: "Készülő rendelések sikeresen lekérve.", data: orders });
     } catch (error) {
-        console.debug('Error fetching in-process orders:', error);
         return res.status(500).json({ message: "Hiba történt a készülő rendelések lekérése során.", error });
     }
 };
