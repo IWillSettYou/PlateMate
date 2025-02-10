@@ -33,6 +33,12 @@ describe('Role Handler', () => {
     });
 
     afterAll((done) => {
+        connect.query(`
+        DROP TABLE IF EXISTS user;
+    `, (err) => {
+            if (err) return done(err);
+            done();
+        });
         connect.end((err) => {
             if (err) return done(err);
             done();
