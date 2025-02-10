@@ -32,6 +32,12 @@ describe('Token Handler End-to-End', () => {
     });
 
     afterAll((done) => {
+        connect.query(`
+                DROP TABLE IF EXISTS tokens;
+            `, (err) => {
+            if (err) return done(err);
+            done();
+        });
         connect.end((err) => {
             if (err) return done(err);
             done();
