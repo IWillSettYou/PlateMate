@@ -40,9 +40,11 @@ const checkSessionMiddleware = async (req, res, next) => {
 
 const checkSession = async (req, res) => {
     try {
-        const dbSession = await findSession(req.cookies['connect.sid'].split(':')[1].split('.')[0]);
+
+        const cookie = req.cookies['connect.sid'].split(':')[1].split('.')[0];
+        const dbSession = await findSession(cookie);
         const dbSessionData = dbSession.response;
-        
+
         if (dbSessionData.length === 0) {
             return { message : "Nem található ilyen munkamenet.", response :false }; 
         }

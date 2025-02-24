@@ -33,14 +33,18 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password} = req.body;
+
+
   try {
     const sessionCheck = await checkSession(req, res);
-
     if (!sessionCheck) {
       return res.status(400).send({ message: "Session check failed." });
     }
 
+
+
     const sessionId = uuidv4();
+
 
     let jti, user, users;
 
@@ -134,6 +138,7 @@ const login = async (req, res) => {
       }
     }
   } catch (error) {
+
     res.status(500).send({ message: "Error occurred during login.", error: error });
   }
 };
