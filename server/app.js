@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { v4: uuidv4 } = require('uuid');
 
-const { checkSessionMiddleware } = require("./middlewares/sessionHandler");
+const { checkSessionMiddleware} = require("./middlewares/sessionHandler");
 const { checkTokenMiddleware } = require("./middlewares/tokenHandler");
 const { login, register, logout } = require("./controllers/authController") 
 const { redirectHandler } = require("./middlewares/redirectHandler") 

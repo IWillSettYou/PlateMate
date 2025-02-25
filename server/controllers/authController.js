@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 const User = require("../models/user");
 const { deleteSession, uploadSession, checkSession } = require("../middlewares/sessionHandler");
+const {router} = require("express/lib/application");
 
 const register = async (req, res) => {
   const { name, email, password, permissionId} = req.body;
@@ -160,6 +161,7 @@ const generateRefreshToken = async (jti, user, sid) => {
 const logout = async (req, res) => {
   try {
     const sessionId = req.cookies['connect.sid']?.split(':')[1]?.split('.')[0];
+
     if (!sessionId) {
       return res.status(400).send({ message: "Invalid session ID." });
     }

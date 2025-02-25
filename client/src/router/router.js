@@ -22,6 +22,7 @@ import Orders from '../pages/orders/Orders.vue'
 import NotFound from '../pages/404/NotFound.vue'
 
 
+
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/login', name: 'Login', component: Login },
@@ -43,5 +44,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
 
 export default router
