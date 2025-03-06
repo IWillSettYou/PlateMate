@@ -55,7 +55,7 @@ export default {
     <form @submit.prevent="createPaymentMethod">
       <div class="form-group">
         <label class="form-label">Neve</label>
-        <input type="text" placeholder="Kártya" v-model="formData.PaymentMethodName" class="form-input" required />
+        <input type="text" placeholder="Új fizetési mód" v-model="formData.PaymentMethodName" class="form-input" required />
       </div>
       <button type="submit" class="form-submit">Létrehozás</button>
     </form>
