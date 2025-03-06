@@ -1,4 +1,3 @@
-// server/__test__/authController.__test__.js
 const { describe, it, expect, beforeEach } = require('@jest/globals');
 const authController = require('../controllers/authController');
 const User = require('../models/user');

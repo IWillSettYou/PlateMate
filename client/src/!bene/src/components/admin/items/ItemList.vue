@@ -84,8 +84,8 @@ export default {
           <tr>
             <th>ID</th>
             <th>Név</th>
-            <th>Kategória</th>
             <th>Ár</th>
+            <th>Kategória</th>
             <th>Művelet</th>
           </tr>
         </thead>
